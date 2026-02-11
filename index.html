@@ -34,7 +34,6 @@ body {
   margin: 6px 0 50px;
 }
 
-/* 主按钮 */
 .main-btn-wrap {
   position: relative;
   width: 200px;
@@ -72,14 +71,14 @@ body {
   border: 2px solid rgba(255,255,255,0.1);
 }
 
-/* 进度条 */
 .progress-bar {
   width: 100%;
+  max-width: 340px;
   height: 6px;
   background: rgba(255,255,255,0.1);
   border-radius: 3px;
   overflow: hidden;
-  margin: 10px 0;
+  margin: 0 0 20px 0;
   display: none;
 }
 .progress {
@@ -89,7 +88,6 @@ body {
   transition: width 0.3s ease;
 }
 
-/* 按钮 */
 .ad-btn {
   background: #2563EB;
   color: #fff;
@@ -106,7 +104,6 @@ body {
   margin: 10px 0 30px;
 }
 
-/* 功能卡片 */
 .card {
   width: 100%;
   max-width: 340px;
@@ -177,7 +174,6 @@ body {
 <button class="ad-btn" id="adBtn">观看广告免费使用</button>
 <div class="ad-tip">每天仅看1次广告，全天有效</div>
 
-<!-- 缓存清理 -->
 <div class="card" id="cacheCard">
   <div class="card-left">
     <div class="card-icon">
@@ -193,7 +189,6 @@ body {
   <div class="card-arrow">›</div>
 </div>
 
-<!-- 内存优化 -->
 <div class="card" id="memoryCard">
   <div class="card-left">
     <div class="card-icon">
@@ -209,7 +204,6 @@ body {
   <div class="card-arrow">›</div>
 </div>
 
-<!-- 手机降温 -->
 <div class="card" id="coolCard">
   <div class="card-left">
     <div class="card-icon">
@@ -233,6 +227,14 @@ const progress = document.getElementById('progress');
 const adBtn = document.getElementById('adBtn');
 let unlocked = false;
 
+// 随机数工具
+function rand(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function randFloat(min, max, decimals = 1) {
+  return (Math.random() * (max - min) + min).toFixed(decimals);
+}
+
 // 解锁
 adBtn.onclick = () => {
   if(unlocked) return;
@@ -244,7 +246,7 @@ adBtn.onclick = () => {
   },1500);
 };
 
-// 一键优化（超逼真）
+// 一键优化
 mainBtn.onclick = () => {
   if(!unlocked) { alert("请先观看广告解锁功能"); return; }
   progressBar.style.display = "block";
@@ -258,7 +260,7 @@ mainBtn.onclick = () => {
   },2000);
 };
 
-// 缓存清理
+// 缓存清理（随机数字）
 document.getElementById('cacheCard').onclick = () => {
   if(!unlocked) { alert("请先观看广告解锁功能"); return; }
   let i = 0;
@@ -268,12 +270,13 @@ document.getElementById('cacheCard').onclick = () => {
     progress.style.width = i+"%";
     if(i>=100) {
       clearInterval(interval);
-      alert("缓存清理完成\n已释放 156MB 存储空间");
+      const size = rand(100, 300);
+      alert("缓存清理完成\n已释放 " + size + "MB 存储空间");
     }
   },150);
 };
 
-// 内存优化
+// 内存优化（随机数字）
 document.getElementById('memoryCard').onclick = () => {
   if(!unlocked) { alert("请先观看广告解锁功能"); return; }
   let i = 0;
@@ -283,12 +286,13 @@ document.getElementById('memoryCard').onclick = () => {
     progress.style.width = i+"%";
     if(i>=100) {
       clearInterval(interval);
-      alert("内存优化完成\n已关闭 5 个后台进程");
+      const count = rand(3, 9);
+      alert("内存优化完成\n已关闭 " + count + " 个后台进程");
     }
   },150);
 };
 
-// 手机降温
+// 手机降温（随机数字）
 document.getElementById('coolCard').onclick = () => {
   if(!unlocked) { alert("请先观看广告解锁功能"); return; }
   let i = 0;
@@ -298,7 +302,8 @@ document.getElementById('coolCard').onclick = () => {
     progress.style.width = i+"%";
     if(i>=100) {
       clearInterval(interval);
-      alert("手机降温完成\n温度降低 3.2°C，续航提升");
+      const temp = randFloat(2.0, 4.0);
+      alert("手机降温完成\n温度降低 " + temp + "°C，续航提升");
     }
   },150);
 };
