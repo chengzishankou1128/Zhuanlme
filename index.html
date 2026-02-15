@@ -17,7 +17,7 @@
             dark: '#0f172a',
           },
           fontFamily: {
-            sans: ['Inter', 'system-ui'],
+            sans: ['Inter','system-ui'],
           },
         }
       }
@@ -26,14 +26,14 @@
   <style type="text/tailwindcss">
     @layer utilities {
       .glass {
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(255,255,255,0.08);
         backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255,255,255,0.1);
       }
       .glass-dark {
-        background: rgba(15, 23, 42, 0.6);
+        background: rgba(15,23,42,0.6);
         backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255,255,255,0.05);
       }
       .gradient-bg {
         background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
@@ -47,142 +47,164 @@
         transition: transform 0.2s;
       }
       .hover-scale:hover {
-        transform: scale(1.05);
+        transform: scale(1.04);
       }
     }
   </style>
 </head>
+
 <body class="bg-slate-100 dark:bg-dark min-h-screen transition-colors duration-300">
-  <div class="fixed top-0 left-0 w-full h-full opacity-20 pointer-events-none gradient-bg -z-10"></div>
+<div class="fixed top-0 left-0 w-full h-full opacity-20 pointer-events-none gradient-bg -z-10"></div>
 
-  <div class="max-w-5xl mx-auto px-4 py-10">
-    <!-- 顶部 -->
-    <div class="flex justify-between items-center mb-8">
-      <h1 class="text-2xl md:text-3xl font-bold text-gradient">AI通鉴</h1>
-      <button id="theme-toggle" class="glass p-3 rounded-full hover-scale">
-        <i class="fa fa-moon-o dark:hidden text-gray-700"></i>
-        <i class="fa fa-sun-o hidden dark:block text-yellow-300"></i>
-      </button>
-    </div>
-
-    <!-- 搜索框 -->
-    <div class="glass dark:glass-dark rounded-2xl p-5 mb-10 shadow-xl">
-      <div class="flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-3 shadow">
-        <i class="fa fa-search text-gray-400 mr-3"></i>
-        <input id="search-input" type="text" placeholder="搜索或输入网址，一键直达..." 
-               class="w-full bg-transparent outline-none text-gray-800 dark:text-gray-200">
-        <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90">
-          搜索
-        </button>
-      </div>
-    </div>
-
-    <!-- 快捷图标 -->
-    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-10">
-      <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://www.google.com">
-        <i class="fa fa-chrome text-xl text-blue-500"></i>
-        <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">谷歌</p>
-      </div>
-      <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://github.com">
-        <i class="fa fa-github text-xl text-gray-700 dark:text-gray-300"></i>
-        <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">GitHub</p>
-      </div>
-      <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://www.douyin.com">
-        <i class="fa fa-video-camera text-xl text-red-500"></i>
-        <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">抖音</p>
-      </div>
-      <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://www.baidu.com">
-        <i class="fa fa-search text-xl text-blue-400"></i>
-        <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">百度</p>
-      </div>
-      <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://mail.163.com">
-        <i class="fa fa-envelope text-xl text-indigo-400"></i>
-        <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">邮箱</p>
-      </div>
-      <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://www.aliyundrive.com">
-        <i class="fa fa-cloud text-xl text-blue-400"></i>
-        <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">网盘</p>
-      </div>
-    </div>
-
-    <!-- 分类 -->
-    <h2 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">AI通鉴·分类导航</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-      <!-- 开发资源 -->
-      <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-        <h3 class="font-medium mb-3 text-gray-800 dark:text-gray-200">开发资源</h3>
-        <div class="grid grid-cols-3 gap-2 text-sm text-gray-600 dark:text-gray-400">
-          <span onclick="window.open('https://github.com', '_blank')" class="cursor-pointer hover:text-primary">GitHub</span>
-          <span onclick="window.open('https://stackoverflow.com', '_blank')" class="cursor-pointer hover:text-primary">StackOverflow</span>
-          <span onclick="window.open('https://codepen.io', '_blank')" class="cursor-pointer hover:text-primary">CodePen</span>
-          <span onclick="window.open('https://developer.mozilla.org', '_blank')" class="cursor-pointer hover:text-primary">MDN</span>
-          <span onclick="window.open('https://vuejs.org', '_blank')" class="cursor-pointer hover:text-primary">Vue</span>
-          <span onclick="window.open('https://react.dev', '_blank')" class="cursor-pointer hover:text-primary">React</span>
-        </div>
-      </div>
-      <!-- 实用工具 -->
-      <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-        <h3 class="font-medium mb-3 text-gray-800 dark:text-gray-200">实用工具</h3>
-        <div class="grid grid-cols-3 gap-2 text-sm text-gray-600 dark:text-gray-400">
-          <span onclick="window.open('https://cli.im/', '_blank')" class="cursor-pointer hover:text-primary">二维码</span>
-          <span onclick="window.open('https://tinypng.com/', '_blank')" class="cursor-pointer hover:text-primary">图片压缩</span>
-          <span onclick="window.open('https://convertio.co/zh/', '_blank')" class="cursor-pointer hover:text-primary">格式转换</span>
-          <span onclick="window.open('https://fanyi.baidu.com/', '_blank')" class="cursor-pointer hover:text-primary">在线翻译</span>
-          <span onclick="window.open('https://www.calculator.net/', '_blank')" class="cursor-pointer hover:text-primary">计算器</span>
-          <span onclick="window.open('https://notion.so/', '_blank')" class="cursor-pointer hover:text-primary">便签</span>
-        </div>
-      </div>
-      <!-- AI工具大全 -->
-      <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-        <h3 class="font-medium mb-3 text-gray-800 dark:text-gray-200">AI工具大全</h3>
-        <div class="grid grid-cols-3 gap-2 text-sm text-gray-600 dark:text-gray-400">
-          <span onclick="window.open('https://www.doubao.com/', '_blank')" class="cursor-pointer hover:text-primary">豆包</span>
-          <span onclick="window.open('https://chat.openai.com/', '_blank')" class="cursor-pointer hover:text-primary">ChatGPT</span>
-          <span onclick="window.open('https://yiyan.baidu.com/', '_blank')" class="cursor-pointer hover:text-primary">文心一言</span>
-          <span onclick="window.open('https://www.midjourney.com/', '_blank')" class="cursor-pointer hover:text-primary">AI作图</span>
-          <span onclick="window.open('https://www.elevenlabs.io/', '_blank')" class="cursor-pointer hover:text-primary">AI配音</span>
-          <span onclick="window.open('https://www.notion.so/', '_blank')" class="cursor-pointer hover:text-primary">AI写作</span>
-        </div>
-      </div>
-    </div>
-
-    <footer class="text-center text-sm text-gray-500">
-      <p>AI通鉴 © 2026  ·  新一代AI智能导航平台</p>
-    </footer>
+<div class="max-w-5xl mx-auto px-4 py-10">
+  <!-- 顶部 -->
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-2xl md:text-3xl font-bold text-gradient">AI通鉴</h1>
+    <button id="theme-toggle" class="glass p-3 rounded-full hover-scale">
+      <i class="fa fa-moon-o dark:hidden text-gray-700"></i>
+      <i class="fa fa-sun-o hidden dark:block text-yellow-300"></i>
+    </button>
   </div>
 
-  <script>
-    // 主题切换
-    const toggle = document.getElementById('theme-toggle')
-    toggle.addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark')
-      localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-    })
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark')
-    }
+  <!-- 智能搜索框 -->
+  <div class="glass dark:glass-dark rounded-2xl p-5 mb-10 shadow-xl">
+    <div class="flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-3 shadow">
+      <i class="fa fa-search text-gray-400 mr-3"></i>
+      <input id="search-input" type="text" placeholder="搜索、打开网站、输入网址……" 
+             class="w-full bg-transparent outline-none text-gray-800 dark:text-gray-200">
+      <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90">
+        搜索
+      </button>
+    </div>
+  </div>
 
-    // 快捷点击跳转
-    document.querySelectorAll('[data-url]').forEach(el => {
-      el.onclick = () => window.open(el.dataset.url, '_blank')
-    })
+  <!-- 快捷图标 -->
+  <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-10">
+    <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://www.google.com">
+      <i class="fa fa-chrome text-xl text-blue-500"></i>
+      <p class="text-sm mt-2">谷歌</p>
+    </div>
+    <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://github.com">
+      <i class="fa fa-github text-xl text-gray-700 dark:text-gray-300"></i>
+      <p class="text-sm mt-2">GitHub</p>
+    </div>
+    <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://www.douyin.com">
+      <i class="fa fa-video-camera text-xl text-red-500"></i>
+      <p class="text-sm mt-2">抖音</p>
+    </div>
+    <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://www.baidu.com">
+      <i class="fa fa-search text-xl text-blue-400"></i>
+      <p class="text-sm mt-2">百度</p>
+    </div>
+    <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://www.yijiayipu.cn">
+      <i class="fa fa-shopping-bag text-xl text-indigo-400"></i>
+      <p class="text-sm mt-2">号卡商城</p>
+    </div>
+    <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://www.aliyundrive.com">
+      <i class="fa fa-cloud text-xl text-blue-400"></i>
+      <p class="text-sm mt-2">网盘</p>
+    </div>
+  </div>
 
-    // 搜索功能（干净不尴尬版）
-    const input = document.getElementById('search-input')
-    const btn = document.getElementById('search-btn')
+  <!-- 分类 -->
+  <h2 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">AI通鉴·分类导航</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+    <!-- 开发资源 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3">开发资源</h3>
+      <div class="grid grid-cols-3 gap-2 text-sm text-gray-600 dark:text-gray-400">
+        <span onclick="window.open('https://github.com','_blank')" class="cursor-pointer hover:text-primary">GitHub</span>
+        <span onclick="window.open('https://stackoverflow.com','_blank')" class="cursor-pointer hover:text-primary">StackOverflow</span>
+        <span onclick="window.open('https://codepen.io','_blank')" class="cursor-pointer hover:text-primary">CodePen</span>
+        <span onclick="window.open('https://developer.mozilla.org','_blank')" class="cursor-pointer hover:text-primary">MDN</span>
+        <span onclick="window.open('https://vuejs.org','_blank')" class="cursor-pointer hover:text-primary">Vue</span>
+        <span onclick="window.open('https://react.dev','_blank')" class="cursor-pointer hover:text-primary">React</span>
+      </div>
+    </div>
+    <!-- 实用工具 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3">实用工具</h3>
+      <div class="grid grid-cols-3 gap-2 text-sm text-gray-600 dark:text-gray-400">
+        <span onclick="window.open('https://cli.im/','_blank')" class="cursor-pointer hover:text-primary">二维码</span>
+        <span onclick="window.open('https://tinypng.com/','_blank')" class="cursor-pointer hover:text-primary">图片压缩</span>
+        <span onclick="window.open('https://convertio.co/zh/','_blank')" class="cursor-pointer hover:text-primary">格式转换</span>
+        <span onclick="window.open('https://fanyi.baidu.com/','_blank')" class="cursor-pointer hover:text-primary">在线翻译</span>
+        <span onclick="window.open('https://www.calculator.net/','_blank')" class="cursor-pointer hover:text-primary">计算器</span>
+        <span onclick="window.open('https://notion.so/','_blank')" class="cursor-pointer hover:text-primary">便签</span>
+      </div>
+    </div>
+    <!-- AI工具大全 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3">AI工具大全</h3>
+      <div class="grid grid-cols-3 gap-2 text-sm text-gray-600 dark:text-gray-400">
+        <span onclick="window.open('https://www.doubao.com/','_blank')" class="cursor-pointer hover:text-primary">豆包</span>
+        <span onclick="window.open('https://chat.openai.com/','_blank')" class="cursor-pointer hover:text-primary">ChatGPT</span>
+        <span onclick="window.open('https://yiyan.baidu.com/','_blank')" class="cursor-pointer hover:text-primary">文心一言</span>
+        <span onclick="window.open('https://www.midjourney.com/','_blank')" class="cursor-pointer hover:text-primary">AI作图</span>
+        <span onclick="window.open('https://www.elevenlabs.io/','_blank')" class="cursor-pointer hover:text-primary">AI配音</span>
+        <span onclick="window.open('https://www.notion.so/','_blank')" class="cursor-pointer hover:text-primary">AI写作</span>
+      </div>
+    </div>
+  </div>
 
-    function goSearch() {
-      const q = input.value.trim()
-      if (!q) return
-      if (q.startsWith('http')) {
-        window.open(q, '_blank')
-      } else {
-        window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(q), '_blank')
+  <footer class="text-center text-sm text-gray-500">
+    <p>AI通鉴 © 2026 · 新一代AI智能导航平台</p>
+  </footer>
+</div>
+
+<script>
+  // 主题
+  const toggle = document.getElementById('theme-toggle')
+  toggle.addEventListener('click', () => {
+    document.documentElement.classList.toggle('dark')
+    localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+  })
+  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    document.documentElement.classList.add('dark')
+  }
+
+  // 快捷跳转
+  document.querySelectorAll('[data-url]').forEach(el => {
+    el.onclick = () => window.open(el.dataset.url, '_blank')
+  })
+
+  // 智能搜索（自然不尬，真正可用）
+  const input = document.getElementById('search-input')
+  const btn = document.getElementById('search-btn')
+
+  const smartMap = {
+    '抖音': 'https://douyin.com',
+    'github': 'https://github.com',
+    '百度': 'https://baidu.com',
+    '谷歌': 'https://google.com',
+    '微信': 'https://wx.qq.com',
+    '号卡': 'https://yijiayipu.cn',
+    '商城': 'https://yijiayipu.cn',
+    'ai通鉴': 'https://yijiayipu.cn',
+  }
+
+  function goSearch() {
+    let q = input.value.trim().toLowerCase()
+    if (!q) return
+
+    // 智能匹配
+    for (let key in smartMap) {
+      if (q.includes(key)) {
+        window.open(smartMap[key], '_blank')
+        return
       }
     }
 
-    btn.addEventListener('click', goSearch)
-    input.addEventListener('keydown', e => e.key === 'Enter' && goSearch())
-  </script>
+    // 网址判断
+    if (q.startsWith('http')) {
+      window.open(q, '_blank')
+    } else {
+      window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(q), '_blank')
+    }
+  }
+
+  btn.addEventListener('click', goSearch)
+  input.addEventListener('keydown', e => e.key === 'Enter' && goSearch())
+</script>
 </body>
 </html>
