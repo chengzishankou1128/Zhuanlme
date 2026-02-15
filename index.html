@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="application-name" content="AI通鉴">
+  <meta name="description" content="AI通鉴 - 新一代AI智能导航">
   <title>AI通鉴 - 新一代AI智能导航</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -44,37 +46,83 @@
         -webkit-text-fill-color: transparent;
       }
       .hover-scale {
-        transition: transform 0.2s, box-shadow 0.2s;
+        transition: transform 0.24s ease, box-shadow 0.24s ease;
       }
       .hover-scale:hover {
-        transform: scale(1.04);
-        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.08);
       }
       .nav-card {
         @apply glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer;
+      }
+      .back-top {
+        @apply fixed bottom-6 right-6 w-12 h-12 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg transition-all duration-300 opacity-0 translate-y-10 pointer-events-none;
+      }
+      .back-top.show {
+        @apply opacity-100 translate-y-0 pointer-events-auto;
+      }
+      .loading {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f8fafc;
+        transition: opacity 0.5s ease;
+      }
+      .dark .loading {
+        background: #0f172a;
+      }
+      .loading.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .dot {
+        width: 10px;
+        height: 10px;
+        margin: 0 5px;
+        border-radius: 50%;
+        background: #4f46e5;
+        animation: bounce 0.6s infinite alternate;
+      }
+      .dot:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .dot:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      @keyframes bounce {
+        from { transform: translateY(0); }
+        to { transform: translateY(-15px); }
       }
     }
   </style>
 </head>
 
 <body class="bg-slate-100 dark:bg-dark min-h-screen transition-colors duration-300">
+<!-- 加载动画 -->
+<div class="loading" id="loading">
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+</div>
+
 <div class="fixed top-0 left-0 w-full h-full opacity-20 pointer-events-none gradient-bg -z-10"></div>
 
-<div class="max-w-5xl mx-auto px-4 py-10">
-  <!-- 顶部 -->
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl md:text-3xl font-bold text-gradient">AI通鉴</h1>
-    <div class="flex items-center gap-3">
-      <div id="real-time" class="text-sm text-gray-600 dark:text-gray-300"></div>
-      <button id="theme-toggle" class="glass p-3 rounded-full hover-scale">
-        <i class="fa fa-moon-o dark:hidden text-gray-700"></i>
-        <i class="fa fa-sun-o hidden dark:block text-yellow-300"></i>
-      </button>
-    </div>
+<!-- 顶部导航 -->
+<nav class="glass dark:glass-dark sticky top-2 z-50 max-w-5xl mx-auto rounded-full px-5 py-3 mb-6 flex items-center justify-between">
+  <h1 class="text-lg font-bold text-gradient">AI通鉴</h1>
+  <div class="flex gap-4 text-sm text-gray-700 dark:text-gray-300">
+    <a href="#" class="hover:text-primary transition-colors">首页</a>
+    <a href="#tools" class="hover:text-primary transition-colors">工具</a>
+    <a href="#categories" class="hover:text-primary transition-colors">分类</a>
   </div>
+</nav>
 
+<div class="max-w-5xl mx-auto px-4 pb-20">
   <!-- 公告 -->
-  <div class="glass dark:glass-dark rounded-xl px-4 py-2 mb-6 text-sm text-center text-gray-700 dark:text-gray-300">
+  <div class="glass dark:glass-dark rounded-xl px-4 py-3 mb-6 text-sm text-center text-gray-700 dark:text-gray-300">
     AI通鉴 · 高效上网 · 一站直达
   </div>
 
@@ -95,7 +143,7 @@
     </div>
   </div>
 
-  <!-- 常用快捷 -->
+  <!-- 常用直达 -->
   <h2 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">常用直达</h2>
   <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-8">
     <div class="nav-card" data-url="https://www.douyin.com">
@@ -125,7 +173,7 @@
   </div>
 
   <!-- 快捷工具 -->
-  <h2 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">快捷工具</h2>
+  <h2 id="tools" class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">快捷工具</h2>
   <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 mb-8">
     <div class="nav-card" onclick="window.open('https://cli.im/','_blank')">
       <i class="fa fa-qrcode text-xl text-green-500"></i>
@@ -147,14 +195,14 @@
       <i class="fa fa-sticky-note-o text-xl text-gray-500"></i>
       <p class="text-xs mt-1">便签</p>
     </div>
-    <div class="nav-card" id="tool-clock">
+    <div class="nav-card">
       <i class="fa fa-clock-o text-xl text-teal-500"></i>
       <p class="text-xs mt-1">时间</p>
     </div>
   </div>
 
-  <!-- 全部分类 → 8大拓展版（已核验可用） -->
-  <h2 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">网址分类</h2>
+  <!-- 全部分类 -->
+  <h2 id="categories" class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">网址分类</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
     <!-- 常用平台 -->
     <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
@@ -188,7 +236,7 @@
       <div class="grid grid-cols-2 gap-2 text-sm">
         <span onclick="window.open('https://www.aliyundrive.com','_blank')" class="cursor-pointer hover:text-primary">阿里云盘</span>
         <span onclick="window.open('https://pan.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度网盘</span>
-        <span onclick="window.open('https://notion.so','_blank')" class="cursor-pointer hover:text-primary">Notion</span>
+        <span onclick="window.open('https://www.notion.so','_blank')" class="cursor-pointer hover:text-primary">Notion</span>
         <span onclick="window.open('https://fanyi.baidu.com','_blank')" class="cursor-pointer hover:text-primary">翻译</span>
         <span onclick="window.open('https://cli.im','_blank')" class="cursor-pointer hover:text-primary">二维码</span>
         <span onclick="window.open('https://www.calculator.net','_blank')" class="cursor-pointer hover:text-primary">计算器</span>
@@ -203,7 +251,7 @@
         <span onclick="window.open('https://chat.openai.com','_blank')" class="cursor-pointer hover:text-primary">ChatGPT</span>
         <span onclick="window.open('https://yiyan.baidu.com','_blank')" class="cursor-pointer hover:text-primary">文心一言</span>
         <span onclick="window.open('https://www.midjourney.com','_blank')" class="cursor-pointer hover:text-primary">AI作图</span>
-        <span onclick="window.open('https://www.elevenlabs.io','_blank')" class="cursor-pointer hover:text-primary">AI配音</span>
+        <span onclick="window.open('https://elevenlabs.io','_blank')" class="cursor-pointer hover:text-primary">AI配音</span>
         <span onclick="window.open('https://github.com','_blank')" class="cursor-pointer hover:text-primary">GitHub</span>
       </div>
     </div>
@@ -215,7 +263,7 @@
         <span onclick="window.open('https://weibo.com','_blank')" class="cursor-pointer hover:text-primary">微博</span>
         <span onclick="window.open('https://www.xiaohongshu.com','_blank')" class="cursor-pointer hover:text-primary">小红书</span>
         <span onclick="window.open('https://www.toutiao.com','_blank')" class="cursor-pointer hover:text-primary">今日头条</span>
-        <span onclick="window.open('https://www.qq.com','_blank')" class="cursor-pointer hover:text-primary">QQ</span>
+        <span onclick="window.open('https://im.qq.com','_blank')" class="cursor-pointer hover:text-primary">QQ</span>
         <span onclick="window.open('https://www.douban.com','_blank')" class="cursor-pointer hover:text-primary">豆瓣</span>
         <span onclick="window.open('https://www.kuaishou.com','_blank')" class="cursor-pointer hover:text-primary">快手</span>
       </div>
@@ -226,7 +274,7 @@
       <h3 class="font-medium mb-3 text-base">影音娱乐</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
         <span onclick="window.open('https://v.qq.com','_blank')" class="cursor-pointer hover:text-primary">腾讯视频</span>
-        <span onclick="window.open('https://www.youku.com','_blank')" class="cursor-pointer hover:text-primary">优酷</span>
+        <span onclick="window.open('https://youku.com','_blank')" class="cursor-pointer hover:text-primary">优酷</span>
         <span onclick="window.open('https://www.iqiyi.com','_blank')" class="cursor-pointer hover:text-primary">爱奇艺</span>
         <span onclick="window.open('https://music.163.com','_blank')" class="cursor-pointer hover:text-primary">网易云</span>
         <span onclick="window.open('https://y.qq.com','_blank')" class="cursor-pointer hover:text-primary">QQ音乐</span>
@@ -247,14 +295,14 @@
       </div>
     </div>
 
-    <!-- 学习教育（已核验可用） -->
+    <!-- 学习教育 -->
     <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
       <h3 class="font-medium mb-3 text-base">学习教育</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
         <span onclick="window.open('https://www.icourse163.org','_blank')" class="cursor-pointer hover:text-primary">中国大学MOOC</span>
-        <span onclick="window.open('https://www.21boya.cn','_blank')" class="cursor-pointer hover:text-primary">易班博雅</span>
-        <span onclick="window.open('https://study.163.com','_blank')" class="cursor-pointer hover:text-primary">网易云课堂</span>
         <span onclick="window.open('https://www.xuetangx.com','_blank')" class="cursor-pointer hover:text-primary">学堂在线</span>
+        <span onclick="window.open('https://study.163.com','_blank')" class="cursor-pointer hover:text-primary">网易云课堂</span>
+        <span onclick="window.open('https://www.open.edu.cn','_blank')" class="cursor-pointer hover:text-primary">国家开放大学</span>
         <span onclick="window.open('https://www.cnki.net','_blank')" class="cursor-pointer hover:text-primary">知网</span>
         <span onclick="window.open('https://xueshu.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度学术</span>
       </div>
@@ -266,32 +314,29 @@
   </footer>
 </div>
 
+<!-- 回到顶部 -->
+<button id="backTop" class="back-top">
+  <i class="fa fa-arrow-up"></i>
+</button>
+
 <script>
-  // 主题切换
-  const toggle = document.getElementById('theme-toggle')
-  toggle.addEventListener('click', () => {
-    document.documentElement.classList.toggle('dark')
-    localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+  // 加载动画
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loading').classList.add('hidden')
+    }, 600)
   })
+
+  // 主题
   if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     document.documentElement.classList.add('dark')
   }
 
-  // 实时时间
-  function updateTime() {
-    const now = new Date();
-    document.getElementById('real-time').innerText = now.toLocaleTimeString()
-  }
-  setInterval(updateTime, 1000)
-  updateTime()
-
-  // 快捷跳转
-  document.querySelectorAll('[data-url]').forEach(el => {
-    el.onclick = () => window.open(el.dataset.url, '_blank')
-  })
-
-  // 搜索引擎切换
+  // 搜索
+  const input = document.getElementById('search-input')
+  const btn = document.getElementById('search-btn')
   let currentEngine = 'baidu'
+  
   document.querySelectorAll('.search-engine').forEach(btn => {
     btn.onclick = () => {
       document.querySelectorAll('.search-engine').forEach(b => {
@@ -304,13 +349,10 @@
     }
   })
 
-  // 智能搜索
-  const input = document.getElementById('search-input')
-  const btn = document.getElementById('search-btn')
   const smartMap = {
-    '抖音':'https://douyin.com','github':'https://github.com','百度':'https://baidu.com',
-    '谷歌':'https://google.com','号卡':'https://yijiayipu.cn','商城':'https://yijiayipu.cn',
-    '微信':'https://wx.qq.com','b站':'https://bilibili.com','淘宝':'https://taobao.com'
+    '抖音':'https://douyin.com','知乎':'https://zhihu.com','B站':'https://bilibili.com',
+    '百度':'https://baidu.com','淘宝':'https://taobao.com','京东':'https://jd.com',
+    '号卡':'https://yijiayipu.cn','商城':'https://yijiayipu.cn','微信':'https://wx.qq.com'
   }
 
   function goSearch() {
@@ -329,8 +371,27 @@
       window.open(url + encodeURIComponent(q), '_blank')
     }
   }
+
   btn.addEventListener('click', goSearch)
   input.addEventListener('keydown', e => e.key === 'Enter' && goSearch())
+
+  // 快捷卡片
+  document.querySelectorAll('[data-url]').forEach(el => {
+    el.onclick = () => window.open(el.dataset.url, '_blank')
+  })
+
+  // 回到顶部
+  const backTop = document.getElementById('backTop')
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backTop.classList.add('show')
+    } else {
+      backTop.classList.remove('show')
+    }
+  })
+  backTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  })
 </script>
 </body>
 </html>
