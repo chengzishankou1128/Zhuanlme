@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="application-name" content="AI通鉴">
-  <meta name="description" content="AI通鉴 - 新一代AI智能导航">
+  <meta name="description" content="AI通鉴 · 高效上网 · 一站直达">
   <title>AI通鉴 - 新一代AI智能导航</title>
+  <link rel="icon" href="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-9hnh1cl1ds/8f9a9a9d9a9d9a9d9a9d9a9d9a9d9a9d~tplv-9hnh1cl1ds-image.png" type="image/x-icon">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   
@@ -19,7 +20,7 @@
       theme: {
         extend: {
           colors: {
-            primary: '#4f46e5',
+            primary: '#4f67e5',
             secondary: '#7c3aed',
             dark: '#0f172a',
           },
@@ -43,25 +44,25 @@
         border: 1px solid rgba(255,255,255,0.05);
       }
       .gradient-bg {
-        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+        background: linear-gradient(135deg, #4f67e5 0%, #7c3aed 50%, #db2777 100%);
       }
       .text-gradient {
-        background: linear-gradient(90deg, #4f46e5, #db2777);
+        background: linear-gradient(90deg, #4f67e5, #db2777);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
       .hover-scale {
-        transition: transform 0.24s ease, box-shadow 0.24s ease;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
       .hover-scale:hover {
-        transform: translateY(-2px) scale(1.02);
-        box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       }
       .nav-card {
         @apply glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer;
       }
       .back-top {
-        @apply fixed bottom-6 right-6 w-12 h-12 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg transition-all duration-300 opacity-0 translate-y-10 pointer-events-none;
+        @apply fixed bottom-6 right-6 w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg transition-all duration-300 opacity-0 translate-y-5 pointer-events-none z-40;
       }
       .back-top.show {
         @apply opacity-100 translate-y-0 pointer-events-auto;
@@ -88,7 +89,7 @@
         height: 10px;
         margin: 0 5px;
         border-radius: 50%;
-        background: #4f46e5;
+        background: #4f67e5;
         animation: bounce 0.6s infinite alternate;
       }
       .dot:nth-child(2) {
@@ -102,13 +103,16 @@
         to { transform: translateY(-15px); }
       }
       .feedback-btn {
-        @apply fixed bottom-6 left-6 px-3 py-2 rounded-full glass dark:glass-dark text-xs text-primary shadow-lg hover-scale z-40;
+        @apply fixed bottom-6 left-6 px-3 py-1.5 rounded-full glass dark:glass-dark text-xs text-primary shadow-lg hover:scale-105 z-40;
       }
       .theme-toggle {
-        @apply fixed top-2 right-4 w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale z-50;
+        @apply fixed top-3 right-3 w-9 h-9 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale z-50;
       }
       .time-box {
-        @apply text-center text-sm text-gray-600 dark:text-gray-300 mb-4;
+        @apply text-center text-sm text-gray-600 dark:text-gray-300 mb-3;
+      }
+      .history-item {
+        @apply px-2 py-1.5 text-sm bg-gray-100 dark:bg-gray-800 rounded cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700;
       }
     }
   </style>
@@ -131,7 +135,7 @@
 </button>
 
 <!-- 顶部导航 -->
-<nav class="glass dark:glass-dark sticky top-2 z-50 max-w-5xl mx-auto rounded-full px-5 py-3 mb-6 flex items-center justify-between">
+<nav class="glass dark:glass-dark sticky top-2 z-50 max-w-5xl mx-auto rounded-full px-5 py-3 mb-5 flex items-center justify-between">
   <h1 class="text-lg font-bold text-gradient">AI通鉴</h1>
   <div class="flex gap-4 text-sm text-gray-700 dark:text-gray-300">
     <a href="#" class="hover:text-primary transition-colors">首页</a>
@@ -145,7 +149,7 @@
   <div id="realTime" class="time-box"></div>
 
   <!-- 公告 -->
-  <div class="glass dark:glass-dark rounded-xl px-4 py-3 mb-6 text-sm text-center text-gray-700 dark:text-gray-300">
+  <div class="glass dark:glass-dark rounded-xl px-4 py-3 mb-5 text-sm text-center text-gray-700 dark:text-gray-300">
     AI通鉴 · 高效上网 · 一站直达
   </div>
 
@@ -157,13 +161,13 @@
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="bing">必应</button>
     </div>
     <div class="flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-3 shadow">
-      <i class="fa fa-search text-gray-400 mr-3"></i>
+      <i id="searchIcon" class="fa fa-search text-gray-400 mr-3 cursor-pointer"></i>
       <input id="search-input" type="text" placeholder="搜索、打开网站、输入网址……" 
              class="w-full bg-transparent outline-none text-gray-800 dark:text-gray-200">
-      <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90">
-        搜索
-      </button>
+      <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90">搜索</button>
     </div>
+    <!-- 搜索历史 -->
+    <div id="searchHistory" class="mt-3 flex flex-wrap gap-2"></div>
   </div>
 
   <!-- 常用直达 -->
@@ -340,7 +344,8 @@
       <a class="hover:text-primary">免责声明</a>
     </div>
     <p class="mb-1">AI通鉴 © 2026 · 新一代AI智能导航平台</p>
-    <p><a href="https://beian.miit.gov.cn" target="_blank" class="hover:text-primary">桂ICP备2026001644号-1</a></p>
+    <p class="mb-1"><a href="https://beian.miit.gov.cn" target="_blank" class="hover:text-primary">桂ICP备2026001644号-1</a></p>
+    <p>统计由 51.la 提供</p>
   </footer>
 </div>
 
@@ -350,19 +355,17 @@
 </button>
 
 <!-- 意见反馈 -->
-<button class="feedback-btn" onclick="alert('感谢反馈！请联系客服微信：HK34597')">
+<button class="feedback-btn" onclick="alert('反馈已收到！感谢您的支持')">
   <i class="fa fa-comment-o mr-1"></i>意见反馈
 </button>
 
 <script>
   // 加载动画
   window.addEventListener('load', () => {
-    setTimeout(() => {
-      document.getElementById('loading').classList.add('hidden')
-    }, 600)
+    setTimeout(() => document.getElementById('loading').classList.add('hidden'), 500)
   })
 
-  // 暗黑模式切换
+  // 暗黑模式
   const themeToggle = document.getElementById('themeToggle')
   function toggleDark() {
     document.documentElement.classList.toggle('dark')
@@ -371,78 +374,86 @@
   themeToggle.addEventListener('click', toggleDark)
   if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
   }
 
   // 实时时间
   function updateTime() {
     const now = new Date()
-    const y = now.getFullYear()
-    const m = now.getMonth() + 1
-    const d = now.getDate()
-    const hh = String(now.getHours()).padStart(2, '0')
-    const mm = String(now.getMinutes()).padStart(2, '0')
-    const ss = String(now.getSeconds()).padStart(2, '0')
-    const w = ['日','一','二','三','四','五','六'][now.getDay()]
-    document.getElementById('realTime').innerText = 
-      `${y}年${m}月${d}日 ${hh}:${mm}:${ss} 星期${w}`
+    const y = now.getFullYear(), m = now.getMonth()+1, d = now.getDate()
+    const hh = String(now.getHours()).padStart(2,'0'), mm = String(now.getMinutes()).padStart(2,'0'), ss = String(now.getSeconds()).padStart(2,'0')
+    const w = '日一二三四五六'[now.getDay()]
+    document.getElementById('realTime').innerText = `${y}年${m}月${d}日 ${hh}:${mm}:${ss} 星期${w}`
   }
   updateTime()
   setInterval(updateTime, 1000)
 
-  // 搜索
-  const input = document.getElementById('search-input')
-  const btn = document.getElementById('search-btn')
+  // 搜索历史
+  const searchInput = document.getElementById('search-input')
+  const searchBtn = document.getElementById('search-btn')
+  const searchIcon = document.getElementById('searchIcon')
+  const searchHistory = document.getElementById('searchHistory')
   let currentEngine = 'baidu'
-  
+
+  // 自动聚焦搜索框
+  window.onload = () => searchInput.focus()
+
+  // 读取历史
+  let history = JSON.parse(localStorage.getItem('searchHistory') || '[]')
+  function renderHistory() {
+    searchHistory.innerHTML = ''
+    history.slice(-6).forEach(item => {
+      const div = document.createElement('div')
+      div.className = 'history-item'
+      div.innerText = item
+      div.onclick = () => {
+        searchInput.value = item
+        doSearch()
+      }
+      searchHistory.appendChild(div)
+    })
+  }
+  renderHistory()
+
+  // 搜索引擎切换
   document.querySelectorAll('.search-engine').forEach(btn => {
     btn.onclick = () => {
-      document.querySelectorAll('.search-engine').forEach(b => {
-        b.classList.remove('bg-primary', 'text-white')
-        b.classList.add('bg-gray-200', 'dark:bg-gray-700')
-      })
-      btn.classList.remove('bg-gray-200', 'dark:bg-gray-700')
-      btn.classList.add('bg-primary', 'text-white')
+      document.querySelectorAll('.search-engine').forEach(b => b.classList.remove('bg-primary','text-white'), b.classList.add('bg-gray-200','dark:bg-gray-700'))
+      btn.classList.remove('bg-gray-200','dark:bg-gray-700')
+      btn.classList.add('bg-primary','text-white')
       currentEngine = btn.dataset.engine
     }
   })
 
-  const smartMap = {
-    '抖音':'https://douyin.com','知乎':'https://zhihu.com','B站':'https://bilibili.com',
-    '百度':'https://baidu.com','淘宝':'https://taobao.com','京东':'https://jd.com',
-    '号卡':'https://yijiayipu.cn','商城':'https://yijiayipu.cn','微信':'https://wx.qq.com'
-  }
-
-  function goSearch() {
-    let q = input.value.trim().toLowerCase()
+  // 搜索
+  function doSearch() {
+    let q = searchInput.value.trim()
     if (!q) return
-    for(let k in smartMap){
-      if(q.includes(k)){ window.open(smartMap[k], '_blank'); return }
+    if (!history.includes(q)) {
+      history.push(q)
+      localStorage.setItem('searchHistory', JSON.stringify(history))
+      renderHistory()
     }
-    if(q.startsWith('http')){ window.open(q,'_blank') }
-    else {
-      const url = {
-        baidu: 'https://www.baidu.com/s?wd=',
-        google: 'https://www.google.com/search?q=',
-        bing: 'https://www.bing.com/search?q='
-      }[currentEngine]
-      window.open(url + encodeURIComponent(q), '_blank')
-    }
+    const url = {
+      baidu: 'https://www.baidu.com/s?wd=',
+      google: 'https://www.google.com/search?q=',
+      bing: 'https://www.bing.com/search?q='
+    }[currentEngine]
+    window.open(url + encodeURIComponent(q), '_blank')
   }
 
-  btn.addEventListener('click', goSearch)
-  input.addEventListener('keydown', e => e.key === 'Enter' && goSearch())
+  searchBtn.onclick = doSearch
+  searchIcon.onclick = doSearch
+  searchInput.addEventListener('keydown', e => e.key === 'Enter' && doSearch())
 
-  // 防重复点击 + 震动
+  // 卡片点击 + 震动反馈
   let lastClick = 0
   document.querySelectorAll('[data-url]').forEach(el => {
     el.onclick = () => {
-      let now = Date.now()
-      if(now - lastClick < 800) return
+      const now = Date.now()
+      if (now - lastClick < 700) return
       lastClick = now
-      el.style.transform = 'scale(0.95)'
-      setTimeout(() => el.style.transform = '', 100)
+      el.style.transform = 'scale(0.96)'
+      setTimeout(() => el.style.transform = '', 80)
       window.open(el.dataset.url, '_blank')
     }
   })
@@ -450,15 +461,9 @@
   // 回到顶部
   const backTop = document.getElementById('backTop')
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-      backTop.classList.add('show')
-    } else {
-      backTop.classList.remove('show')
-    }
+    backTop.classList.toggle('show', window.scrollY > 300)
   })
-  backTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  })
+  backTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }))
 </script>
 </body>
 </html>
