@@ -59,6 +59,7 @@
   <div class="fixed top-0 left-0 w-full h-full opacity-20 pointer-events-none gradient-bg -z-10"></div>
 
   <div class="max-w-5xl mx-auto px-4 py-10">
+    <!-- 顶部 -->
     <div class="flex justify-between items-center mb-8">
       <h1 class="text-2xl md:text-3xl font-bold text-gradient">AI通鉴</h1>
       <button id="theme-toggle" class="glass p-3 rounded-full hover-scale">
@@ -67,6 +68,7 @@
       </button>
     </div>
 
+    <!-- AI 搜索框 -->
     <div class="glass dark:glass-dark rounded-2xl p-5 mb-8 shadow-xl">
       <div class="flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-3 shadow">
         <i class="fa fa-search text-gray-400 mr-3"></i>
@@ -78,6 +80,7 @@
       </div>
     </div>
 
+    <!-- AI 对话区域 -->
     <div id="ai-chat" class="glass dark:glass-dark rounded-2xl p-4 mb-8 hidden">
       <div class="flex items-start gap-3 mb-3">
         <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">
@@ -89,6 +92,7 @@
       </div>
     </div>
 
+    <!-- 快捷图标 -->
     <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-8">
       <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://www.google.com">
         <i class="fa fa-chrome text-xl text-blue-500"></i>
@@ -116,39 +120,43 @@
       </div>
     </div>
 
+    <!-- 分类 -->
     <h2 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">AI通鉴·分类导航</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+      <!-- 开发资源 -->
       <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
         <h3 class="font-medium mb-3 text-gray-800 dark:text-gray-200">开发资源</h3>
         <div class="grid grid-cols-3 gap-2 text-sm text-gray-600 dark:text-gray-400">
-          <span onclick="window.open('https://github.com','_blank')" class="cursor-pointer hover:text-primary">GitHub</span>
-          <span onclick="window.open('https://stackoverflow.com','_blank')" class="cursor-pointer hover:text-primary">StackOverflow</span>
-          <span onclick="window.open('https://codepen.io','_blank')" class="cursor-pointer hover:text-primary">CodePen</span>
-          <span onclick="window.open('https://developer.mozilla.org','_blank')" class="cursor-pointer hover:text-primary">MDN</span>
-          <span onclick="window.open('https://vuejs.org','_blank')" class="cursor-pointer hover:text-primary">Vue</span>
-          <span onclick="window.open('https://react.dev','_blank')" class="cursor-pointer hover:text-primary">React</span>
+          <span onclick="window.open('https://github.com', '_blank')" class="cursor-pointer hover:text-primary">GitHub</span>
+          <span onclick="window.open('https://stackoverflow.com', '_blank')" class="cursor-pointer hover:text-primary">StackOverflow</span>
+          <span onclick="window.open('https://codepen.io', '_blank')" class="cursor-pointer hover:text-primary">CodePen</span>
+          <span onclick="window.open('https://developer.mozilla.org', '_blank')" class="cursor-pointer hover:text-primary">MDN</span>
+          <span onclick="window.open('https://vuejs.org', '_blank')" class="cursor-pointer hover:text-primary">Vue</span>
+          <span onclick="window.open('https://react.dev', '_blank')" class="cursor-pointer hover:text-primary">React</span>
         </div>
       </div>
+      <!-- 实用工具 -->
       <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
         <h3 class="font-medium mb-3 text-gray-800 dark:text-gray-200">实用工具</h3>
         <div class="grid grid-cols-3 gap-2 text-sm text-gray-600 dark:text-gray-400">
-          <span class="cursor-pointer hover:text-primary">二维码</span>
-          <span class="cursor-pointer hover:text-primary">图片压缩</span>
-          <span class="cursor-pointer hover:text-primary">格式转换</span>
-          <span class="cursor-pointer hover:text-primary">在线翻译</span>
-          <span class="cursor-pointer hover:text-primary">计算器</span>
-          <span class="cursor-pointer hover:text-primary">便签</span>
+          <span onclick="window.open('https://cli.im/', '_blank')" class="cursor-pointer hover:text-primary">二维码</span>
+          <span onclick="window.open('https://tinypng.com/', '_blank')" class="cursor-pointer hover:text-primary">图片压缩</span>
+          <span onclick="window.open('https://convertio.co/zh/', '_blank')" class="cursor-pointer hover:text-primary">格式转换</span>
+          <span onclick="window.open('https://fanyi.baidu.com/', '_blank')" class="cursor-pointer hover:text-primary">在线翻译</span>
+          <span onclick="window.open('https://www.calculator.net/', '_blank')" class="cursor-pointer hover:text-primary">计算器</span>
+          <span onclick="window.open('https://notion.so/', '_blank')" class="cursor-pointer hover:text-primary">便签</span>
         </div>
       </div>
+      <!-- AI工具大全 -->
       <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
         <h3 class="font-medium mb-3 text-gray-800 dark:text-gray-200">AI工具大全</h3>
         <div class="grid grid-cols-3 gap-2 text-sm text-gray-600 dark:text-gray-400">
-          <span onclick="window.open('https://www.doubao.com','_blank')" class="cursor-pointer hover:text-primary">豆包</span>
-          <span onclick="window.open('https://chat.openai.com','_blank')" class="cursor-pointer hover:text-primary">ChatGPT</span>
-          <span onclick="window.open('https://yiyan.baidu.com','_blank')" class="cursor-pointer hover:text-primary">文心一言</span>
-          <span class="cursor-pointer hover:text-primary">AI作图</span>
-          <span class="cursor-pointer hover:text-primary">AI配音</span>
-          <span class="cursor-pointer hover:text-primary">AI写作</span>
+          <span onclick="window.open('https://www.doubao.com/', '_blank')" class="cursor-pointer hover:text-primary">豆包</span>
+          <span onclick="window.open('https://chat.openai.com/', '_blank')" class="cursor-pointer hover:text-primary">ChatGPT</span>
+          <span onclick="window.open('https://yiyan.baidu.com/', '_blank')" class="cursor-pointer hover:text-primary">文心一言</span>
+          <span onclick="window.open('https://www.midjourney.com/', '_blank')" class="cursor-pointer hover:text-primary">AI作图</span>
+          <span onclick="window.open('https://www.elevenlabs.io/', '_blank')" class="cursor-pointer hover:text-primary">AI配音</span>
+          <span onclick="window.open('https://www.notion.so/', '_blank')" class="cursor-pointer hover:text-primary">AI写作</span>
         </div>
       </div>
     </div>
@@ -159,7 +167,7 @@
   </div>
 
   <script>
-    // 主题
+    // 主题切换
     const toggle = document.getElementById('theme-toggle')
     toggle.addEventListener('click', () => {
       document.documentElement.classList.toggle('dark')
@@ -169,11 +177,9 @@
       document.documentElement.classList.add('dark')
     }
 
-    // 图标点击
+    // 快捷点击跳转
     document.querySelectorAll('[data-url]').forEach(el => {
-      el.addEventListener('click', () => {
-        window.open(el.dataset.url, '_blank')
-      })
+      el.onclick = () => window.open(el.dataset.url, '_blank')
     })
 
     const aiChat = document.getElementById('ai-chat')
@@ -181,15 +187,16 @@
     const input = document.getElementById('search-input')
     const btn = document.getElementById('search-btn')
 
+    // AI 指令匹配
     function aiCommand(text) {
       const t = text.toLowerCase().trim()
-      if (t.includes('抖音')) return { url: 'https://www.douyin.com', msg: 'AI通鉴正在为你打开抖音' }
-      if (t.includes('github')) return { url: 'https://github.com', msg: 'AI通鉴正在为你打开 GitHub' }
-      if (t.includes('百度')) return { url: 'https://www.baidu.com', msg: 'AI通鉴正在为你打开百度' }
-      if (t.includes('谷歌')) return { url: 'https://www.google.com', msg: 'AI通鉴正在为你打开谷歌' }
-      if (t.includes('微信')) return { url: 'https://wx.qq.com', msg: 'AI通鉴正在为你打开微信' }
-      if (t.includes('导航') || t.includes('ai通鉴')) return { msg: 'AI通鉴已为你准备：开发、工具、AI、视频、社交全品类导航' }
-      return { msg: '我是AI通鉴，试试说：打开抖音、打开GitHub、推荐AI网站' }
+      if (t.includes('抖音') || t.includes('打开抖音')) return { url: 'https://douyin.com', msg: 'AI通鉴正在为你打开抖音' }
+      if (t.includes('github') || t.includes('代码')) return { url: 'https://github.com', msg: 'AI通鉴正在为你打开 GitHub' }
+      if (t.includes('百度') || t.includes('搜索')) return { url: 'https://baidu.com', msg: 'AI通鉴正在为你打开百度' }
+      if (t.includes('谷歌') || t.includes('google')) return { url: 'https://google.com', msg: 'AI通鉴正在为你打开谷歌' }
+      if (t.includes('微信')) return { url: 'https://wx.qq.com', msg: 'AI通鉴正在为你打开网页版微信' }
+      if (t.includes('导航') || t.includes('网站') || t.includes('ai通鉴')) return { msg: 'AI通鉴已为你准备：开发、工具、AI、视频、社交等全品类导航' }
+      return { msg: '我是AI通鉴，可帮你打开网站、搜索、推荐工具，试试说：打开抖音、推荐AI网站、导航大全' }
     }
 
     function doSearch() {
@@ -198,17 +205,11 @@
       const res = aiCommand(text)
       aiChat.classList.remove('hidden')
       aiReply.innerText = res.msg
-      if (res.url) {
-        setTimeout(() => {
-          window.open(res.url, '_blank')
-        }, 1000)
-      }
+      if (res.url) setTimeout(() => window.open(res.url, '_blank'), 1200)
     }
 
     btn.addEventListener('click', doSearch)
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') doSearch()
-    })
+    input.addEventListener('keydown', e => e.key === 'Enter' && doSearch())
   </script>
 </body>
 </html>
