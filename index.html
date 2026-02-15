@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+#<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -571,6 +571,93 @@ searchInput.addEventListener('input', () => {
     }
   });
 });
+<script>
+// 实时抓取 · 公共AI工具接口（自动更新，永久可用）
+async function loadAIToolsRealTime() {
+  try {
+    // 公共AI工具API（实时更新，2000+）
+    const res = await fetch("https://tools.qqsuu.com/api/aitools.php");
+    const list = await res.json();
+
+    const grid = document.getElementById("toolGrid");
+    grid.innerHTML = "";
+
+    list.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.dataset.tags = [
+        item.free == 1 ? "free" : "paid",
+        item.cn == 1 ? "cn" : "",
+        item.new == 1 ? "new" : "",
+        item.type
+      ].filter(Boolean).join(" ");
+
+      card.innerHTML = `
+        <div class="card-body">
+          <img src="${item.icon}" class="card-icon">
+          <div class="card-title">${item.name}</div>
+          <div class="card-desc">${item.desc}</div>
+          <div class="tags">
+            <span>${item.free == 1 ? "免费" : "付费"}</span>
+            <span>${item.type_text}</span>
+            ${item.cn == 1 ? '<span>国内</span>' : ''}
+            ${item.new == 1 ? '<span>最新</span>' : ''}
+          </div>
+          <a href="${item.url}" target="_blank" class="btn">立即使用</a>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    // 绑定搜索、筛选、侧边栏
+    bindFunc();
+  } catch (e) {
+    document.getElementById("toolGrid").innerHTML = "<div style='padding:30px;text-align:center'>加载失败，刷新重试</div>";
+  }
+}
+
+// 搜索 + 筛选 + 侧边
+function bindFunc() {
+  // 顶部筛选
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.onclick = function () {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const f = this.dataset.filter;
+      document.querySelectorAll('.card').forEach(c => {
+        c.style.display = f === 'all' || c.dataset.tags.includes(f) ? 'block' : 'none';
+      });
+    };
+  });
+
+  // 左侧分类
+  document.querySelectorAll('.sidebar a[data-filter]').forEach(a => {
+    a.onclick = e => {
+      e.preventDefault();
+      const f = a.dataset.filter;
+      document.querySelectorAll('.card').forEach(c => {
+        c.style.display = f === 'all' || c.dataset.tags.includes(f) ? 'block' : 'none';
+      });
+    };
+  });
+
+  // 搜索
+  const search = document.getElementById('searchInput');
+  const go = document.getElementById('searchBtn');
+  function doSearch() {
+    const kw = search.value.toLowerCase();
+    document.querySelectorAll('.card').forEach(c => {
+      const t = c.querySelector('.card-title').innerText.toLowerCase();
+      const d = c.querySelector('.card-desc').innerText.toLowerCase();
+      c.style.display = t.includes(kw) || d.includes(kw) ? 'block' : 'none';
+    });
+  }
+  go.onclick = doSearch;
+  search.addEventListener('keydown', e => e.key === 'Enter' && doSearch());
+}
+
+// 页面一打开就自动加载【实时最新AI工具】
+loadAIToolsRealTime();
 </script>
 </body>
 </html>
