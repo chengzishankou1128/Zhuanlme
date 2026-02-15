@@ -114,6 +114,14 @@
       .history-item {
         @apply px-2 py-1.5 text-sm bg-gray-100 dark:bg-gray-800 rounded cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700;
       }
+
+      /* 右侧悬浮边栏 */
+      .right-sidebar {
+        @apply fixed right-2 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-2;
+      }
+      .sidebar-btn {
+        @apply w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer;
+      }
     }
   </style>
 </head>
@@ -133,6 +141,26 @@
   <i class="fa fa-moon-o dark:hidden"></i>
   <i class="fa fa-sun-o hidden dark:block"></i>
 </button>
+
+<!-- ====================== 右侧悬浮边栏 ====================== -->
+<div class="right-sidebar">
+  <!-- 信符铺快捷入口 -->
+  <div class="sidebar-btn" onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')" title="信符铺">
+    <i class="fa fa-shopping-bag"></i>
+  </div>
+  <!-- 刷新页面 -->
+  <div class="sidebar-btn" onclick="location.reload()" title="刷新">
+    <i class="fa fa-refresh"></i>
+  </div>
+  <!-- 反馈 -->
+  <div class="sidebar-btn" onclick="alert('感谢反馈！')" title="反馈">
+    <i class="fa fa-comment-o"></i>
+  </div>
+  <!-- 回到顶部 -->
+  <div class="sidebar-btn" id="sideBackTop" title="回到顶部">
+    <i class="fa fa-arrow-up"></i>
+  </div>
+</div>
 
 <!-- 顶部导航 -->
 <nav class="glass dark:glass-dark sticky top-2 z-50 max-w-5xl mx-auto rounded-full px-5 py-3 mb-5 flex items-center justify-between">
@@ -349,11 +377,6 @@
   </footer>
 </div>
 
-<!-- 回到顶部 -->
-<button id="backTop" class="back-top">
-  <i class="fa fa-arrow-up"></i>
-</button>
-
 <!-- 意见反馈 -->
 <button class="feedback-btn" onclick="alert('反馈已收到！感谢您的支持')">
   <i class="fa fa-comment-o mr-1"></i>意见反馈
@@ -458,12 +481,10 @@
     }
   })
 
-  // 回到顶部
-  const backTop = document.getElementById('backTop')
-  window.addEventListener('scroll', () => {
-    backTop.classList.toggle('show', window.scrollY > 300)
-  })
-  backTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }))
+  // 右侧边栏 - 回到顶部
+  document.getElementById('sideBackTop').onclick = () => {
+    window.scrollTo({ top:0, behavior:'smooth' })
+  }
 </script>
 </body>
 </html>
