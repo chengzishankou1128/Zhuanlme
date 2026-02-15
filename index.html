@@ -3,50 +3,223 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI工具大全 - 2000+AI工具导航 | 每日更新</title>
+<title>AI工具大全 - 全球AI工具导航 | 每日更新</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto}
 body{background:#f9fafb;color:#111}
-.navbar{background:#fff;border-bottom:1px solid #eee;padding:12px 0;position:sticky;top:0;z-index:999}
-.nav-container{max-width:1400px;margin:0 auto;padding:0 14px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.logo{font-size:20px;font-weight:700;color:#1677ff;white-space:nowrap}
-.nav-menu{display:flex;gap:18px}
-.nav-menu a{color:#333;text-decoration:none;font-size:14px;padding:6px 4px}
-.nav-menu a:hover{color:#1677ff}
-.search-box{flex:1;max-width:600px;display:flex;gap:8px}
-.search-box input{flex:1;padding:11px 16px;border:1px solid #e5e7eb;border-radius:12px;outline:none;font-size:14px}
-.search-btn{padding:0 20px;background:#1677ff;color:#fff;border:none;border-radius:12px;cursor:pointer;font-size:14px;white-space:nowrap}
-.filter{display:flex;gap:8px;padding:10px 14px;overflow-x:auto;max-width:1400px;margin:0 auto}
-.filter span{padding:6px 12px;background:#fff;border:1px solid #e5e7eb;border-radius:20px;font-size:13px;white-space:nowrap;cursor:pointer}
-.filter span.active{background:#1677ff;color:#fff}
-.main{display:flex;max-width:1400px;margin:0 auto;padding:14px;gap:14px}
-.sidebar{width:220px;background:#fff;border-radius:12px;padding:16px;position:sticky;top:90px;align-self:flex-start}
-.sidebar h3{margin-bottom:10px;font-size:14px;color:#555}
-.sidebar a{display:block;padding:8px 10px;border-radius:8px;margin-bottom:4px;font-size:14px;color:#333;text-decoration:none}
-.sidebar a:hover{background:#f1f5f9}
-.content{flex:1}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
-.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.04);transition:transform .2s}
-.card:hover{transform:translateY(-3px)}
-.card-icon{width:50px;height:50px;border-radius:12px;object-fit:cover;margin-bottom:10px;background:#f5f5f5}
-.card-body{padding:16px}
-.card-title{font-size:15px;font-weight:600;margin-bottom:6px}
-.card-desc{font-size:13px;color:#555;line-height:1.4;margin-bottom:10px;min-height:40px}
-.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
-.tags span{font-size:12px;padding:3px 6px;background:#f0f7ff;color:#1677ff;border-radius:6px}
-.btn{display:inline-block;padding:8px 12px;background:#1677ff;color:#fff;border-radius:8px;font-size:13px;text-decoration:none}
-.ad{background:#fff;border-radius:12px;padding:20px;text-align:center;margin-bottom:14px;color:#999;border:1px dashed #ddd}
-.empty{padding:40px 20px;text-align:center;color:#999}
-@media(max-width:900px){.nav-menu{display:none}.sidebar{display:none}.grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}}
+
+/* 顶部导航 */
+.navbar{
+    background:#fff;
+    border-bottom:1px solid #eee;
+    padding:12px 0;
+    position:sticky;
+    top:0;
+    z-index:999;
+}
+.nav-container{
+    max-width:1400px;
+    margin:0 auto;
+    padding:0 14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+.logo{
+    font-size:20px;
+    font-weight:700;
+    color:#1677ff;
+    white-space:nowrap;
+}
+.nav-menu{
+    display:flex;
+    gap:18px;
+}
+.nav-menu a{
+    color:#333;
+    text-decoration:none;
+    font-size:14px;
+    padding:6px 4px;
+}
+.nav-menu a:hover{
+    color:#1677ff;
+}
+
+/* 搜索 */
+.search-box{
+    flex:1;
+    max-width:600px;
+    display:flex;
+    gap:8px;
+}
+.search-box input{
+    flex:1;
+    padding:11px 16px;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    outline:none;
+    font-size:14px;
+}
+.search-btn{
+    padding:0 20px;
+    background:#1677ff;
+    color:#fff;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:14px;
+    white-space:nowrap;
+}
+
+/* 筛选 */
+.filter{
+    display:flex;
+    gap:8px;
+    padding:10px 14px;
+    overflow-x:auto;
+    max-width:1400px;
+    margin:0 auto;
+}
+.filter span{
+    padding:6px 12px;
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:20px;
+    font-size:13px;
+    white-space:nowrap;
+    cursor:pointer;
+}
+.filter span.active{
+    background:#1677ff;
+    color:#fff;
+}
+
+.main{
+    display:flex;
+    max-width:1400px;
+    margin:0 auto;
+    padding:14px;
+    gap:14px;
+}
+.sidebar{
+    width:220px;
+    background:#fff;
+    border-radius:12px;
+    padding:16px;
+    position:sticky;
+    top:90px;
+    align-self:flex-start;
+}
+.sidebar h3{
+    margin-bottom:10px;
+    font-size:14px;
+    color:#555;
+}
+.sidebar a{
+    display:block;
+    padding:8px 10px;
+    border-radius:8px;
+    margin-bottom:4px;
+    font-size:14px;
+    color:#333;
+    text-decoration:none;
+}
+.sidebar a:hover{
+    background:#f1f5f9;
+}
+.content{
+    flex:1;
+}
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:14px;
+}
+.card{
+    background:#fff;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 2px 6px rgba(0,0,0,.04);
+    transition:transform .2s;
+}
+.card:hover{
+    transform:translateY(-3px);
+}
+.card-icon{
+    width:50px;
+    height:50px;
+    border-radius:12px;
+    object-fit:cover;
+    margin-bottom:10px;
+}
+.card-body{
+    padding:16px;
+}
+.card-title{
+    font-size:15px;
+    font-weight:600;
+    margin-bottom:6px;
+}
+.card-desc{
+    font-size:13px;
+    color:#555;
+    line-height:1.4;
+    margin-bottom:10px;
+}
+.tags{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    margin-bottom:10px;
+}
+.tags span{
+    font-size:12px;
+    padding:3px 6px;
+    background:#f0f7ff;
+    color:#1677ff;
+    border-radius:6px;
+}
+.btn{
+    display:inline-block;
+    padding:8px 12px;
+    background:#1677ff;
+    color:#fff;
+    border-radius:8px;
+    font-size:13px;
+    text-decoration:none;
+}
+.ad{
+    background:#fff;
+    border-radius:12px;
+    padding:20px;
+    text-align:center;
+    margin-bottom:14px;
+    color:#999;
+    border:1px dashed #ddd;
+}
+
+/* 手机适配：隐藏侧边栏和顶部菜单 */
+@media(max-width:900px){
+    .nav-menu{display:none;}
+    .sidebar{display:none;}
+    .grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+}
 </style>
 </head>
 <body>
 
+<!-- 顶部导航栏 -->
 <div class="navbar">
   <div class="nav-container">
     <div class="logo">AI工具大全</div>
     <div class="nav-menu">
-      <a href="#">首页</a><a href="#">AI导航</a><a href="#">最新上线</a><a href="#">热门工具</a><a href="#">教程资讯</a><a href="#">关于我们</a>
+      <a href="#">首页</a>
+      <a href="#">AI导航</a>
+      <a href="#">最新上线</a>
+      <a href="#">热门工具</a>
+      <a href="#">教程资讯</a>
+      <a href="#">关于我们</a>
     </div>
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="搜索AI工具、写作、绘画、视频、配音、办公...">
@@ -55,6 +228,7 @@ body{background:#f9fafb;color:#111}
   </div>
 </div>
 
+<!-- 筛选栏 -->
 <div class="filter">
   <span class="filter-btn active" data-filter="all">全部</span>
   <span class="filter-btn" data-filter="free">免费可用</span>
@@ -66,20 +240,97 @@ body{background:#f9fafb;color:#111}
 <div class="main">
   <div class="sidebar">
     <h3>分类导航</h3>
-    <a data-cate="all">全部工具</a>
-    <a data-cate="chat">AI聊天</a>
-    <a data-cate="write">写作生成</a>
-    <a data-cate="image">AI绘画</a>
-    <a data-cate="video">AI视频</a>
-    <a data-cate="voice">AI配音</a>
-    <a data-cate="office">AI办公</a>
-    <a data-cate="code">AI代码</a>
-    <a data-cate="design">AI设计</a>
+    <a href="#">全部工具</a>
+    <a href="#">热门推荐</a>
+    <a href="#">最新上线</a>
+    <a href="#">写作生成</a>
+    <a href="#">文案创作</a>
+    <a href="#">图片绘画</a>
+    <a href="#">视频生成</a>
+    <a href="#">音频配音</a>
+    <a href="#">AI数字人</a>
+    <a href="#">AI办公</a>
+    <a href="#">代码开发</a>
+    <a href="#">设计工具</a>
+    <a href="#">学习教育</a>
+    <a href="#">AI聊天</a>
   </div>
 
   <div class="content">
     <div class="ad">广告位</div>
-    <div class="grid" id="toolList"></div>
+    <div class="grid" id="toolGrid">
+
+<div class="card" data-tags="free">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://chat.openai.com" class="card-icon">
+    <div class="card-title">ChatGPT</div>
+    <div class="card-desc">强大AI对话助手，写作、问答、编程全能</div>
+    <div class="tags"><span>免费</span><span>AI聊天</span></div>
+    <a href="https://chat.openai.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="paid">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.midjourney.com" class="card-icon">
+    <div class="card-title">Midjourney</div>
+    <div class="card-desc">顶尖AI绘画，生成高质量插画、设计、艺术作品</div>
+    <div class="tags"><span>付费</span><span>AI绘画</span></div>
+    <a href="https://www.midjourney.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.capcut.cn" class="card-icon">
+    <div class="card-title">剪映</div>
+    <div class="card-desc">免费AI视频剪辑，自动字幕、智能剪辑、特效生成</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI视频</span></div>
+    <a href="https://www.capcut.cn" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://ai.wps.cn" class="card-icon">
+    <div class="card-title">WPS AI</div>
+    <div class="card-desc">AI智能办公，文档总结、PPT生成、表格分析</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI办公</span></div>
+    <a href="https://ai.wps.cn" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://yiyan.baidu.com" class="card-icon">
+    <div class="card-title">文心一言</div>
+    <div class="card-desc">百度人工智能对话模型，全能问答助手</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI聊天</span></div>
+    <a href="https://yiyan.baidu.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://tongyi.aliyun.com" class="card-icon">
+    <div class="card-title">通义千问</div>
+    <div class="card-desc">阿里AI大模型，写作、文案、办公一站式助手</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI写作</span></div>
+    <a href="https://tongyi.aliyun.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.doubao.com" class="card-icon">
+    <div class="card-title">豆包</div>
+    <div class="card-desc">字节跳动全能AI助手，聊天、写作、问答</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI全能</span></div>
+    <a href="https://www.doubao.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+    </div>
     <div class="ad" style="margin-top:14px">广告位</div>
   </div>
 </div>
@@ -88,157 +339,40 @@ body{background:#f9fafb;color:#111}
 <script>LA.init({id:"3P1SroYiCoilgdOp",ck:"3P1SroYiCoilgdOp"})</script>
 
 <script>
-const toolData = [
-{"name":"ChatGPT","icon":"https://p.qqan.com/up/2023-7/16940640634756652.png","desc":"强大AI对话助手，写作、问答、编程全能","tags":["free","chat"],"url":"https://chat.openai.com"},
-{"name":"Midjourney","icon":"https://p.qqan.com/up/2023-7/16940640644756653.png","desc":"顶尖AI绘画，生成高质量插画、设计、艺术作品","tags":["paid","image"],"url":"https://www.midjourney.com"},
-{"name":"剪映","icon":"https://p.qqan.com/up/2023-7/16940640654756654.png","desc":"免费AI视频剪辑，自动字幕、智能剪辑、特效生成","tags":["free","cn","video","new"],"url":"https://www.capcut.cn"},
-{"name":"WPS AI","icon":"https://p.qqan.com/up/2023-7/16940640664756655.png","desc":"AI智能办公，文档总结、PPT生成、表格分析","tags":["free","cn","office","new"],"url":"https://ai.wps.cn"},
-{"name":"文心一言","icon":"https://p.qqan.com/up/2023-7/16940640674756656.png","desc":"百度人工智能对话模型，全能问答助手","tags":["free","cn","chat","new"],"url":"https://yiyan.baidu.com"},
-{"name":"通义千问","icon":"https://p.qqan.com/up/2023-7/16940640684756657.png","desc":"阿里AI大模型，写作、文案、办公一站式助手","tags":["free","cn","write","new"],"url":"https://tongyi.aliyun.com"},
-{"name":"讯飞星火","icon":"https://p.qqan.com/up/2023-7/16940640694756658.png","desc":"科大讯飞AI，语音对话、写作、总结全能","tags":["free","cn","chat","office","new"],"url":"https://xinghuo.xfyun.cn"},
-{"name":"豆包","icon":"https://p.qqan.com/up/2023-7/16940640704756659.png","desc":"字节跳动全能AI助手，聊天、写作、问答","tags":["free","cn","chat","write","new"],"url":"https://www.doubao.com"},
-{"name":"Claude","icon":"https://p.qqan.com/up/2023-7/16940640714756660.png","desc":"长文本AI助手，适合文档阅读、总结、写作","tags":["free","chat"],"url":"https://claude.ai"},
-{"name":"Gemini","icon":"https://p.qqan.com/up/2023-7/16940640724756661.png","desc":"谷歌多模态AI，图文视频全能理解","tags":["free","chat"],"url":"https://gemini.google.com"},
-{"name":"可灵AI","icon":"https://p.qqan.com/up/2023-7/16940640734756662.png","desc":"AI视频生成，文本一键生成高清视频","tags":["free","cn","video","new"],"url":"https://www.klingai.com"},
-{"name":"即梦AI","icon":"https://p.qqan.com/up/2023-7/16940640744756663.png","desc":"国产AI绘画，国风、插画、动漫风格","tags":["free","cn","image","new"],"url":"https://www.jimengai.com"},
-{"name":"无界版图","icon":"https://p.qqan.com/up/2023-7/16940640754756664.png","desc":"可商用AI绘画，版权安全可商用","tags":["free","cn","image"],"url":"https://www.wujiebantu.com"},
-{"name":"通义万相","icon":"https://p.qqan.com/up/2023-7/16940640764756665.png","desc":"阿里AI绘画，生成图片、海报、设计图","tags":["free","cn","image"],"url":"https://tongyi.aliyun.com/wanxiang"},
-{"name":"文心一格","icon":"https://p.qqan.com/up/2023-7/16940640774756666.png","desc":"百度AI绘画，艺术创作、海报生成","tags":["free","cn","image"],"url":"https://yige.baidu.com"},
-{"name":"腾讯智影","icon":"https://p.qqan.com/up/2023-7/16940640784756667.png","desc":"AI数字人、配音、视频剪辑一站式","tags":["free","cn","voice","video"],"url":"https://zenith.qq.com"},
-{"name":"讯飞配音","icon":"https://p.qqan.com/up/2023-7/16940640794756668.png","desc":"超真实AI配音，短视频、广告专用","tags":["free","cn","voice"],"url":"https://peiyin.xunfei.cn"},
-{"name":"魔音工坊","icon":"https://p.qqan.com/up/2023-7/16940640804756669.png","desc":"AI配音+去水印，短视频神器","tags":["free","cn","voice"],"url":"https://www.moyin.com"},
-{"name":"秘塔写作猫","icon":"https://p.qqan.com/up/2023-7/16940640814756670.png","desc":"AI写作、校对、润色、改写工具","tags":["free","cn","write"],"url":"https://xiezuocat.com"},
-{"name":"彩云小梦","icon":"https://p.qqan.com/up/2023-7/16940640824756671.png","desc":"AI小说创作、续写、文案生成","tags":["free","cn","write"],"url":"https://if.caiyunai.com"},
-{"name":"Cursor","icon":"https://p.qqan.com/up/2023-7/16940640834756672.png","desc":"AI代码编辑器，自动写代码、查错","tags":["free","code"],"url":"https://cursor.sh"},
-{"name":"通义灵码","icon":"https://p.qqan.com/up/2023-7/16940640844756673.png","desc":"阿里AI编程助手，VS插件","tags":["free","cn","code"],"url":"https://tongyi.aliyun.com/lingma"},
-{"name":"醒图","icon":"https://p.qqan.com/up/2023-7/16940640854756674.png","desc":"AI修图、抠图、特效、设计工具","tags":["free","cn","design"],"url":"https://xingtu.cn"},
-{"name":"Canva可画","icon":"https://p.qqan.com/up/2023-7/16940640864756675.png","desc":"AI海报、PPT、设计模板工具","tags":["free","cn","design"],"url":"https://www.canva.com"},
-{"name":"创客贴","icon":"https://p.qqan.com/up/2023-7/16940640874756676.png","desc":"在线平面设计，AI一键生成","tags":["free","cn","design"],"url":"https://www.chuangkit.com"},
-
-// ==============================================
-// 下面开始自动生成 2000+ 真实质感AI工具（不重复、图标正常）
-// ==============================================
-];
-
-const icons = [
-"https://p.qqan.com/up/2023-7/16940640634756652.png",
-"https://p.qqan.com/up/2023-7/16940640644756653.png",
-"https://p.qqan.com/up/2023-7/16940640654756654.png",
-"https://p.qqan.com/up/2023-7/16940640664756655.png",
-"https://p.qqan.com/up/2023-7/16940640674756656.png",
-"https://p.qqan.com/up/2023-7/16940640684756657.png",
-"https://p.qqan.com/up/2023-7/16940640694756658.png",
-"https://p.qqan.com/up/2023-7/16940640704756659.png",
-"https://p.qqan.com/up/2023-7/16940640714756660.png",
-"https://p.qqan.com/up/2023-7/16940640724756661.png",
-"https://p.qqan.com/up/2023-7/16940640734756662.png",
-"https://p.qqan.com/up/2023-7/16940640744756663.png",
-"https://p.qqan.com/up/2023-7/16940640754756664.png",
-"https://p.qqan.com/up/2023-7/16940640764756665.png",
-"https://p.qqan.com/up/2023-7/16940640774756666.png",
-"https://p.qqan.com/up/2023-7/16940640784756667.png",
-"https://p.qqan.com/up/2023-7/16940640794756668.png",
-"https://p.qqan.com/up/2023-7/16940640804756669.png",
-"https://p.qqan.com/up/2023-7/16940640814756670.png",
-"https://p.qqan.com/up/2023-7/16940640824756671.png"
-];
-
-const cateList = ["chat","write","image","video","voice","office","code","design"];
-const prefix = ["AI","智能","超级","全能","极速","新一代","专业","免费"];
-const typeList = [
-"聊天助手","写作助手","绘画工具","视频生成","配音工具",
-"办公神器","代码助手","设计工具","文案生成","数字人",
-"思维导图","去水印","抠图工具","扩图工具","高清修复",
-"文案改写","论文助手","脚本生成","翻译工具","PPT生成"
-];
-
-const descList = [
-"功能强大，简单易用，一键生成效果",
-"支持中文，免费使用，无需注册",
-"国内可直接访问，速度快，效果好",
-"多场景适用，短视频、工作、学习都能用",
-"界面简洁，操作简单，新手也能快速上手"
-];
-
-// 生成到 2000+
-for(let i=1;i<=1975;i++){
-  const icon = icons[i%icons.length];
-  const cate = cateList[i%cateList.length];
-  const isCN = Math.random()>0.3;
-  const isFree = Math.random()>0.2;
-  const isNew = Math.random()>0.7;
-  const tags = [isFree?"free":"paid", cate];
-  if(isCN) tags.push("cn");
-  if(isNew) tags.push("new");
-
-  const name = `${prefix[i%prefix.length]}${typeList[i%typeList.length]}${i}`;
-  const desc = descList[i%descList.length];
-  const url = "#";
-
-  toolData.push({name, icon, desc, tags, url});
-}
-
-// 渲染工具
-const toolList = document.getElementById('toolList');
-function render(list){
-  toolList.innerHTML = '';
-  if(list.length===0){toolList.innerHTML='<div class="empty">暂无结果</div>';return}
-  list.forEach(t=>{
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <div class="card-body">
-        <img src="${t.icon}" class="card-icon" alt="${t.name}">
-        <div class="card-title">${t.name}</div>
-        <div class="card-desc">${t.desc}</div>
-        <div class="tags">${t.tags.map(g=>{
-          const map={free:"免费",paid:"付费",cn:"国内",new:"最新",
-              chat:"AI聊天",write:"写作",image:"绘画",video:"视频",
-              voice:"配音",office:"办公",code:"代码",design:"设计"};
-          return `<span>${map[g]||g}</span>`;
-        }).join('')}</div>
-        <a href="${t.url}" class="btn" target="_blank">立即使用</a>
-      </div>`;
-    toolList.appendChild(card);
-  })
-}
-render(toolData);
+const filterBtns = document.querySelectorAll('.filter-btn');
+const cards = document.querySelectorAll('.card');
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
 
 // 筛选
-const filterBtns = document.querySelectorAll('.filter-btn');
-filterBtns.forEach(b=>{
-  b.addEventListener('click',()=>{
-    filterBtns.forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    const f = b.dataset.filter;
-    const res = f==='all' ? toolData : toolData.filter(t=>t.tags.includes(f));
-    render(res);
-  })
-})
-
-// 左侧分类
-document.querySelectorAll('.sidebar a[data-cate]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    e.preventDefault();
-    const c = a.dataset.cate;
-    const res = c==='all' ? toolData : toolData.filter(t=>t.tags.includes(c));
-    render(res);
-  })
-})
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    cards.forEach(c => {
+      if(f === 'all' || c.dataset.tags.includes(f)){
+        c.style.display = 'block';
+      }else{
+        c.style.display = 'none';
+      }
+    });
+  });
+});
 
 // 搜索
 function doSearch(){
-  const kw = document.getElementById('searchInput').value.toLowerCase().trim();
-  if(!kw){render(toolData);return}
-  const res = toolData.filter(t=>
-    t.name.toLowerCase().includes(kw) || 
-    t.desc.toLowerCase().includes(kw)
-  );
-  render(res);
+  const kw = searchInput.value.toLowerCase();
+  cards.forEach(c => {
+    const t = c.querySelector('.card-title').innerText.toLowerCase();
+    const d = c.querySelector('.card-desc').innerText.toLowerCase();
+    c.style.display = (t.includes(kw) || d.includes(kw)) ? 'block' : 'none';
+  });
 }
-document.getElementById('searchBtn').onclick = doSearch;
-document.getElementById('searchInput').addEventListener('keydown',e=>{
-  if(e.key==='Enter')doSearch()
+
+searchBtn.onclick = doSearch;
+searchInput.addEventListener('keydown', (e)=>{
+  if(e.key === 'Enter') doSearch();
 });
 </script>
 </body>
