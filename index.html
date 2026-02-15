@@ -9,7 +9,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   
-  <!-- 51.la 网站统计 -->
+  <!-- 51.la 统计 -->
   <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
   <script>LA.init({id:"3P1xuCYvCR9rfBGe",ck:"3P1xuCYvCR9rfBGe"})</script>
 
@@ -21,7 +21,7 @@
           colors: {
             primary: '#4f46e5',
             secondary: '#7c3aed',
-            dark: '#0f2342',
+            dark: '#0f172a',
           },
           fontFamily: {
             sans: ['Inter','system-ui'],
@@ -101,6 +101,9 @@
         from { transform: translateY(0); }
         to { transform: translateY(-15px); }
       }
+      .feedback-btn {
+        @apply fixed bottom-6 left-6 px-3 py-2 rounded-full glass dark:glass-dark text-xs text-primary shadow-lg hover-scale z-40;
+      }
     }
   </style>
 </head>
@@ -126,7 +129,7 @@
 </nav>
 
 <div class="max-w-5xl mx-auto px-4 pb-20">
-  <!-- 公告 -->
+  <!-- 滚动公告 -->
   <div class="glass dark:glass-dark rounded-xl px-4 py-3 mb-6 text-sm text-center text-gray-700 dark:text-gray-300">
     AI通鉴 · 高效上网 · 一站直达
   </div>
@@ -139,7 +142,7 @@
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="bing">必应</button>
     </div>
     <div class="flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-3 shadow">
-      <i class="fa fa-search text-gray-40 mr-3"></i>
+      <i class="fa fa-search text-gray-400 mr-3"></i>
       <input id="search-input" type="text" placeholder="搜索、打开网站、输入网址……" 
              class="w-full bg-transparent outline-none text-gray-800 dark:text-gray-200">
       <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90">
@@ -314,14 +317,26 @@
     </div>
   </div>
 
+  <!-- 底部 -->
   <footer class="text-center text-sm text-gray-500 pt-6 border-t border-gray-200 dark:border-gray-800">
-    <p>AI通鉴 © 2026 · 新一代AI智能导航平台</p>
+    <div class="flex justify-center gap-3 mb-2">
+      <a class="hover:text-primary">隐私政策</a>
+      <a class="hover:text-primary">用户协议</a>
+      <a class="hover:text-primary">免责声明</a>
+    </div>
+    <p class="mb-1">AI通鉴 © 2026 · 新一代AI智能导航平台</p>
+    <p>桂ICP备2026001644号-1</p>
   </footer>
 </div>
 
 <!-- 回到顶部 -->
 <button id="backTop" class="back-top">
   <i class="fa fa-arrow-up"></i>
+</button>
+
+<!-- 意见反馈 -->
+<button class="feedback-btn" onclick="alert('感谢反馈！请联系客服微信：AI-tongjian')">
+  <i class="fa fa-comment-o mr-1"></i>意见反馈
 </button>
 
 <script>
@@ -380,9 +395,15 @@
   btn.addEventListener('click', goSearch)
   input.addEventListener('keydown', e => e.key === 'Enter' && goSearch())
 
-  // 快捷卡片
+  // 防重复点击
+  let lastClick = 0
   document.querySelectorAll('[data-url]').forEach(el => {
-    el.onclick = () => window.open(el.dataset.url, '_blank')
+    el.onclick = () => {
+      let now = Date.now()
+      if(now - lastClick < 800) return
+      lastClick = now
+      window.open(el.dataset.url, '_blank')
+    }
   })
 
   // 回到顶部
