@@ -6,12 +6,12 @@
   <meta name="application-name" content="AI通鉴">
   <meta name="description" content="AI通鉴 · 高效上网 · 一站直达">
   <title>AI通鉴 - 新一代AI智能导航</title>
-  <link rel="icon" href="https://p3-flow-imagex-sign.byteimg.com/ii-i9hnh1cl1ds/8d9a9d9a9d9a9d9a9d9a9d9a9d9a9d~tplv-9hnh1cl1ds-image.png" type="image/x-icon">
+  <link rel="icon" href="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-9hnh1cl1ds/8f9a9a9d9a9d9a9d9a9d9a9d9a9d9a9d~tplv-9hnh1cl1ds-image.png" type="image/x-icon">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   
   <!-- 51.la 统计 -->
-  <script charset="UTF-8" id="LA_COLLECTION" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+  <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
   <script>LA.init({id:"3P1xuCYvCR9rfBGe",ck:"3P1xuCYvCR9rfBGe"})</script>
 
   <script>
@@ -28,7 +28,7 @@
             sans: ['Inter','system-ui'],
           },
         },
-      }
+      },
     }
   </script>
   <style type="text/tailwindcss">
@@ -61,9 +61,6 @@
       .nav-card {
         @apply glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer;
       }
-      .slide-card {
-        @apply w-72 glass dark:glass-dark rounded-xl p-4 hover-scale flex-shrink-0;
-      }
       .loading {
         position: fixed;
         inset: 0;
@@ -74,7 +71,7 @@
         background: #f8fafc;
         transition: opacity 0.5s ease;
       }
-      .dark .loading {
+      .dark {
         background: #0f172a;
       }
       .loading.hidden {
@@ -108,6 +105,8 @@
       .history-item {
         @apply px-2 py-1.5 text-sm bg-gray-100 dark:bg-gray-800 rounded cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700;
       }
+
+      /* 右侧悬浮边栏 */
       .right-sidebar {
         @apply fixed right-2 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3;
       }
@@ -127,12 +126,6 @@
       }
       .sidebar-toggle {
         @apply fixed right-2 bottom-20 w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer z-40;
-      }
-      .slide-container {
-        @apply flex gap-3 overflow-x-auto pb-2 scrollbar-hide;
-      }
-      .slide-container::-webkit-scrollbar {
-        display: none;
       }
     }
   </style>
@@ -154,12 +147,12 @@
   <i class="fa fa-sun-o hidden dark:block"></i>
 </button>
 
-<!-- 侧边栏开关 -->
+<!-- 右侧边栏开关（手机专用） -->
 <div class="sidebar-toggle" id="sidebarToggle">
   <i class="fa fa-bars"></i>
 </div>
 
-<!-- 右侧边栏 -->
+<!-- ====================== 右侧悬浮边栏 ====================== -->
 <div class="right-sidebar" id="rightSidebar">
   <div class="sidebar-btn" data-text="信符铺" onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')">
     <i class="fa fa-shopping-bag"></i>
@@ -184,7 +177,7 @@
   <div class="flex gap-4 text-sm text-gray-700 dark:text-gray-300">
     <a href="#" class="hover:text-primary transition-colors">首页</a>
     <a href="#tools" class="hover:text-primary transition-colors">工具</a>
-    <a href="#needs" class="hover:text-primary transition-colors">需求中心</a>
+    <a href="#categories" class="hover:text-primary transition-colors">分类</a>
   </div>
 </nav>
 
@@ -199,7 +192,7 @@
 
   <!-- 智能搜索框 -->
   <div class="glass dark:glass-dark rounded-2xl p-5 mb-8 shadow-xl">
-    <div class="flex flex-wrap gap-2 mb-3">
+    <div class="flex-wrap gap-2 mb-3 flex">
       <button class="search-engine px-2 py-1 text-xs rounded bg-primary text-white" data-engine="baidu">百度</button>
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="google">谷歌</button>
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="bing">必应</button>
@@ -210,7 +203,8 @@
              class="w-full bg-transparent outline-none text-gray-800 dark:text-gray-200">
       <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90">搜索</button>
     </div>
-    <div id="searchHistory" class="mt-3 flex flex-wrap gap-2"></div>
+    <!-- 搜索历史 -->
+    <div id="searchHistory" class="mt-3 flex-wrap gap-2"></div>
   </div>
 
   <!-- 常用直达 -->
@@ -271,160 +265,112 @@
     </div>
   </div>
 
-  <!-- 横向滑动 · 十大需求 -->
-  <h2 id="needs" class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">🔥 万人刚需 · 横向滑动</h2>
-  <div class="slide-container mb-12">
-
-    <!-- 1 短视频娱乐 -->
-    <div class="slide-card">
-      <h3 class="font-medium mb-2 flex items-center gap-2"><i class="fa fa-play-circle text-red-500"></i>短视频 & 娱乐</h3>
+  <!-- 全部分类 -->
+  <h2 id="categories" class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">网址分类</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+    <!-- 常用平台 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">常用平台</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://douyin.com','_blank')" class="cursor-pointer hover:text-primary">抖音</span>
-        <span onclick="window.open('https://kuaishou.com','_blank')" class="cursor-pointer hover:text-primary">快手</span>
-        <span onclick="window.open('https://bilibili.com','_blank')" class="cursor-pointer hover:text-primary">B站</span>
-        <span onclick="window.open('https://music.163.com','_blank')" class="cursor-pointer hover:text-primary">网易云</span>
+        <span onclick="window.open('https://www.douyin.com','_blank')" class="cursor-pointer hover:text-primary">抖音</span>
+        <span onclick="window.open('https://www.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度</span>
+        <span onclick="window.open('https://www.zhihu.com','_blank')" class="cursor-pointer hover:text-primary">知乎</span>
+        <span onclick="window.open('https://www.bilibili.com','_blank')" class="cursor-pointer hover:text-primary">B站</span>
+        <span onclick="window.open('https://v.qq.com','_blank')" class="cursor-pointer hover:text-primary">腾讯视频</span>
+        <span onclick="window.open('https://www.163.com','_blank')" class="cursor-pointer hover:text-primary">网易</span>
+      </div>
+    </div>
+
+    <!-- 电商购物 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">电商购物</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <span onclick="window.open('https://www.taobao.com','_blank')" class="cursor-pointer hover:text-primary">淘宝</span>
+        <span onclick="window.open('https://www.jd.com','_blank')" class="cursor-pointer hover:text-primary">京东</span>
+        <span onclick="window.open('https://www.pinduoduo.com','_blank')" class="cursor-pointer hover:text-primary">拼多多</span>
+        <span onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')" class="cursor-pointer hover:text-primary">信符铺</span>
+        <span onclick="window.open('https://www.meituan.com','_blank')" class="cursor-pointer hover:text-primary">美团</span>
+        <span onclick="window.open('https://www.ele.me','_blank')" class="cursor-pointer hover:text-primary">饿了么</span>
+      </div>
+    </div>
+
+    <!-- 工具效率 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">工具效率</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <span onclick="window.open('https://www.aliyundrive.com','_blank')" class="cursor-pointer hover:text-primary">阿里云盘</span>
+        <span onclick="window.open('https://pan.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度网盘</span>
+        <span onclick="window.open('https://www.notion.so','_blank')" class="cursor-pointer hover:text-primary">Notion</span>
+        <span onclick="window.open('https://fanyi.baidu.com','_blank')" class="cursor-pointer hover:text-primary">翻译</span>
+        <span onclick="window.open('https://cli.im','_blank')" class="cursor-pointer hover:text-primary">二维码</span>
+        <span onclick="window.open('https://www.calculator.net','_blank')" class="cursor-pointer hover:text-primary">计算器</span>
+      </div>
+    </div>
+
+    <!-- AI工具 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">AI工具</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <span onclick="window.open('https://www.doubao.com','_blank')" class="cursor-pointer hover:text-primary">豆包</span>
+        <span onclick="window.open('https://chat.openai.com','_blank')" class="cursor-pointer hover:text-primary">ChatGPT</span>
+        <span onclick="window.open('https://yiyan.baidu.com','_blank')" class="cursor-pointer hover:text-primary">文心一言</span>
+        <span onclick="window.open('https://www.midjourney.com','_blank')" class="cursor-pointer hover:text-primary">AI作图</span>
+        <span onclick="window.open('https://elevenlabs.io','_blank')" class="cursor-pointer hover:text-primary">AI配音</span>
+        <span onclick="window.open('https://github.com','_blank')" class="cursor-pointer hover:text-primary">GitHub</span>
+      </div>
+    </div>
+
+    <!-- 社交资讯 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">社交资讯</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <span onclick="window.open('https://weibo.com','_blank')" class="cursor-pointer hover:text-primary">微博</span>
+        <span onclick="window.open('https://www.xiaohongshu.com','_blank')" class="cursor-pointer hover:text-primary">小红书</span>
+        <span onclick="window.open('https://www.toutiao.com','_blank')" class="cursor-pointer hover:text-primary">今日头条</span>
+        <span onclick="window.open('https://im.qq.com','_blank')" class="cursor-pointer hover:text-primary">QQ</span>
+        <span onclick="window.open('https://www.douban.com','_blank')" class="cursor-pointer hover:text-primary">豆瓣</span>
+        <span onclick="window.open('https://www.kuaishou.com','_blank')" class="cursor-pointer hover:text-primary">快手</span>
+      </div>
+    </div>
+
+    <!-- 影音娱乐 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">影音娱乐</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
         <span onclick="window.open('https://v.qq.com','_blank')" class="cursor-pointer hover:text-primary">腾讯视频</span>
         <span onclick="window.open('https://youku.com','_blank')" class="cursor-pointer hover:text-primary">优酷</span>
-        <span onclick="window.open('https://mgtv.com','_blank')" class="cursor-pointer hover:text-primary">芒果TV</span>
-        <span onclick="window.open('https://iqiyi.com','_blank')" class="cursor-pointer hover:text-primary">爱奇艺</span>
+        <span onclick="window.open('https://www.iqiyi.com','_blank')" class="cursor-pointer hover:text-primary">爱奇艺</span>
+        <span onclick="window.open('https://music.163.com','_blank')" class="cursor-pointer hover:text-primary">网易云</span>
+        <span onclick="window.open('https://y.qq.com','_blank')" class="cursor-pointer hover:text-primary">QQ音乐</span>
+        <span onclick="window.open('https://www.huya.com','_blank')" class="cursor-pointer hover:text-primary">虎牙</span>
       </div>
     </div>
 
-    <!-- 2 社交聊天 -->
-    <div class="slide-card">
-      <h3 class="font-medium mb-2 flex items-center gap-2"><i class="fa fa-comments text-blue-500"></i>社交聊天</h3>
+    <!-- 办公设计 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">办公设计</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://weixin.qq.com','_blank')" class="cursor-pointer hover:text-primary">微信</span>
-        <span onclick="window.open('https://im.qq.com','_blank')" class="cursor-pointer hover:text-primary">QQ</span>
-        <span onclick="window.open('https://weibo.com','_blank')" class="cursor-pointer hover:text-primary">微博</span>
-        <span onclick="window.open('https://zhihu.com','_blank')" class="cursor-pointer hover:text-primary">知乎</span>
-        <span onclick="window.open('https://xiaohongshu.com','_blank')" class="cursor-pointer hover:text-primary">小红书</span>
-        <span onclick="window.open('https://tieba.baidu.com','_blank')" class="cursor-pointer hover:text-primary">贴吧</span>
-        <span onclick="window.open('https://douban.com','_blank')" class="cursor-pointer hover:text-primary">豆瓣</span>
-        <span onclick="window.open('https://news.qq.com','_blank')" class="cursor-pointer hover:text-primary">腾讯新闻</span>
-      </div>
-    </div>
-
-    <!-- 3 搜索查信息 -->
-    <div class="slide-card">
-      <h3 class="font-medium mb-2 flex items-center gap-2"><i class="fa fa-search text-blue-400"></i>搜索 & 查信息</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度</span>
-        <span onclick="window.open('https://tianqi.com','_blank')" class="cursor-pointer hover:text-primary">天气</span>
-        <span onclick="window.open('https://baidu.com/s?wd=快递查询','_blank')" class="cursor-pointer hover:text-primary">快递</span>
-        <span onclick="window.open('https://map.baidu.com','_blank')" class="cursor-pointer hover:text-primary">地图</span>
-        <span onclick="window.open('https://news.baidu.com','_blank')" class="cursor-pointer hover:text-primary">新闻</span>
-        <span onclick="window.open('https://fanyi.baidu.com','_blank')" class="cursor-pointer hover:text-primary">翻译</span>
-        <span onclick="window.open('https://12306.cn','_blank')" class="cursor-pointer hover:text-primary">火车票</span>
-        <span onclick="window.open('https://ip138.com','_blank')" class="cursor-pointer hover:text-primary">IP查询</span>
-      </div>
-    </div>
-
-    <!-- 4 购物薅羊毛 -->
-    <div class="slide-card">
-      <h3 class="font-medium mb-2 flex items-center gap-2"><i class="fa fa-shopping-cart text-orange-500"></i>购物 & 薅羊毛</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://taobao.com','_blank')" class="cursor-pointer hover:text-primary">淘宝</span>
-        <span onclick="window.open('https://jd.com','_blank')" class="cursor-pointer hover:text-primary">京东</span>
-        <span onclick="window.open('https://pinduoduo.com','_blank')" class="cursor-pointer hover:text-primary">拼多多</span>
-        <span onclick="window.open('https://meituan.com','_blank')" class="cursor-pointer hover:text-primary">美团</span>
-        <span onclick="window.open('https://ele.me','_blank')" class="cursor-pointer hover:text-primary">饿了么</span>
-        <span onclick="window.open('https://2.taobao.com','_blank')" class="cursor-pointer hover:text-primary">闲鱼</span>
-        <span onclick="window.open('https://duozhuayu.com','_blank')" class="cursor-pointer hover:text-primary">多抓鱼</span>
-        <span onclick="window.open('https://suning.com','_blank')" class="cursor-pointer hover:text-primary">苏宁</span>
-      </div>
-    </div>
-
-    <!-- 5 办公工具 -->
-    <div class="slide-card">
-      <h3 class="font-medium mb-2 flex items-center gap-2"><i class="fa fa-briefcase text-indigo-500"></i>办公 & 工具</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://wps.cn','_blank')" class="cursor-pointer hover:text-primary">WPS</span>
+        <span onclick="window.open('https://www.figma.com','_blank')" class="cursor-pointer hover:text-primary">Figma</span>
+        <span onclick="window.open('https://www.canva.com','_blank')" class="cursor-pointer hover:text-primary">Canva</span>
         <span onclick="window.open('https://docs.qq.com','_blank')" class="cursor-pointer hover:text-primary">腾讯文档</span>
+        <span onclick="window.open('https://www.wps.cn','_blank')" class="cursor-pointer hover:text-primary">WPS</span>
         <span onclick="window.open('https://mail.qq.com','_blank')" class="cursor-pointer hover:text-primary">QQ邮箱</span>
-        <span onclick="window.open('https://doctranspdf.com','_blank')" class="cursor-pointer hover:text-primary">PDF转换</span>
-        <span onclick="window.open('https://cli.im','_blank')" class="cursor-pointer hover:text-primary">二维码</span>
-        <span onclick="window.open('https://ps.gaoding.com','_blank')" class="cursor-pointer hover:text-primary">在线PS</span>
-        <span onclick="window.open('https://xunjiepdf.com','_blank')" class="cursor-pointer hover:text-primary">PDF处理</span>
-        <span onclick="window.open('https://kapwing.com','_blank')" class="cursor-pointer hover:text-primary">录屏剪辑</span>
+        <span onclick="window.open('https://www.aliyun.com','_blank')" class="cursor-pointer hover:text-primary">阿里云</span>
       </div>
     </div>
 
-    <!-- 6 学习教育 -->
-    <div class="slide-card">
-      <h3 class="font-medium mb-2 flex items-center gap-2"><i class="fa fa-book text-green-500"></i>学习 & 教育</h3>
+    <!-- 学习教育 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">学习教育</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://icourse163.org','_blank')" class="cursor-pointer hover:text-primary">大学MOOC</span>
-        <span onclick="window.open('https://study.163.com','_blank')" class="cursor-pointer hover:text-primary">网易课堂</span>
-        <span onclick="window.open('https://zuoyebang.com','_blank')" class="cursor-pointer hover:text-primary">作业帮</span>
-        <span onclick="window.open('https://cnki.net','_blank')" class="cursor-pointer hover:text-primary">知网</span>
-        <span onclick="window.open('https://bing.com/dict','_blank')" class="cursor-pointer hover:text-primary">英语词典</span>
-        <span onclick="window.open('https://doyoudo.com','_blank')" class="cursor-pointer hover:text-primary">设计教程</span>
-        <span onclick="window.open('https://51cto.com','_blank')" class="cursor-pointer hover:text-primary">IT教程</span>
-        <span onclick="window.open('https://kaokaocn.com','_blank')" class="cursor-pointer hover:text-primary">考证</span>
+        <span onclick="window.open('https://www.icourse163.org','_blank')" class="cursor-pointer hover:text-primary">中国大学MOOC</span>
+        <span onclick="window.open('https://www.xuetangx.com','_blank')" class="cursor-pointer hover:text-primary">学堂在线</span>
+        <span onclick="window.open('https://study.163.com','_blank')" class="cursor-pointer hover:text-primary">网易云课堂</span>
+        <span onclick="window.open('https://www.open.edu.cn','_blank')" class="cursor-pointer hover:text-primary">国家开放大学</span>
+        <span onclick="window.open('https://www.cnki.net','_blank')" class="cursor-pointer hover:text-primary">知网</span>
+        <span onclick="window.open('https://xueshu.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度学术</span>
       </div>
     </div>
-
-    <!-- 7 生活服务 -->
-    <div class="slide-card">
-      <h3 class="font-medium mb-2 flex items-center gap-2"><i class="fa fa-home text-yellow-500"></i>生活服务</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://12306.cn','_blank')" class="cursor-pointer hover:text-primary">火车票</span>
-        <span onclick="window.open('https://didichuxing.com','_blank')" class="cursor-pointer hover:text-primary">滴滴</span>
-        <span onclick="window.open('https://gjj.cn','_blank')" class="cursor-pointer hover:text-primary">公积金</span>
-        <span onclick="window.open('https://baidu.com/s?wd=医院挂号','_blank')" class="cursor-pointer hover:text-primary">挂号</span>
-        <span onclick="window.open('https://life.qq.com','_blank')" class="cursor-pointer hover:text-primary">话费充值</span>
-        <span onclick="window.open('https://baidu.com/s?wd=违章查询','_blank')" class="cursor-pointer hover:text-primary">违章</span>
-        <span onclick="window.open('https://8684.cn','_blank')" class="cursor-pointer hover:text-primary">公交</span>
-        <span onclick="window.open('https://baidu.com/s?wd=水电费缴纳','_blank')" class="cursor-pointer hover:text-primary">水电费</span>
-      </div>
-    </div>
-
-    <!-- 8 推广副业变现 -->
-    <div class="slide-card">
-      <h3 class="font-medium mb-2 flex items-center gap-2"><i class="fa fa-line-chart text-green-600"></i>推广 & 副业</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://douyin.com','_blank')" class="cursor-pointer hover:text-primary">抖音引流</span>
-        <span onclick="navigator.clipboard.writeText('chien5156').then(()=>alert('客服微信已复制！'))" class="cursor-pointer hover:text-primary">客服微信</span>
-        <span onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')" class="cursor-pointer hover:text-primary">号卡宽带</span>
-        <span onclick="window.open('https://capcut.com','_blank')" class="cursor-pointer hover:text-primary">剪映</span>
-        <span onclick="window.open('https://baidu.com/s?wd=兼职','_blank')" class="cursor-pointer hover:text-primary">兼职</span>
-        <span onclick="window.open('https://baidu.com/s?wd=短视频带货','_blank')" class="cursor-pointer hover:text-primary">带货</span>
-        <span onclick="window.open('https://pipixia.com','_blank')" class="cursor-pointer hover:text-primary">素材库</span>
-        <span onclick="window.open('https://baidu.com/s?wd=私域流量','_blank')" class="cursor-pointer hover:text-primary">私域流量</span>
-      </div>
-    </div>
-
-    <!-- 9 下载资源 -->
-    <div class="slide-card">
-      <h3 class="font-medium mb-2 flex items-center gap-2"><i class="fa fa-download text-purple-500"></i>下载 & 资源</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://pan.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度网盘</span>
-        <span onclick="window.open('https://aliyundrive.com','_blank')" class="cursor-pointer hover:text-primary">阿里云盘</span>
-        <span onclick="window.open('https://pc6.com','_blank')" class="cursor-pointer hover:text-primary">软件下载</span>
-        <span onclick="window.open('https://gamersky.com','_blank')" class="cursor-pointer hover:text-primary">游戏</span>
-        <span onclick="window.open('https://bz55.com','_blank')" class="cursor-pointer hover:text-primary">壁纸</span>
-        <span onclick="window.open('https://ziti5.com','_blank')" class="cursor-pointer hover:text-primary">字体</span>
-        <span onclick="window.open('https://67tool.com','_blank')" class="cursor-pointer hover:text-primary">工具合集</span>
-        <span onclick="window.open('https://51tool.com','_blank')" class="cursor-pointer hover:text-primary">在线工具</span>
-      </div>
-    </div>
-
-    <!-- 10 数码工具 -->
-    <div class="slide-card">
-      <h3 class="font-medium mb-2 flex items-center gap-2"><i class="fa fa-mobile text-gray-600 dark:text-gray-300"></i>数码 & 工具</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://speedtest.cn','_blank')" class="cursor-pointer hover:text-primary">测网速</span>
-        <span onclick="window.open('https://baidu.com/s?wd=手机评测','_blank')" class="cursor-pointer hover:text-primary">手机评测</span>
-        <span onclick="window.open('https://router.baidu.com','_blank')" class="cursor-pointer hover:text-primary">路由器</span>
-        <span onclick="window.open('https://baidu.com/s?wd=系统清理','_blank')" class="cursor-pointer hover:text-primary">系统清理</span>
-        <span onclick="window.open('https://baidu.com/s?wd=数据恢复','_blank')" class="cursor-pointer hover:text-primary">数据恢复</span>
-        <span onclick="window.open('https://baidu.com/s?wd=刷机教程','_blank')" class="cursor-pointer hover:text-primary">刷机</span>
-        <span onclick="window.open('https://baidu.com/s?wd=硬盘检测','_blank')" class="cursor-pointer hover:text-primary">硬盘检测</span>
-        <span onclick="window.open('https://baidu.com/s?wd=电池修复','_blank')" class="cursor-pointer hover:text-primary">电池修复</span>
-      </div>
-    </div>
-
   </div>
 
   <!-- 底部 -->
@@ -524,7 +470,7 @@
     if (e.key === 'Enter') doSearch()
   })
 
-  // 卡片点击
+  // 卡片点击效果
   let lastClick = 0
   document.querySelectorAll('[data-url]').forEach(el => {
     el.onclick = () => {
@@ -537,11 +483,12 @@
     }
   })
 
-  // 侧边栏展开收起
+  // 手机端右侧边栏手动展开/收起
   const sidebar = document.getElementById('rightSidebar')
   const toggle = document.getElementById('sidebarToggle')
   let isOpen = false
 
+  // 手机默认隐藏
   if (window.innerWidth < 640) {
     sidebar.style.display = 'none'
   }
