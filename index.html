@@ -7,234 +7,50 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto}
 body{background:#f9fafb;color:#111}
-
-/* 顶部导航 */
-.navbar{
-    background:#fff;
-    border-bottom:1px solid #eee;
-    padding:12px 0;
-    position:sticky;
-    top:0;
-    z-index:999;
-}
-.nav-container{
-    max-width:1400px;
-    margin:0 auto;
-    padding:0 14px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-}
-.logo{
-    font-size:20px;
-    font-weight:700;
-    color:#1677ff;
-    white-space:nowrap;
-}
-.nav-menu{
-    display:flex;
-    gap:18px;
-}
-.nav-menu a{
-    color:#333;
-    text-decoration:none;
-    font-size:14px;
-    padding:6px 4px;
-}
-.nav-menu a:hover{
-    color:#1677ff;
-}
-
-/* 搜索 */
-.search-box{
-    flex:1;
-    max-width:600px;
-    display:flex;
-    gap:8px;
-}
-.search-box input{
-    flex:1;
-    padding:11px 16px;
-    border:1px solid #e5e7eb;
-    border-radius:12px;
-    outline:none;
-    font-size:14px;
-}
-.search-btn{
-    padding:0 20px;
-    background:#1677ff;
-    color:#fff;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    font-size:14px;
-    white-space:nowrap;
-}
-
-/* 筛选 */
-.filter{
-    display:flex;
-    gap:8px;
-    padding:10px 14px;
-    overflow-x:auto;
-    max-width:1400px;
-    margin:0 auto;
-}
-.filter span{
-    padding:6px 12px;
-    background:#fff;
-    border:1px solid #e5e7eb;
-    border-radius:20px;
-    font-size:13px;
-    white-space:nowrap;
-    cursor:pointer;
-}
-.filter span.active{
-    background:#1677ff;
-    color:#fff;
-}
-
-.main{
-    display:flex;
-    max-width:1400px;
-    margin:0 auto;
-    padding:14px;
-    gap:14px;
-}
-.sidebar{
-    width:220px;
-    background:#fff;
-    border-radius:12px;
-    padding:16px;
-    position:sticky;
-    top:90px;
-    align-self:flex-start;
-}
-.sidebar h3{
-    margin-bottom:10px;
-    font-size:14px;
-    color:#555;
-}
-.sidebar a{
-    display:block;
-    padding:8px 10px;
-    border-radius:8px;
-    margin-bottom:4px;
-    font-size:14px;
-    color:#333;
-    text-decoration:none;
-}
-.sidebar a:hover{
-    background:#f1f5f9;
-}
-.content{
-    flex:1;
-}
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-    gap:14px;
-}
-.card{
-    background:#fff;
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 2px 6px rgba(0,0,0,.04);
-    transition:transform .2s;
-}
-.card:hover{
-    transform:translateY(-3px);
-}
-.card-icon{
-    width:50px;
-    height:50px;
-    border-radius:12px;
-    object-fit:cover;
-    margin-bottom:10px;
-}
-.card-body{
-    padding:16px;
-}
-.card-title{
-    font-size:15px;
-    font-weight:600;
-    margin-bottom:6px;
-}
-.card-desc{
-    font-size:13px;
-    color:#555;
-    line-height:1.4;
-    margin-bottom:10px;
-}
-.tags{
-    display:flex;
-    gap:6px;
-    flex-wrap:wrap;
-    margin-bottom:10px;
-}
-.tags span{
-    font-size:12px;
-    padding:3px 6px;
-    background:#f0f7ff;
-    color:#1677ff;
-    border-radius:6px;
-}
-.btn{
-    display:inline-block;
-    padding:8px 12px;
-    background:#1677ff;
-    color:#fff;
-    border-radius:8px;
-    font-size:13px;
-    text-decoration:none;
-}
-.ad{
-    background:#fff;
-    border-radius:12px;
-    padding:20px;
-    text-align:center;
-    margin-bottom:14px;
-    color:#999;
-    border:1px dashed #ddd;
-}
-
-/* 手机适配：隐藏侧边栏和顶部菜单 */
-@media(max-width:900px){
-    .nav-menu{display:none;}
-    .sidebar{display:none;}
-    .grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
-}
+.top{position:sticky;top:0;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.05);z-index:999}
+.header{max-width:1400px;margin:0 auto;padding:12px 14px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:20px;font-weight:700;color:#1677ff}
+.search-box{flex:1;max-width:600px;margin:0 20px}
+.search-box input{width:100%;padding:11px 16px;border:1px solid #e5e7eb;border-radius:12px;outline:none;font-size:14px}
+.filter{display:flex;gap:8px;padding:10px 14px;overflow-x:auto;max-width:1400px;margin:0 auto}
+.filter span{padding:6px 12px;background:#fff;border:1px solid #e5e7eb;border-radius:20px;font-size:13px;white-space:nowrap;cursor:pointer}
+.filter span.active{background:#1677ff;color:#fff}
+.main{display:flex;max-width:1400px;margin:0 auto;padding:14px;gap:14px}
+.sidebar{width:220px;background:#fff;border-radius:12px;padding:16px;position:sticky;top:90px;align-self:flex-start}
+.sidebar h3{margin-bottom:10px;font-size:14px;color:#555}
+.sidebar a{display:block;padding:8px 10px;border-radius:8px;margin-bottom:4px;font-size:14px;color:#333;text-decoration:none}
+.sidebar a:hover{background:#f1f5f9}
+.content{flex:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.04);transition:transform .2s}
+.card:hover{transform:translateY(-3px)}
+.card-icon{width:50px;height:50px;border-radius:12px;object-fit:cover;margin-bottom:10px}
+.card-body{padding:16px}
+.card-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.card-desc{font-size:13px;color:#555;line-height:1.4;margin-bottom:10px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.tags span{font-size:12px;padding:3px 6px;background:#f0f7ff;color:#1677ff;border-radius:6px}
+.btn{display:inline-block;padding:8px 12px;background:#1677ff;color:#fff;border-radius:8px;font-size:13px;text-decoration:none}
+.ad{background:#fff;border-radius:12px;padding:20px;text-align:center;margin-bottom:14px;color:#999;border:1px dashed #ddd}
+@media(max-width:900px){.sidebar{display:none}.grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}}
 </style>
 </head>
 <body>
 
-<!-- 顶部导航栏 -->
-<div class="navbar">
-  <div class="nav-container">
+<div class="top">
+  <div class="header">
     <div class="logo">AI工具大全</div>
-    <div class="nav-menu">
-      <a href="#">首页</a>
-      <a href="#">AI导航</a>
-      <a href="#">最新上线</a>
-      <a href="#">热门工具</a>
-      <a href="#">教程资讯</a>
-      <a href="#">关于我们</a>
-    </div>
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="搜索AI工具、写作、绘画、视频、配音、办公...">
-      <button class="search-btn" id="searchBtn">搜索</button>
     </div>
   </div>
-</div>
-
-<!-- 筛选栏 -->
-<div class="filter">
-  <span class="filter-btn active" data-filter="all">全部</span>
-  <span class="filter-btn" data-filter="free">免费可用</span>
-  <span class="filter-btn" data-filter="paid">付费</span>
-  <span class="filter-btn" data-filter="cn">国内可用</span>
-  <span class="filter-btn" data-filter="new">最新上线</span>
+  <div class="filter">
+    <span class="filter-btn active" data-filter="all">全部</span>
+    <span class="filter-btn" data-filter="free">免费可用</span>
+    <span class="filter-btn" data-filter="paid">付费</span>
+    <span class="filter-btn" data-filter="cn">国内可用</span>
+    <span class="filter-btn" data-filter="new">最新上线</span>
+  </div>
 </div>
 
 <div class="main">
@@ -290,6 +106,16 @@ body{background:#f9fafb;color:#111}
   </div>
 </div>
 
+<div class="card" data-tags="free">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://elevenlabs.io" class="card-icon">
+    <div class="card-title">ElevenLabs</div>
+    <div class="card-desc">超真实AI配音，支持多语种、情感朗读</div>
+    <div class="tags"><span>免费</span><span>AI配音</span></div>
+    <a href="https://elevenlabs.io" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
 <div class="card" data-tags="free cn new">
   <div class="card-body">
     <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://ai.wps.cn" class="card-icon">
@@ -297,6 +123,16 @@ body{background:#f9fafb;color:#111}
     <div class="card-desc">AI智能办公，文档总结、PPT生成、表格分析</div>
     <div class="tags"><span>免费</span><span>国内可用</span><span>AI办公</span></div>
     <a href="https://ai.wps.cn" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://runwayml.com" class="card-icon">
+    <div class="card-title">Runway</div>
+    <div class="card-desc">AI视频生成、图片动效、智能剪辑工具</div>
+    <div class="tags"><span>免费</span><span>AI视频</span></div>
+    <a href="https://runwayml.com" target="_blank" class="btn">立即使用</a>
   </div>
 </div>
 
@@ -322,11 +158,371 @@ body{background:#f9fafb;color:#111}
 
 <div class="card" data-tags="free cn new">
   <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://xinghuo.xfyun.cn" class="card-icon">
+    <div class="card-title">讯飞星火</div>
+    <div class="card-desc">科大讯飞AI，语音对话、写作、总结全能</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI办公</span></div>
+    <a href="https://xinghuo.xfyun.cn" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://claude.ai" class="card-icon">
+    <div class="card-title">Claude</div>
+    <div class="card-desc">长文本AI助手，适合文档阅读、总结、写作</div>
+    <div class="tags"><span>免费</span><span>AI聊天</span></div>
+    <a href="https://claude.ai" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://gemini.google.com" class="card-icon">
+    <div class="card-title">Gemini</div>
+    <div class="card-desc">谷歌多模态AI，图文视频全能理解</div>
+    <div class="tags"><span>免费</span><span>AI聊天</span></div>
+    <a href="https://gemini.google.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="paid new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://openai.com/dall-e-3" class="card-icon">
+    <div class="card-title">DALL·E 3</div>
+    <div class="card-desc">OpenAI官方AI绘画，生成高清创意图片</div>
+    <div class="tags"><span>付费</span><span>AI绘画</span></div>
+    <a href="https://openai.com/dall-e-3" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://stablediffusionweb.com" class="card-icon">
+    <div class="card-title">Stable Diffusion</div>
+    <div class="card-desc">开源AI绘画，本地部署、自由创作</div>
+    <div class="tags"><span>免费</span><span>AI绘画</span></div>
+    <a href="https://stablediffusionweb.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://xingtu.cn" class="card-icon">
+    <div class="card-title">醒图</div>
+    <div class="card-desc">国内热门AI修图、绘画、特效工具</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI设计</span></div>
+    <a href="https://xingtu.cn" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.jimengai.com" class="card-icon">
+    <div class="card-title">即梦AI</div>
+    <div class="card-desc">国产AI绘画，国风、插画、动漫风格</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI绘画</span></div>
+    <a href="https://www.jimengai.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.wujiebantu.com" class="card-icon">
+    <div class="card-title">无界版图</div>
+    <div class="card-desc">可商用AI绘画平台，版权安全</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>可商用</span></div>
+    <a href="https://www.wujiebantu.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://tongyi.aliyun.com/wanxiang" class="card-icon">
+    <div class="card-title">通义万相</div>
+    <div class="card-desc">阿里AI绘画，生成海报、插画、头像</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI绘画</span></div>
+    <a href="https://tongyi.aliyun.com/wanxiang" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://yige.baidu.com" class="card-icon">
+    <div class="card-title">文心一格</div>
+    <div class="card-desc">百度AI绘画，艺术创作、设计素材</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI绘画</span></div>
+    <a href="https://yige.baidu.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://pika.art" class="card-icon">
+    <div class="card-title">Pika Labs</div>
+    <div class="card-desc">AI生成短视频，文字一键变视频</div>
+    <div class="tags"><span>免费</span><span>AI视频</span></div>
+    <a href="https://pika.art" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.heygen.com" class="card-icon">
+    <div class="card-title">HeyGen</div>
+    <div class="card-desc">AI数字人视频，虚拟主播、口播视频</div>
+    <div class="tags"><span>免费</span><span>数字人</span></div>
+    <a href="https://www.heygen.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.klingai.com" class="card-icon">
+    <div class="card-title">可灵AI</div>
+    <div class="card-desc">国产AI视频生成，短视频创作神器</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI视频</span></div>
+    <a href="https://www.klingai.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://bilibili.com" class="card-icon">
+    <div class="card-title">必剪</div>
+    <div class="card-desc">B站旗下免费AI剪辑、视频工具</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI剪辑</span></div>
+    <a href="https://bilibili.com/fenjie" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="paid">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.synthesia.io" class="card-icon">
+    <div class="card-title">Synthesia</div>
+    <div class="card-desc">海外AI数字人视频制作平台</div>
+    <div class="tags"><span>付费</span><span>数字人</span></div>
+    <a href="https://www.synthesia.io" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://peiyin.xfyun.cn" class="card-icon">
+    <div class="card-title">讯飞配音</div>
+    <div class="card-desc">国内超自然AI配音，支持多角色</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI配音</span></div>
+    <a href="https://peiyin.xfyun.cn" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://zenith.qq.com" class="card-icon">
+    <div class="card-title">腾讯智影</div>
+    <div class="card-desc">腾讯免费AI配音、数字人、剪辑工具</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI配音</span></div>
+    <a href="https://zenith.qq.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.moyin.com" class="card-icon">
+    <div class="card-title">魔音工坊</div>
+    <div class="card-desc">AI配音+去水印，短视频神器</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI配音</span></div>
+    <a href="https://www.moyin.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.voicebe.com" class="card-icon">
+    <div class="card-title">标贝悦读</div>
+    <div class="card-desc">儿童故事、情感朗读类AI配音</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI配音</span></div>
+    <a href="https://www.voicebe.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="paid">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.notion.ai" class="card-icon">
+    <div class="card-title">Notion AI</div>
+    <div class="card-desc">AI笔记、写作、知识库一体化</div>
+    <div class="tags"><span>付费</span><span>AI办公</span></div>
+    <a href="https://www.notion.ai" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.feishu.cn" class="card-icon">
+    <div class="card-title">飞书AI</div>
+    <div class="card-desc">智能总结、会议纪要、文档助手</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI办公</span></div>
+    <a href="https://www.feishu.cn" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.dingtalk.com" class="card-icon">
+    <div class="card-title">钉钉AI</div>
+    <div class="card-desc">阿里办公AI，自动总结、文案生成</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI办公</span></div>
+    <a href="https://www.dingtalk.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://docs.qq.com" class="card-icon">
+    <div class="card-title">腾讯文档AI</div>
+    <div class="card-desc">在线文档AI写作、总结、润色</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI办公</span></div>
+    <a href="https://docs.qq.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://mubu.com" class="card-icon">
+    <div class="card-title">幕布</div>
+    <div class="card-desc">AI思维导图、大纲、笔记整理</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI笔记</span></div>
+    <a href="https://mubu.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="paid">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://github.com/copilot" class="card-icon">
+    <div class="card-title">GitHub Copilot</div>
+    <div class="card-desc">AI代码助手，自动补全、写程序</div>
+    <div class="tags"><span>付费</span><span>AI代码</span></div>
+    <a href="https://github.com/copilot" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://cursor.sh" class="card-icon">
+    <div class="card-title">Cursor</div>
+    <div class="card-desc">AI专用代码编辑器，免费好用</div>
+    <div class="tags"><span>免费</span><span>AI代码</span></div>
+    <a href="https://cursor.sh" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://tongyi.aliyun.com/lingma" class="card-icon">
+    <div class="card-title">通义灵码</div>
+    <div class="card-desc">阿里AI代码助手，国产编程神器</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI代码</span></div>
+    <a href="https://tongyi.aliyun.com/lingma" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://xiezuocat.com" class="card-icon">
+    <div class="card-title">秘塔写作猫</div>
+    <div class="card-desc">AI校对、润色、改写、文案优化</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>文案工具</span></div>
+    <a href="https://xiezuocat.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn new">
+  <div class="card-body">
     <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.doubao.com" class="card-icon">
     <div class="card-title">豆包</div>
     <div class="card-desc">字节跳动全能AI助手，聊天、写作、问答</div>
     <div class="tags"><span>免费</span><span>国内可用</span><span>AI全能</span></div>
     <a href="https://www.doubao.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://if.caiyunai.com" class="card-icon">
+    <div class="card-title">彩云小梦</div>
+    <div class="card-desc">AI小说、故事、网文创作</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>小说写作</span></div>
+    <a href="https://if.caiyunai.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.shanjian.tv" class="card-icon">
+    <div class="card-title">闪剪</div>
+    <div class="card-desc">AI智能剪辑，自动生成短视频</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI剪辑</span></div>
+    <a href="https://www.shanjian.tv" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.capcut.com" class="card-icon">
+    <div class="card-title">CapCut</div>
+    <div class="card-desc">剪映国际版，海外AI剪辑工具</div>
+    <div class="tags"><span>免费</span><span>AI剪辑</span></div>
+    <a href="https://www.capcut.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://devchat.ai" class="card-icon">
+    <div class="card-title">DevChat</div>
+    <div class="card-desc">AI编程助手，代码问答、调试</div>
+    <div class="tags"><span>免费</span><span>AI代码</span></div>
+    <a href="https://devchat.ai" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free new">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://ai.meta.com" class="card-icon">
+    <div class="card-title">CodeLlama</div>
+    <div class="card-desc">Meta开源AI代码大模型</div>
+    <div class="tags"><span>免费</span><span>AI代码</span></div>
+    <a href="https://ai.meta.com/resources/models-and-libraries/llama-downloads/" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://ai.meitu.com" class="card-icon">
+    <div class="card-title">美图AI</div>
+    <div class="card-desc">AI修图、绘画、特效、海报</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI设计</span></div>
+    <a href="https://ai.meitu.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.canva.com" class="card-icon">
+    <div class="card-title">可画</div>
+    <div class="card-desc">Canva中文AI设计、海报模板</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI设计</span></div>
+    <a href="https://www.canva.com" target="_blank" class="btn">立即使用</a>
+  </div>
+</div>
+
+<div class="card" data-tags="free cn">
+  <div class="card-body">
+    <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://www.chuangkit.com" class="card-icon">
+    <div class="card-title">创客贴</div>
+    <div class="card-desc">国内AI设计、图片、海报工具</div>
+    <div class="tags"><span>免费</span><span>国内可用</span><span>AI设计</span></div>
+    <a href="https://www.chuangkit.com" target="_blank" class="btn">立即使用</a>
   </div>
 </div>
 
@@ -341,38 +537,39 @@ body{background:#f9fafb;color:#111}
 <script>
 const filterBtns = document.querySelectorAll('.filter-btn');
 const cards = document.querySelectorAll('.card');
-const searchInput = document.getElementById('searchInput');
-const searchBtn = document.getElementById('searchBtn');
 
-// 筛选
 filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     filterBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    const f = btn.dataset.filter;
-    cards.forEach(c => {
-      if(f === 'all' || c.dataset.tags.includes(f)){
-        c.style.display = 'block';
-      }else{
-        c.style.display = 'none';
+    const filter = btn.getAttribute('data-filter');
+    cards.forEach(card => {
+      if (filter === 'all') {
+        card.style.display = 'block';
+      } else {
+        const tags = card.getAttribute('data-tags');
+        if (tags.includes(filter)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
       }
     });
   });
 });
 
-// 搜索
-function doSearch(){
-  const kw = searchInput.value.toLowerCase();
-  cards.forEach(c => {
-    const t = c.querySelector('.card-title').innerText.toLowerCase();
-    const d = c.querySelector('.card-desc').innerText.toLowerCase();
-    c.style.display = (t.includes(kw) || d.includes(kw)) ? 'block' : 'none';
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', () => {
+  const keyword = searchInput.value.toLowerCase();
+  cards.forEach(card => {
+    const title = card.querySelector('.card-title').textContent.toLowerCase();
+    const desc = card.querySelector('.card-desc').textContent.toLowerCase();
+    if (title.includes(keyword) || desc.includes(keyword)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
   });
-}
-
-searchBtn.onclick = doSearch;
-searchInput.addEventListener('keydown', (e)=>{
-  if(e.key === 'Enter') doSearch();
 });
 </script>
 </body>
