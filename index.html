@@ -117,29 +117,17 @@
         color: #fff;
         padding: 2px 8px;
         border-radius: 4px;
+        font-size: 12px;
         z-index: 99;
       }
       .sidebar-toggle {
         @apply fixed right-2 bottom-20 w-10 h-10 rounded-full glass glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer z-40;
       }
-
-      /* 升级：页面入场动画 */
-      .page-fade-in {
-        animation: pageFadeIn 0.6s ease forwards;
-      }
-      @keyframes pageFadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-      /* 升级：平滑滚动 */
-      html {
-        scroll-behavior: smooth;
-      }
     }
   </style>
 </head>
 
-<body class="bg-slate-50 dark:bg-dark min-h-screen transition-colors duration-300 page-fade-in">
+<body class="bg-slate-50 dark:bg-dark min-h-screen transition-colors duration-300">
 <div class="loading" id="loading">
   <div class="dot"></div>
   <div class="dot"></div>
@@ -175,9 +163,8 @@
   </div>
 </div>
 
-<!-- 升级：标题点击返回首页 -->
 <nav class="glass glass-dark sticky top-2 z-50 max-w-5xl mx-auto rounded-full px-5 py-3 mb-5 flex items-center justify-between">
-  <h1 class="text-lg font-bold text-gradient cursor-pointer" onclick="window.location.href='/'">AI通鉴.cn</h1>
+  <h1 class="text-lg font-bold text-gradient">AI通鉴.cn</h1>
   <div class="flex gap-4 text-sm text-gray-700 dark:text-gray-300">
     <a href="#" class="hover:text-primary transition-colors">首页</a>
     <a href="#tools" class="hover:text-primary transition-colors">工具</a>
@@ -362,30 +349,31 @@
     </div>
   </div>
 
-  <!-- 升级：干净版权栏 -->
-  <footer class="text-center text-sm text-gray-400 pt-6 border-t border-gray-100 dark:border-gray-800">
-    AI通鉴.cn © 2026 保留所有权利
+  <footer class="text-center text-sm text-gray-500 pt-6 border-t border-gray-200 dark:border-gray-800">
+    <div class="flex justify-center gap-3 mb-2">
+      <a class="hover:text-primary">隐私政策</a>
+      <a class="hover:text-primary">用户协议</a>
+      <a class="hover:text-primary">免责声明</a>
+    </div>
+    <p class="mb-1">AI通鉴.cn © 2026</p>
   </footer>
 </div>
 
 <script>
   window.addEventListener('load', () => {
-    setTimeout(() => document.getElementById('loading').classList.add('hidden'), 400)
+    setTimeout(() => document.getElementById('loading').classList.add('hidden'), 500)
   })
 
-  // 升级：自动跟随系统深色/浅色
   const themeToggle = document.getElementById('themeToggle')
   function toggleDark() {
     document.documentElement.classList.toggle('dark')
     localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
   }
   themeToggle.addEventListener('click', toggleDark)
-  
   if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     document.documentElement.classList.add('dark')
   }
 
-  // 时间
   function updateTime() {
     const now = new Date()
     const y = now.getFullYear(), m = now.getMonth()+1, d = now.getDate()
@@ -396,7 +384,6 @@
   updateTime()
   setInterval(updateTime, 1000)
 
-  // 搜索
   const searchInput = document.getElementById('search-input')
   const searchBtn = document.getElementById('search-btn')
   const searchIcon = document.getElementById('searchIcon')
@@ -452,20 +439,18 @@
     if (e.key === 'Enter') doSearch()
   })
 
-  // 升级：点击手感优化
   let lastClick = 0
   document.querySelectorAll('[data-url]').forEach(el => {
     el.onclick = () => {
       const now = Date.now()
       if (now - lastClick < 700) return
       lastClick = now
-      el.style.transform = 'scale(0.92)'
+      el.style.transform = 'scale(0.96)'
       setTimeout(() => el.style.transform = '', 80)
       window.open(el.dataset.url, '_blank')
     }
   })
 
-  // 手机侧边栏开关
   const sidebar = document.getElementById('rightSidebar')
   const toggle = document.getElementById('sidebarToggle')
   let isOpen = false
