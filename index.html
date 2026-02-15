@@ -14,7 +14,7 @@
           colors: {
             primary: '#4f46e5',
             secondary: '#7c3aed',
-            dark: '#0f172a',
+            dark: '#0f2342',
           },
           fontFamily: {
             sans: ['Inter','system-ui'],
@@ -153,43 +153,110 @@
     </div>
   </div>
 
-  <!-- 全部分类 -->
-  <h2 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">全部分类</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-    <!-- 开发 -->
+  <!-- 全部分类 → 8大拓展版 -->
+  <h2 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">网址分类</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+    <!-- 常用平台 -->
     <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3">开发资源</h3>
-      <div class="grid grid-cols-3 gap-2 text-sm">
-        <span onclick="window.open('https://github.com','_blank')" class="cursor-pointer hover:text-primary">GitHub</span>
-        <span onclick="window.open('https://stackoverflow.com','_blank')" class="cursor-pointer hover:text-primary">StackOverflow</span>
-        <span onclick="window.open('https://codepen.io','_blank')" class="cursor-pointer hover:text-primary">CodePen</span>
-        <span onclick="window.open('https://developer.mozilla.org','_blank')" class="cursor-pointer hover:text-primary">MDN</span>
-        <span onclick="window.open('https://vuejs.org','_blank')" class="cursor-pointer hover:text-primary">Vue</span>
-        <span onclick="window.open('https://react.dev','_blank')" class="cursor-pointer hover:text-primary">React</span>
+      <h3 class="font-medium mb-3 text-base">常用平台</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <span onclick="window.open('https://www.douyin.com','_blank')" class="cursor-pointer hover:text-primary">抖音</span>
+        <span onclick="window.open('https://www.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度</span>
+        <span onclick="window.open('https://www.zhihu.com','_blank')" class="cursor-pointer hover:text-primary">知乎</span>
+        <span onclick="window.open('https://www.bilibili.com','_blank')" class="cursor-pointer hover:text-primary">B站</span>
+        <span onclick="window.open('https://v.qq.com','_blank')" class="cursor-pointer hover:text-primary">腾讯视频</span>
+        <span onclick="window.open('https://www.163.com','_blank')" class="cursor-pointer hover:text-primary">网易</span>
       </div>
     </div>
-    <!-- AI工具 -->
+
+    <!-- 电商购物 -->
     <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3">AI工具大全</h3>
-      <div class="grid grid-cols-3 gap-2 text-sm">
-        <span onclick="window.open('https://www.doubao.com/','_blank')" class="cursor-pointer hover:text-primary">豆包</span>
-        <span onclick="window.open('https://chat.openai.com/','_blank')" class="cursor-pointer hover:text-primary">ChatGPT</span>
-        <span onclick="window.open('https://yiyan.baidu.com/','_blank')" class="cursor-pointer hover:text-primary">文心一言</span>
-        <span onclick="window.open('https://www.midjourney.com/','_blank')" class="cursor-pointer hover:text-primary">AI作图</span>
-        <span onclick="window.open('https://www.elevenlabs.io/','_blank')" class="cursor-pointer hover:text-primary">AI配音</span>
-        <span onclick="window.open('https://www.notion.so/','_blank')" class="cursor-pointer hover:text-primary">AI写作</span>
-      </div>
-    </div>
-    <!-- 生活 & 电商 -->
-    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3">生活服务</h3>
-      <div class="grid grid-cols-3 gap-2 text-sm">
+      <h3 class="font-medium mb-3 text-base">电商购物</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
         <span onclick="window.open('https://www.taobao.com','_blank')" class="cursor-pointer hover:text-primary">淘宝</span>
         <span onclick="window.open('https://www.jd.com','_blank')" class="cursor-pointer hover:text-primary">京东</span>
-        <span onclick="window.open('https://www.bilibili.com','_blank')" class="cursor-pointer hover:text-primary">B站</span>
-        <span onclick="window.open('https://www.baidu.com/weather','_blank')" class="cursor-pointer hover:text-primary">天气</span>
-        <span onclick="window.open('https://v.qq.com','_blank')" class="cursor-pointer hover:text-primary">腾讯视频</span>
+        <span onclick="window.open('https://www.pinduoduo.com','_blank')" class="cursor-pointer hover:text-primary">拼多多</span>
+        <span onclick="window.open('https://www.yijiayipu.cn','_blank')" class="cursor-pointer hover:text-primary">号卡商城</span>
         <span onclick="window.open('https://www.meituan.com','_blank')" class="cursor-pointer hover:text-primary">美团</span>
+        <span onclick="window.open('https://www.ele.me','_blank')" class="cursor-pointer hover:text-primary">饿了么</span>
+      </div>
+    </div>
+
+    <!-- 工具效率 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">工具效率</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <span onclick="window.open('https://www.aliyundrive.com','_blank')" class="cursor-pointer hover:text-primary">阿里云盘</span>
+        <span onclick="window.open('https://pan.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度网盘</span>
+        <span onclick="window.open('https://notion.so','_blank')" class="cursor-pointer hover:text-primary">Notion</span>
+        <span onclick="window.open('https://fanyi.baidu.com','_blank')" class="cursor-pointer hover:text-primary">翻译</span>
+        <span onclick="window.open('https://cli.im','_blank')" class="cursor-pointer hover:text-primary">二维码</span>
+        <span onclick="window.open('https://www.calculator.net','_blank')" class="cursor-pointer hover:text-primary">计算器</span>
+      </div>
+    </div>
+
+    <!-- AI工具 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">AI工具</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <span onclick="window.open('https://www.doubao.com','_blank')" class="cursor-pointer hover:text-primary">豆包</span>
+        <span onclick="window.open('https://chat.openai.com','_blank')" class="cursor-pointer hover:text-primary">ChatGPT</span>
+        <span onclick="window.open('https://yiyan.baidu.com','_blank')" class="cursor-pointer hover:text-primary">文心一言</span>
+        <span onclick="window.open('https://www.midjourney.com','_blank')" class="cursor-pointer hover:text-primary">AI作图</span>
+        <span onclick="window.open('https://www.elevenlabs.io','_blank')" class="cursor-pointer hover:text-primary">AI配音</span>
+        <span onclick="window.open('https://github.com','_blank')" class="cursor-pointer hover:text-primary">GitHub</span>
+      </div>
+    </div>
+
+    <!-- 社交资讯 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">社交资讯</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <span onclick="window.open('https://weibo.com','_blank')" class="cursor-pointer hover:text-primary">微博</span>
+        <span onclick="window.open('https://www.xiaohongshu.com','_blank')" class="cursor-pointer hover:text-primary">小红书</span>
+        <span onclick="window.open('https://www.toutiao.com','_blank')" class="cursor-pointer hover:text-primary">今日头条</span>
+        <span onclick="window.open('https://www.qq.com','_blank')" class="cursor-pointer hover:text-primary">QQ</span>
+        <span onclick="window.open('https://www.douban.com','_blank')" class="cursor-pointer hover:text-primary">豆瓣</span>
+        <span onclick="window.open('https://www.kuaishou.com','_blank')" class="cursor-pointer hover:text-primary">快手</span>
+      </div>
+    </div>
+
+    <!-- 影音娱乐 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">影音娱乐</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <span onclick="window.open('https://v.qq.com','_blank')" class="cursor-pointer hover:text-primary">腾讯视频</span>
+        <span onclick="window.open('https://www.youku.com','_blank')" class="cursor-pointer hover:text-primary">优酷</span>
+        <span onclick="window.open('https://www.iqiyi.com','_blank')" class="cursor-pointer hover:text-primary">爱奇艺</span>
+        <span onclick="window.open('https://music.163.com','_blank')" class="cursor-pointer hover:text-primary">网易云</span>
+        <span onclick="window.open('https://y.qq.com','_blank')" class="cursor-pointer hover:text-primary">QQ音乐</span>
+        <span onclick="window.open('https://www.huya.com','_blank')" class="cursor-pointer hover:text-primary">虎牙</span>
+      </div>
+    </div>
+
+    <!-- 办公设计 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">办公设计</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <span onclick="window.open('https://www.figma.com','_blank')" class="cursor-pointer hover:text-primary">Figma</span>
+        <span onclick="window.open('https://www.canva.com','_blank')" class="cursor-pointer hover:text-primary">Canva</span>
+        <span onclick="window.open('https://docs.qq.com','_blank')" class="cursor-pointer hover:text-primary">腾讯文档</span>
+        <span onclick="window.open('https://www.wps.cn','_blank')" class="cursor-pointer hover:text-primary">WPS</span>
+        <span onclick="window.open('https://mail.qq.com','_blank')" class="cursor-pointer hover:text-primary">QQ邮箱</span>
+        <span onclick="window.open('https://www.aliyun.com','_blank')" class="cursor-pointer hover:text-primary">阿里云</span>
+      </div>
+    </div>
+
+    <!-- 学习教育 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">学习教育</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <span onclick="window.open('https://www.icourse163.org','_blank')" class="cursor-pointer hover:text-primary">慕课</span>
+        <span onclick="window.open('https://www.boyuai.com','_blank')" class="cursor-pointer hover:text-primary">博雅</span>
+        <span onclick="window.open('https://study.163.com','_blank')" class="cursor-pointer hover:text-primary">网易课堂</span>
+        <span onclick="window.open('https://ke.qq.com','_blank')" class="cursor-pointer hover:text-primary">腾讯课堂</span>
+        <span onclick="window.open('https://www.cnki.net','_blank')" class="cursor-pointer hover:text-primary">知网</span>
+        <span onclick="window.open('https://www.baidu.com/edu','_blank')" class="cursor-pointer hover:text-primary">百度教育</span>
       </div>
     </div>
   </div>
@@ -200,7 +267,7 @@
 </div>
 
 <script>
-  // 主题
+  // 主题切换
   const toggle = document.getElementById('theme-toggle')
   toggle.addEventListener('click', () => {
     document.documentElement.classList.toggle('dark')
@@ -223,7 +290,7 @@
     el.onclick = () => window.open(el.dataset.url, '_blank')
   })
 
-  // 搜索引擎
+  // 搜索引擎切换
   let currentEngine = 'baidu'
   document.querySelectorAll('.search-engine').forEach(btn => {
     btn.onclick = () => {
