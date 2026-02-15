@@ -49,9 +49,6 @@
       .hover-scale:hover {
         transform: scale(1.05);
       }
-      .scrollbar-hide::-webkit-scrollbar {
-        display: none;
-      }
     }
   </style>
 </head>
@@ -68,11 +65,11 @@
       </button>
     </div>
 
-    <!-- AI 搜索框 -->
-    <div class="glass dark:glass-dark rounded-2xl p-5 mb-8 shadow-xl">
+    <!-- 搜索框 -->
+    <div class="glass dark:glass-dark rounded-2xl p-5 mb-10 shadow-xl">
       <div class="flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-3 shadow">
         <i class="fa fa-search text-gray-400 mr-3"></i>
-        <input id="search-input" type="text" placeholder="问AI、搜网站、发指令，AI通鉴为你直达..." 
+        <input id="search-input" type="text" placeholder="搜索或输入网址，一键直达..." 
                class="w-full bg-transparent outline-none text-gray-800 dark:text-gray-200">
         <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90">
           搜索
@@ -80,20 +77,8 @@
       </div>
     </div>
 
-    <!-- AI 对话区域 -->
-    <div id="ai-chat" class="glass dark:glass-dark rounded-2xl p-4 mb-8 hidden">
-      <div class="flex items-start gap-3 mb-3">
-        <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary">
-          <i class="fa fa-robot"></i>
-        </div>
-        <div class="flex-1 bg-white/10 dark:bg-slate-800/50 rounded-xl p-3 text-sm text-gray-800 dark:text-gray-200">
-          <p id="ai-reply">你好，我是AI通鉴助手，你可以说：打开抖音、打开GitHub、推荐导航、AI工具...</p>
-        </div>
-      </div>
-    </div>
-
     <!-- 快捷图标 -->
-    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-8">
+    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-10">
       <div class="glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer" data-url="https://www.google.com">
         <i class="fa fa-chrome text-xl text-blue-500"></i>
         <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">谷歌</p>
@@ -182,34 +167,22 @@
       el.onclick = () => window.open(el.dataset.url, '_blank')
     })
 
-    const aiChat = document.getElementById('ai-chat')
-    const aiReply = document.getElementById('ai-reply')
+    // 搜索功能（干净不尴尬版）
     const input = document.getElementById('search-input')
     const btn = document.getElementById('search-btn')
 
-    // AI 指令匹配
-    function aiCommand(text) {
-      const t = text.toLowerCase().trim()
-      if (t.includes('抖音') || t.includes('打开抖音')) return { url: 'https://douyin.com', msg: 'AI通鉴正在为你打开抖音' }
-      if (t.includes('github') || t.includes('代码')) return { url: 'https://github.com', msg: 'AI通鉴正在为你打开 GitHub' }
-      if (t.includes('百度') || t.includes('搜索')) return { url: 'https://baidu.com', msg: 'AI通鉴正在为你打开百度' }
-      if (t.includes('谷歌') || t.includes('google')) return { url: 'https://google.com', msg: 'AI通鉴正在为你打开谷歌' }
-      if (t.includes('微信')) return { url: 'https://wx.qq.com', msg: 'AI通鉴正在为你打开网页版微信' }
-      if (t.includes('导航') || t.includes('网站') || t.includes('ai通鉴')) return { msg: 'AI通鉴已为你准备：开发、工具、AI、视频、社交等全品类导航' }
-      return { msg: '我是AI通鉴，可帮你打开网站、搜索、推荐工具，试试说：打开抖音、推荐AI网站、导航大全' }
+    function goSearch() {
+      const q = input.value.trim()
+      if (!q) return
+      if (q.startsWith('http')) {
+        window.open(q, '_blank')
+      } else {
+        window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(q), '_blank')
+      }
     }
 
-    function doSearch() {
-      const text = input.value.trim()
-      if (!text) return
-      const res = aiCommand(text)
-      aiChat.classList.remove('hidden')
-      aiReply.innerText = res.msg
-      if (res.url) setTimeout(() => window.open(res.url, '_blank'), 1200)
-    }
-
-    btn.addEventListener('click', doSearch)
-    input.addEventListener('keydown', e => e.key === 'Enter' && doSearch())
+    btn.addEventListener('click', goSearch)
+    input.addEventListener('keydown', e => e.key === 'Enter' && goSearch())
   </script>
 </body>
 </html>
