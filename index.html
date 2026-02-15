@@ -26,8 +26,8 @@
           fontFamily: {
             sans: ['Inter','system-ui'],
           },
-        }
-      }
+        },
+      },
     }
   </script>
   <style type="text/tailwindcss">
@@ -104,6 +104,12 @@
       .feedback-btn {
         @apply fixed bottom-6 left-6 px-3 py-2 rounded-full glass dark:glass-dark text-xs text-primary shadow-lg hover-scale z-40;
       }
+      .theme-toggle {
+        @apply fixed top-2 right-4 w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale z-50;
+      }
+      .time-box {
+        @apply text-center text-sm text-gray-600 dark:text-gray-300 mb-4;
+      }
     }
   </style>
 </head>
@@ -118,6 +124,12 @@
 
 <div class="fixed top-0 left-0 w-full h-full opacity-20 pointer-events-none gradient-bg -z-10"></div>
 
+<!-- 主题切换 -->
+<button id="themeToggle" class="theme-toggle">
+  <i class="fa fa-moon-o dark:hidden"></i>
+  <i class="fa fa-sun-o hidden dark:block"></i>
+</button>
+
 <!-- 顶部导航 -->
 <nav class="glass dark:glass-dark sticky top-2 z-50 max-w-5xl mx-auto rounded-full px-5 py-3 mb-6 flex items-center justify-between">
   <h1 class="text-lg font-bold text-gradient">AI通鉴</h1>
@@ -129,7 +141,10 @@
 </nav>
 
 <div class="max-w-5xl mx-auto px-4 pb-20">
-  <!-- 滚动公告 -->
+  <!-- 实时时间 -->
+  <div id="realTime" class="time-box"></div>
+
+  <!-- 公告 -->
   <div class="glass dark:glass-dark rounded-xl px-4 py-3 mb-6 text-sm text-center text-gray-700 dark:text-gray-300">
     AI通鉴 · 高效上网 · 一站直达
   </div>
@@ -325,7 +340,7 @@
       <a class="hover:text-primary">免责声明</a>
     </div>
     <p class="mb-1">AI通鉴 © 2026 · 新一代AI智能导航平台</p>
-    <p>桂ICP备2026001644号-1</p>
+    <p><a href="https://beian.miit.gov.cn" target="_blank" class="hover:text-primary">桂ICP备2026001644号-1</a></p>
   </footer>
 </div>
 
@@ -347,10 +362,34 @@
     }, 600)
   })
 
-  // 主题
+  // 暗黑模式切换
+  const themeToggle = document.getElementById('themeToggle')
+  function toggleDark() {
+    document.documentElement.classList.toggle('dark')
+    localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
+  }
+  themeToggle.addEventListener('click', toggleDark)
   if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
     document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
   }
+
+  // 实时时间
+  function updateTime() {
+    const now = new Date()
+    const y = now.getFullYear()
+    const m = now.getMonth() + 1
+    const d = now.getDate()
+    const hh = String(now.getHours()).padStart(2, '0')
+    const mm = String(now.getMinutes()).padStart(2, '0')
+    const ss = String(now.getSeconds()).padStart(2, '0')
+    const w = ['日','一','二','三','四','五','六'][now.getDay()]
+    document.getElementById('realTime').innerText = 
+      `${y}年${m}月${d}日 ${hh}:${mm}:${ss} 星期${w}`
+  }
+  updateTime()
+  setInterval(updateTime, 1000)
 
   // 搜索
   const input = document.getElementById('search-input')
@@ -395,13 +434,15 @@
   btn.addEventListener('click', goSearch)
   input.addEventListener('keydown', e => e.key === 'Enter' && goSearch())
 
-  // 防重复点击
+  // 防重复点击 + 震动
   let lastClick = 0
   document.querySelectorAll('[data-url]').forEach(el => {
     el.onclick = () => {
       let now = Date.now()
       if(now - lastClick < 800) return
       lastClick = now
+      el.style.transform = 'scale(0.95)'
+      setTimeout(() => el.style.transform = '', 100)
       window.open(el.dataset.url, '_blank')
     }
   })
