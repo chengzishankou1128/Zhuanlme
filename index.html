@@ -61,12 +61,6 @@
       .nav-card {
         @apply glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer;
       }
-      .back-top {
-        @apply fixed bottom-6 right-6 w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg transition-all duration-300 opacity-0 translate-y-5 pointer-events-none z-40;
-      }
-      .back-top.show {
-        @apply opacity-100 translate-y-0 pointer-events-auto;
-      }
       .loading {
         position: fixed;
         inset: 0;
@@ -77,7 +71,7 @@
         background: #f8fafc;
         transition: opacity 0.5s ease;
       }
-      .dark .loading {
+      .dark {
         background: #0f172a;
       }
       .loading.hidden {
@@ -102,9 +96,6 @@
         from { transform: translateY(0); }
         to { transform: translateY(-15px); }
       }
-      .feedback-btn {
-        @apply fixed bottom-6 left-6 px-3 py-1.5 rounded-full glass dark:glass-dark text-xs text-primary shadow-lg hover:scale-105 z-40;
-      }
       .theme-toggle {
         @apply fixed top-3 right-3 w-9 h-9 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale z-50;
       }
@@ -117,10 +108,21 @@
 
       /* 右侧悬浮边栏 */
       .right-sidebar {
-        @apply fixed right-2 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-2;
+        @apply fixed right-2 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3 hidden sm:flex;
       }
       .sidebar-btn {
-        @apply w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer;
+        @apply w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer relative;
+      }
+      .sidebar-btn:hover::after {
+        content: attr(data-text);
+        position: absolute;
+        right: 44px;
+        white-space: nowrap;
+        background: #222;
+        color: #fff;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 12px;
       }
     }
   </style>
@@ -144,20 +146,19 @@
 
 <!-- ====================== 右侧悬浮边栏 ====================== -->
 <div class="right-sidebar">
-  <!-- 信符铺快捷入口 -->
-  <div class="sidebar-btn" onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')" title="信符铺">
+  <div class="sidebar-btn" data-text="信符铺" onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')">
     <i class="fa fa-shopping-bag"></i>
   </div>
-  <!-- 刷新页面 -->
-  <div class="sidebar-btn" onclick="location.reload()" title="刷新">
+  <div class="sidebar-btn" data-text="客服微信" onclick="navigator.clipboard.writeText('chien5156').then(()=>alert('微信号已复制！'))">
+    <i class="fa fa-weixin"></i>
+  </div>
+  <div class="sidebar-btn" data-text="刷新" onclick="location.reload()">
     <i class="fa fa-refresh"></i>
   </div>
-  <!-- 反馈 -->
-  <div class="sidebar-btn" onclick="alert('感谢反馈！')" title="反馈">
-    <i class="fa fa-comment-o"></i>
+  <div class="sidebar-btn" data-text="清空历史" onclick="localStorage.removeItem('searchHistory');history=[];renderHistory();alert('搜索历史已清空')">
+    <i class="fa fa-trash-o"></i>
   </div>
-  <!-- 回到顶部 -->
-  <div class="sidebar-btn" id="sideBackTop" title="回到顶部">
+  <div class="sidebar-btn" data-text="顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
     <i class="fa fa-arrow-up"></i>
   </div>
 </div>
@@ -195,7 +196,7 @@
       <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90">搜索</button>
     </div>
     <!-- 搜索历史 -->
-    <div id="searchHistory" class="mt-3 flex flex-wrap gap-2"></div>
+    <div id="searchHistory" class="mt-3 flex-wrap gap-2"></div>
   </div>
 
   <!-- 常用直达 -->
@@ -377,11 +378,6 @@
   </footer>
 </div>
 
-<!-- 意见反馈 -->
-<button class="feedback-btn" onclick="alert('反馈已收到！感谢您的支持')">
-  <i class="fa fa-comment-o mr-1"></i>意见反馈
-</button>
-
 <script>
   // 加载动画
   window.addEventListener('load', () => {
@@ -417,10 +413,8 @@
   const searchHistory = document.getElementById('searchHistory')
   let currentEngine = 'baidu'
 
-  // 自动聚焦搜索框
   window.onload = () => searchInput.focus()
 
-  // 读取历史
   let history = JSON.parse(localStorage.getItem('searchHistory') || '[]')
   function renderHistory() {
     searchHistory.innerHTML = ''
@@ -437,7 +431,6 @@
   }
   renderHistory()
 
-  // 搜索引擎切换
   document.querySelectorAll('.search-engine').forEach(btn => {
     btn.onclick = () => {
       document.querySelectorAll('.search-engine').forEach(b => b.classList.remove('bg-primary','text-white'), b.classList.add('bg-gray-200','dark:bg-gray-700'))
@@ -447,7 +440,6 @@
     }
   })
 
-  // 搜索
   function doSearch() {
     let q = searchInput.value.trim()
     if (!q) return
@@ -466,9 +458,11 @@
 
   searchBtn.onclick = doSearch
   searchIcon.onclick = doSearch
-  searchInput.addEventListener('keydown', e => e.key === 'Enter' && doSearch())
+  searchInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') doSearch()
+  })
 
-  // 卡片点击 + 震动反馈
+  // 卡片点击效果
   let lastClick = 0
   document.querySelectorAll('[data-url]').forEach(el => {
     el.onclick = () => {
@@ -480,11 +474,6 @@
       window.open(el.dataset.url, '_blank')
     }
   })
-
-  // 右侧边栏 - 回到顶部
-  document.getElementById('sideBackTop').onclick = () => {
-    window.scrollTo({ top:0, behavior:'smooth' })
-  }
 </script>
 </body>
 </html>
