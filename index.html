@@ -108,7 +108,7 @@
 
       /* 右侧悬浮边栏 */
       .right-sidebar {
-        @apply fixed right-2 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3 hidden sm:flex;
+        @apply fixed right-2 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3;
       }
       .sidebar-btn {
         @apply w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer relative;
@@ -123,6 +123,9 @@
         padding: 2px 8px;
         border-radius: 4px;
         font-size: 12px;
+      }
+      .sidebar-toggle {
+        @apply fixed right-2 bottom-20 w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer z-40;
       }
     }
   </style>
@@ -144,8 +147,13 @@
   <i class="fa fa-sun-o hidden dark:block"></i>
 </button>
 
+<!-- 右侧边栏开关（手机专用） -->
+<div class="sidebar-toggle" id="sidebarToggle">
+  <i class="fa fa-bars"></i>
+</div>
+
 <!-- ====================== 右侧悬浮边栏 ====================== -->
-<div class="right-sidebar">
+<div class="right-sidebar" id="rightSidebar">
   <div class="sidebar-btn" data-text="信符铺" onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')">
     <i class="fa fa-shopping-bag"></i>
   </div>
@@ -184,7 +192,7 @@
 
   <!-- 智能搜索框 -->
   <div class="glass dark:glass-dark rounded-2xl p-5 mb-8 shadow-xl">
-    <div class="flex flex-wrap gap-2 mb-3">
+    <div class="flex-wrap gap-2 mb-3 flex">
       <button class="search-engine px-2 py-1 text-xs rounded bg-primary text-white" data-engine="baidu">百度</button>
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="google">谷歌</button>
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="bing">必应</button>
@@ -474,6 +482,22 @@
       window.open(el.dataset.url, '_blank')
     }
   })
+
+  // 手机端右侧边栏手动展开/收起
+  const sidebar = document.getElementById('rightSidebar')
+  const toggle = document.getElementById('sidebarToggle')
+  let isOpen = false
+
+  // 手机默认隐藏
+  if (window.innerWidth < 640) {
+    sidebar.style.display = 'none'
+  }
+
+  toggle.onclick = () => {
+    isOpen = !isOpen
+    sidebar.style.display = isOpen ? 'flex' : 'none'
+    toggle.innerHTML = isOpen ? '<i class="fa fa-times"></i>' : '<i class="fa fa-bars"></i>'
+  }
 </script>
 </body>
 </html>
