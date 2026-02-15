@@ -40,9 +40,8 @@ body{background:#f9fafb;color:#111}
 <div class="top">
   <div class="header">
     <div class="logo">AI工具大全</div>
-   <div class="search-box">
-  <input type="text" id="searchInput" placeholder="搜索AI工具、写作、绘画..."><button class="search-btn" id="searchBtn">搜索</button>
-</div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜索AI工具、写作、绘画、视频、配音、办公...">
     </div>
   </div>
   <div class="filter">
@@ -77,7 +76,8 @@ body{background:#f9fafb;color:#111}
     <div class="ad">广告位</div>
     <div class="grid" id="toolGrid">
 
-<div class="card" data-tags="free">
+<!-- 全部卡片已带好筛选标签 -->
+<div class="card" data-tags="free cn">
   <div class="card-body">
     <img src="https://t3.gstatic.cn/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=128&url=https://chat.openai.com" class="card-icon">
     <div class="card-title">ChatGPT</div>
@@ -532,18 +532,19 @@ body{background:#f9fafb;color:#111}
   </div>
 </div>
 
-<script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-<script>LA.init({id:"3P1SroYiCoilgdOp",ck:"3P1SroYiCoilgdOp"})</script>
-
 <script>
+// 筛选功能
 const filterBtns = document.querySelectorAll('.filter-btn');
 const cards = document.querySelectorAll('.card');
 
 filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
+    // 切换高亮
     filterBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    
     const filter = btn.getAttribute('data-filter');
+    
     cards.forEach(card => {
       if (filter === 'all') {
         card.style.display = 'block';
@@ -559,6 +560,7 @@ filterBtns.forEach(btn => {
   });
 });
 
+// 搜索功能
 const searchInput = document.getElementById('searchInput');
 searchInput.addEventListener('input', () => {
   const keyword = searchInput.value.toLowerCase();
@@ -572,93 +574,6 @@ searchInput.addEventListener('input', () => {
     }
   });
 });
-<script>
-// 实时抓取 · 公共AI工具接口（自动更新，永久可用）
-async function loadAIToolsRealTime() {
-  try {
-    // 公共AI工具API（实时更新，2000+）
-    const res = await fetch("https://tools.qqsuu.com/api/aitools.php");
-    const list = await res.json();
-
-    const grid = document.getElementById("toolGrid");
-    grid.innerHTML = "";
-
-    list.forEach(item => {
-      const card = document.createElement("div");
-      card.className = "card";
-      card.dataset.tags = [
-        item.free == 1 ? "free" : "paid",
-        item.cn == 1 ? "cn" : "",
-        item.new == 1 ? "new" : "",
-        item.type
-      ].filter(Boolean).join(" ");
-
-      card.innerHTML = `
-        <div class="card-body">
-          <img src="${item.icon}" class="card-icon">
-          <div class="card-title">${item.name}</div>
-          <div class="card-desc">${item.desc}</div>
-          <div class="tags">
-            <span>${item.free == 1 ? "免费" : "付费"}</span>
-            <span>${item.type_text}</span>
-            ${item.cn == 1 ? '<span>国内</span>' : ''}
-            ${item.new == 1 ? '<span>最新</span>' : ''}
-          </div>
-          <a href="${item.url}" target="_blank" class="btn">立即使用</a>
-        </div>
-      `;
-      grid.appendChild(card);
-    });
-
-    // 绑定搜索、筛选、侧边栏
-    bindFunc();
-  } catch (e) {
-    document.getElementById("toolGrid").innerHTML = "<div style='padding:30px;text-align:center'>加载失败，刷新重试</div>";
-  }
-}
-
-// 搜索 + 筛选 + 侧边
-function bindFunc() {
-  // 顶部筛选
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.onclick = function () {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      this.classList.add('active');
-      const f = this.dataset.filter;
-      document.querySelectorAll('.card').forEach(c => {
-        c.style.display = f === 'all' || c.dataset.tags.includes(f) ? 'block' : 'none';
-      });
-    };
-  });
-
-  // 左侧分类
-  document.querySelectorAll('.sidebar a[data-filter]').forEach(a => {
-    a.onclick = e => {
-      e.preventDefault();
-      const f = a.dataset.filter;
-      document.querySelectorAll('.card').forEach(c => {
-        c.style.display = f === 'all' || c.dataset.tags.includes(f) ? 'block' : 'none';
-      });
-    };
-  });
-
-  // 搜索
-  const search = document.getElementById('searchInput');
-  const go = document.getElementById('searchBtn');
-  function doSearch() {
-    const kw = search.value.toLowerCase();
-    document.querySelectorAll('.card').forEach(c => {
-      const t = c.querySelector('.card-title').innerText.toLowerCase();
-      const d = c.querySelector('.card-desc').innerText.toLowerCase();
-      c.style.display = t.includes(kw) || d.includes(kw) ? 'block' : 'none';
-    });
-  }
-  go.onclick = doSearch;
-  search.addEventListener('keydown', e => e.key === 'Enter' && doSearch());
-}
-
-// 页面一打开就自动加载【实时最新AI工具】
-loadAIToolsRealTime();
 </script>
 </body>
 </html>
