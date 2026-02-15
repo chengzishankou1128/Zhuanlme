@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="application-name" content="AI通鉴.cn">
-  <meta name="description" content="AI通鉴.cn · 高效上网 · 一站直达">
-  <title>AI通鉴.cn - 新一代AI智能导航</title>
-  <link rel="icon" href="https://p3-flow-imagex.byteimg.com/8f9a9a9d9a9d9a9d9a9d9a9d9a9d9a9d~tplv-9f67e5164d/image.png" type="image/x-icon">
+  <meta name="application-name" content="AI通鉴">
+  <meta name="description" content="AI通鉴 · 高效上网 · 一站直达">
+  <title>AI通鉴 - 新一代AI智能导航</title>
+  <link rel="icon" href="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-9hnh1cl1ds/8f9a9a9d9a9d9a9d9a9d9a9d9a9d9a9d~tplv-9hnh1cl1ds-image.png" type="image/x-icon">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
   
   <!-- 51.la 统计 -->
   <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
@@ -22,43 +22,44 @@
           colors: {
             primary: '#4f67e5',
             secondary: '#7c3aed',
-            dark: '#0f2137',
+            dark: '#0f172a',
           },
           fontFamily: {
             sans: ['Inter','system-ui'],
           },
         },
-      }
+      },
     }
   </script>
   <style type="text/tailwindcss">
     @layer utilities {
       .glass {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255,255,255,0.08);
         backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255,255,255,0.1);
       }
       .glass-dark {
-        background: rgba(15, 33, 55, 0.6);
+        background: rgba(15,23,42,0.6);
         backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255,255,255,0.05);
       }
       .gradient-bg {
         background: linear-gradient(135deg, #4f67e5 0%, #7c3aed 50%, #db2777 100%);
       }
       .text-gradient {
-        background: linear-gradient(90deg, #4f67e5, #7c3aed);
+        background: linear-gradient(90deg, #4f67e5, #db2777);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
       .hover-scale {
-        transition: all 0.2s ease;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
       .hover-scale:hover {
         transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       }
       .nav-card {
-        @apply glass glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer;
+        @apply glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer;
       }
       .loading {
         position: fixed;
@@ -69,6 +70,9 @@
         justify-content: center;
         background: #f8fafc;
         transition: opacity 0.5s ease;
+      }
+      .dark {
+        background: #0f172a;
       }
       .loading.hidden {
         opacity: 0;
@@ -93,7 +97,7 @@
         to { transform: translateY(-15px); }
       }
       .theme-toggle {
-        @apply fixed top-3 right-3 w-10 h-10 rounded-full glass glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer z-50;
+        @apply fixed top-3 right-3 w-9 h-9 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale z-50;
       }
       .time-box {
         @apply text-center text-sm text-gray-600 dark:text-gray-300 mb-3;
@@ -102,11 +106,12 @@
         @apply px-2 py-1.5 text-sm bg-gray-100 dark:bg-gray-800 rounded cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700;
       }
 
+      /* 右侧悬浮边栏 */
       .right-sidebar {
         @apply fixed right-2 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3;
       }
       .sidebar-btn {
-        @apply w-10 h-10 rounded-full glass glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer relative;
+        @apply w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer relative;
       }
       .sidebar-btn:hover::after {
         content: attr(data-text);
@@ -118,33 +123,36 @@
         padding: 2px 8px;
         border-radius: 4px;
         font-size: 12px;
-        z-index: 99;
       }
       .sidebar-toggle {
-        @apply fixed right-2 bottom-20 w-10 h-10 rounded-full glass glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer z-40;
+        @apply fixed right-2 bottom-20 w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer z-40;
       }
     }
   </style>
 </head>
 
-<body class="bg-slate-50 dark:bg-dark min-h-screen transition-colors duration-300">
+<body class="bg-slate-100 dark:bg-dark min-h-screen transition-colors duration-300">
+<!-- 加载动画 -->
 <div class="loading" id="loading">
   <div class="dot"></div>
   <div class="dot"></div>
   <div class="dot"></div>
 </div>
 
-<div class="fixed top-0 left-0 w-full h-full opacity-10 pointer-events-none gradient-bg -z-10"></div>
+<div class="fixed top-0 left-0 w-full h-full opacity-20 pointer-events-none gradient-bg -z-10"></div>
 
+<!-- 主题切换 -->
 <button id="themeToggle" class="theme-toggle">
   <i class="fa fa-moon-o dark:hidden"></i>
   <i class="fa fa-sun-o hidden dark:block"></i>
 </button>
 
+<!-- 右侧边栏开关（手机专用） -->
 <div class="sidebar-toggle" id="sidebarToggle">
   <i class="fa fa-bars"></i>
 </div>
 
+<!-- ====================== 右侧悬浮边栏 ====================== -->
 <div class="right-sidebar" id="rightSidebar">
   <div class="sidebar-btn" data-text="信符铺" onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')">
     <i class="fa fa-shopping-bag"></i>
@@ -163,8 +171,9 @@
   </div>
 </div>
 
-<nav class="glass glass-dark sticky top-2 z-50 max-w-5xl mx-auto rounded-full px-5 py-3 mb-5 flex items-center justify-between">
-  <h1 class="text-lg font-bold text-gradient">AI通鉴.cn</h1>
+<!-- 顶部导航 -->
+<nav class="glass dark:glass-dark sticky top-2 z-50 max-w-5xl mx-auto rounded-full px-5 py-3 mb-5 flex items-center justify-between">
+  <h1 class="text-lg font-bold text-gradient">AI通鉴</h1>
   <div class="flex gap-4 text-sm text-gray-700 dark:text-gray-300">
     <a href="#" class="hover:text-primary transition-colors">首页</a>
     <a href="#tools" class="hover:text-primary transition-colors">工具</a>
@@ -173,27 +182,32 @@
 </nav>
 
 <div class="max-w-5xl mx-auto px-4 pb-20">
+  <!-- 实时时间 -->
   <div id="realTime" class="time-box"></div>
 
-  <div class="glass glass-dark rounded-xl px-4 py-3 mb-5 text-sm text-center text-gray-700 dark:text-gray-300">
-    AI通鉴.cn · 高效上网 · 一站直达
+  <!-- 公告 -->
+  <div class="glass dark:glass-dark rounded-xl px-4 py-3 mb-5 text-sm text-center text-gray-700 dark:text-gray-300">
+    AI通鉴 · 高效上网 · 一站直达
   </div>
 
-  <div class="glass glass-dark rounded-2xl p-5 mb-8 shadow-xl">
-    <div class="flex flex-wrap gap-2 mb-3">
+  <!-- 智能搜索框 -->
+  <div class="glass dark:glass-dark rounded-2xl p-5 mb-8 shadow-xl">
+    <div class="flex-wrap gap-2 mb-3 flex">
       <button class="search-engine px-2 py-1 text-xs rounded bg-primary text-white" data-engine="baidu">百度</button>
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="google">谷歌</button>
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="bing">必应</button>
     </div>
-    <div class="flex items-center bg-white dark:bg-transparent rounded-xl px-4 py-3 shadow">
+    <div class="flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-3 shadow">
       <i id="searchIcon" class="fa fa-search text-gray-400 mr-3 cursor-pointer"></i>
       <input id="search-input" type="text" placeholder="搜索、打开网站、输入网址……" 
-             class="w-full bg-transparent outline-none text-gray-800 dark:text-white">
+             class="w-full bg-transparent outline-none text-gray-800 dark:text-gray-200">
       <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90">搜索</button>
     </div>
-    <div id="searchHistory" class="mt-3 flex flex-wrap gap-2"></div>
+    <!-- 搜索历史 -->
+    <div id="searchHistory" class="mt-3 flex-wrap gap-2"></div>
   </div>
 
+  <!-- 常用直达 -->
   <h2 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">常用直达</h2>
   <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-8">
     <div class="nav-card" data-url="https://www.douyin.com">
@@ -222,6 +236,7 @@
     </div>
   </div>
 
+  <!-- 快捷工具 -->
   <h2 id="tools" class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">快捷工具</h2>
   <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 mb-8">
     <div class="nav-card" onclick="window.open('https://cli.im/','_blank')">
@@ -250,9 +265,11 @@
     </div>
   </div>
 
+  <!-- 全部分类 -->
   <h2 id="categories" class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">网址分类</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-    <div class="glass glass-dark rounded-xl p-5 hover-scale">
+    <!-- 常用平台 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
       <h3 class="font-medium mb-3 text-base">常用平台</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
         <span onclick="window.open('https://www.douyin.com','_blank')" class="cursor-pointer hover:text-primary">抖音</span>
@@ -264,7 +281,8 @@
       </div>
     </div>
 
-    <div class="glass glass-dark rounded-xl p-5 hover-scale">
+    <!-- 电商购物 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
       <h3 class="font-medium mb-3 text-base">电商购物</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
         <span onclick="window.open('https://www.taobao.com','_blank')" class="cursor-pointer hover:text-primary">淘宝</span>
@@ -276,7 +294,8 @@
       </div>
     </div>
 
-    <div class="glass glass-dark rounded-xl p-5 hover-scale">
+    <!-- 工具效率 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
       <h3 class="font-medium mb-3 text-base">工具效率</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
         <span onclick="window.open('https://www.aliyundrive.com','_blank')" class="cursor-pointer hover:text-primary">阿里云盘</span>
@@ -288,7 +307,8 @@
       </div>
     </div>
 
-    <div class="glass glass-dark rounded-xl p-5 hover-scale">
+    <!-- AI工具 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
       <h3 class="font-medium mb-3 text-base">AI工具</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
         <span onclick="window.open('https://www.doubao.com','_blank')" class="cursor-pointer hover:text-primary">豆包</span>
@@ -300,7 +320,8 @@
       </div>
     </div>
 
-    <div class="glass glass-dark rounded-xl p-5 hover-scale">
+    <!-- 社交资讯 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
       <h3 class="font-medium mb-3 text-base">社交资讯</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
         <span onclick="window.open('https://weibo.com','_blank')" class="cursor-pointer hover:text-primary">微博</span>
@@ -312,7 +333,8 @@
       </div>
     </div>
 
-    <div class="glass glass-dark rounded-xl p-5 hover-scale">
+    <!-- 影音娱乐 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
       <h3 class="font-medium mb-3 text-base">影音娱乐</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
         <span onclick="window.open('https://v.qq.com','_blank')" class="cursor-pointer hover:text-primary">腾讯视频</span>
@@ -324,7 +346,8 @@
       </div>
     </div>
 
-    <div class="glass glass-dark rounded-xl p-5 hover-scale">
+    <!-- 办公设计 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
       <h3 class="font-medium mb-3 text-base">办公设计</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
         <span onclick="window.open('https://www.figma.com','_blank')" class="cursor-pointer hover:text-primary">Figma</span>
@@ -336,7 +359,8 @@
       </div>
     </div>
 
-    <div class="glass glass-dark rounded-xl p-5 hover-scale">
+    <!-- 学习教育 -->
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
       <h3 class="font-medium mb-3 text-base">学习教育</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
         <span onclick="window.open('https://www.icourse163.org','_blank')" class="cursor-pointer hover:text-primary">中国大学MOOC</span>
@@ -349,21 +373,26 @@
     </div>
   </div>
 
+  <!-- 底部 -->
   <footer class="text-center text-sm text-gray-500 pt-6 border-t border-gray-200 dark:border-gray-800">
     <div class="flex justify-center gap-3 mb-2">
       <a class="hover:text-primary">隐私政策</a>
       <a class="hover:text-primary">用户协议</a>
       <a class="hover:text-primary">免责声明</a>
     </div>
-    <p class="mb-1">AI通鉴.cn © 2026</p>
+    <p class="mb-1">AI通鉴 © 2026 · 新一代AI智能导航平台</p>
+    <p class="mb-1"><a href="https://beian.miit.gov.cn" target="_blank" class="hover:text-primary">桂ICP备2026001644号-1</a></p>
+    <p>统计由 51.la 提供</p>
   </footer>
 </div>
 
 <script>
+  // 加载动画
   window.addEventListener('load', () => {
     setTimeout(() => document.getElementById('loading').classList.add('hidden'), 500)
   })
 
+  // 暗黑模式
   const themeToggle = document.getElementById('themeToggle')
   function toggleDark() {
     document.documentElement.classList.toggle('dark')
@@ -374,6 +403,7 @@
     document.documentElement.classList.add('dark')
   }
 
+  // 实时时间
   function updateTime() {
     const now = new Date()
     const y = now.getFullYear(), m = now.getMonth()+1, d = now.getDate()
@@ -384,6 +414,7 @@
   updateTime()
   setInterval(updateTime, 1000)
 
+  // 搜索历史
   const searchInput = document.getElementById('search-input')
   const searchBtn = document.getElementById('search-btn')
   const searchIcon = document.getElementById('searchIcon')
@@ -391,8 +422,8 @@
   let currentEngine = 'baidu'
 
   window.onload = () => searchInput.focus()
+
   let history = JSON.parse(localStorage.getItem('searchHistory') || '[]')
-  
   function renderHistory() {
     searchHistory.innerHTML = ''
     history.slice(-6).forEach(item => {
@@ -410,8 +441,8 @@
 
   document.querySelectorAll('.search-engine').forEach(btn => {
     btn.onclick = () => {
-      document.querySelectorAll('.search-engine').forEach(b => b.classList.remove('bg-primary','text-white'), b.classList.add('bg-gray-200 dark:bg-gray-700'))
-      btn.classList.remove('bg-gray-200 dark:bg-gray-700')
+      document.querySelectorAll('.search-engine').forEach(b => b.classList.remove('bg-primary','text-white'), b.classList.add('bg-gray-200','dark:bg-gray-700'))
+      btn.classList.remove('bg-gray-200','dark:bg-gray-700')
       btn.classList.add('bg-primary','text-white')
       currentEngine = btn.dataset.engine
     }
@@ -439,6 +470,7 @@
     if (e.key === 'Enter') doSearch()
   })
 
+  // 卡片点击效果
   let lastClick = 0
   document.querySelectorAll('[data-url]').forEach(el => {
     el.onclick = () => {
@@ -451,10 +483,12 @@
     }
   })
 
+  // 手机端右侧边栏手动展开/收起
   const sidebar = document.getElementById('rightSidebar')
   const toggle = document.getElementById('sidebarToggle')
   let isOpen = false
 
+  // 手机默认隐藏
   if (window.innerWidth < 640) {
     sidebar.style.display = 'none'
   }
