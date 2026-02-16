@@ -6,7 +6,7 @@
   <meta name="application-name" content="AI通鉴">
   <meta name="description" content="AI通鉴 · 高效上网 · 一站直达">
   <title>AI通鉴 - 新一代AI智能导航</title>
-  <link rel="icon" href="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-9hnh1cl1ds/8f9a9a9d9a9d9a9d9a9d9a9d9a9d9a9d~tplv-9hnh1cl1ds-image.png" type="image/x-icon">
+  <link rel="icon" href="https://p3-flow-imagex-sign.bytejump.com/obj/seed-creative-public/assets/favicon.ico" type="image/x-icon">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -18,7 +18,7 @@
           colors: {
             primary: '#4f67e5',
             secondary: '#7c3aed',
-            dark: '#0f172a',
+            dark: '#0f2342',
           },
           fontFamily: {
             sans: ['Inter','system-ui'],
@@ -35,7 +35,7 @@
         border: 1px solid rgba(255,255,255,0.1);
       }
       .glass-dark {
-        background: rgba(15,23,42,0.6);
+        background: rgba(15,35,66,0.6);
         backdrop-filter: blur(16px);
         border: 1px solid rgba(255,255,255,0.05);
       }
@@ -68,7 +68,7 @@
         transition: opacity 0.5s ease;
       }
       .dark {
-        background: #0f172a;
+        background: #0f2342;
       }
       .loading.hidden {
         opacity: 0;
@@ -99,7 +99,7 @@
         @apply text-center text-sm text-gray-600 dark:text-gray-300 mb-3;
       }
       .history-item {
-        @apply px-2 py-1.5 text-sm bg-gray-100 dark:bg-gray-800 rounded cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700;
+        @apply px-2 py-1.5 text-sm bg-gray-100 dark:bg-gray-800 rounded cursor-pointer hover:bg-gray-200 dark:bg-gray-700;
       }
 
       .right-sidebar {
@@ -151,6 +151,9 @@
   <div class="sidebar-btn" data-text="客服微信" onclick="navigator.clipboard.writeText('chien5156').then(()=>alert('微信号已复制！'))">
     <i class="fa fa-weixin"></i>
   </div>
+  <div class="sidebar-btn" data-text="添加到桌面" onclick="showAddToHomeTip()">
+    <i class="fa fa-desktop"></i>
+  </div>
   <div class="sidebar-btn" data-text="刷新" onclick="location.reload()">
     <i class="fa fa-refresh"></i>
   </div>
@@ -164,10 +167,16 @@
 
 <nav class="glass dark:glass-dark sticky top-2 z-50 max-w-5xl mx-auto rounded-full px-5 py-3 mb-5 flex items-center justify-between">
   <h1 class="text-lg font-bold text-gradient">AI通鉴</h1>
-  <div class="flex gap-4 text-sm text-gray-700 dark:text-gray-300">
-    <a href="#" class="hover:text-primary transition-colors">首页</a>
-    <a href="#tools" class="hover:text-primary transition-colors">工具</a>
-    <a href="#categories" class="hover:text-primary transition-colors">分类</a>
+  <div class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300">
+    <a href="#" class="hover:text-primary">首页</a>
+    <a href="#tools" class="hover:text-primary">工具</a>
+    <a href="#categories" class="hover:text-primary">分类</a>
+    <span class="text-xs font-bold gap-1 flex">
+      <a onclick="changeLang('zh')" class="cursor-pointer hover:text-primary">中</a>
+      <a onclick="changeLang('en')" class="cursor-pointer hover:text-primary">EN</a>
+      <a onclick="changeLang('ja')" class="cursor-pointer hover:text-primary">日</a>
+      <a onclick="changeLang('ko')" class="cursor-pointer hover:text-primary">韩</a>
+    </span>
   </div>
 </nav>
 
@@ -186,7 +195,7 @@
     </div>
     <div class="flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-3 shadow">
       <i id="searchIcon" class="fa fa-search text-gray-400 mr-3 cursor-pointer"></i>
-      <input id="search-input" type="text" placeholder="搜索、打开网站、输入网址……" 
+      <input id="search-input" type="text" placeholder="搜索、输入网址……" 
              class="w-full bg-transparent outline-none text-gray-800 dark:text-gray-200">
       <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90">搜索</button>
     </div>
@@ -243,14 +252,32 @@
       <i class="fa fa-sticky-note-o text-xl text-gray-500"></i>
       <p class="text-xs mt-1">便签</p>
     </div>
-    <div class="nav-card" onclick="window.open('https://www.apowersoft.cn/online-watermark-remover','_blank')">
+    <div class="nav-card">
       <i class="fa fa-clock-o text-xl text-teal-500"></i>
-      <p class="text-xs mt-1">去水印</p>
+      <p class="text-xs mt-1">时间</p>
     </div>
   </div>
 
   <h2 id="categories" class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">网址分类</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+
+    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
+      <h3 class="font-medium mb-3 text-base">AI工具</h3>
+      <div class="grid grid-cols-2 gap-2 text-sm">
+        <span onclick="window.open('https://www.doubao.com','_blank')" class="cursor-pointer hover:text-primary">豆包AI</span>
+        <span onclick="window.open('https://chat.openai.com','_blank')" class="cursor-pointer hover:text-primary">ChatGPT</span>
+        <span onclick="window.open('https://tongyi.aliyun.com','_blank')" class="cursor-pointer hover:text-primary">通义千问</span>
+        <span onclick="window.open('https://yiyan.baidu.com','_blank')" class="cursor-pointer hover:text-primary">文心一言</span>
+        <span onclick="window.open('https://www.midjourney.com','_blank')" class="cursor-pointer hover:text-primary">Midjourney</span>
+        <span onclick="window.open('https://www.123apps.com','_blank')" class="cursor-pointer hover:text-primary">AI音视频</span>
+        <span onclick="window.open('https://ai.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度AI</span>
+        <span onclick="window.open('https://ai.sohu.com','_blank')" class="cursor-pointer hover:text-primary">AI去水印</span>
+        <span onclick="window.open('https://tinypng.com','_blank')" class="cursor-pointer hover:text-primary">图片压缩</span>
+        <span onclick="window.open('https://www.canva.com','_blank')" class="cursor-pointer hover:text-primary">AI设计</span>
+        <span onclick="window.open('https://clipdrop.co','_blank')" class="cursor-pointer hover:text-primary">AI抠图</span>
+        <span onclick="window.open('https://www.baidu.com/s?wd=AI工具','_blank')" class="cursor-pointer hover:text-primary">更多AI</span>
+      </div>
+    </div>
 
     <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
       <h3 class="font-medium mb-3 text-base">短视频娱乐</h3>
@@ -337,7 +364,7 @@
         <span onclick="window.open('https://www.baidu.com/s?wd=录屏','_blank')" class="cursor-pointer hover:text-primary">录屏</span>
         <span onclick="window.open('https://www.baidu.com/s?wd=去水印','_blank')" class="cursor-pointer hover:text-primary">去水印</span>
         <span onclick="window.open('https://www.baidu.com/s?wd=表格工具','_blank')" class="cursor-pointer hover:text-primary">表格</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=文档编辑','_blank')" class="cursor-pointer hover:text-primary">文档</span>
+        <span onclick="window.open('https://www.baidu.com/s?wd=文档编辑','_blank')" class="cursor-pointer hover:text-primary">文档编辑</span>
         <span onclick="window.open('https://www.baidu.com/s?wd=倒计时','_blank')" class="cursor-pointer hover:text-primary">倒计时</span>
       </div>
     </div>
@@ -435,121 +462,161 @@
   </div>
 
   <footer class="text-center text-sm text-gray-500 pt-6 border-t border-gray-200 dark:border-gray-800">
-    <div class="flex justify-center gap-3 mb-2">
-      <a class="hover:text-primary">隐私政策</a>
-      <a class="hover:text-primary">用户协议</a>
-      <a class="hover:text-primary">免责声明</a>
+    <div class="flex justify-center gap-4 mb-1">
+      <a class="hover:text-primary cursor-pointer">隐私政策</a>
+      <a class="hover:text-primary cursor-pointer">用户协议</a>
+      <a class="hover:text-primary cursor-pointer">联系我们</a>
     </div>
-    <p class="mb-1">AI通鉴 © 2026 · 个人导航 · 非经营性</p>
-    <p class="mb-1"><a href="https://beian.miit.gov.cn" target="_blank" class="hover:text-primary">桂ICP备2026001644号-1</a></p>
+    <p>© 2026 AI通鉴 All Rights Reserved</p>
   </footer>
 </div>
 
 <script>
-  window.addEventListener('load', () => {
-    setTimeout(() => document.getElementById('loading').classList.add('hidden'), 500)
-  })
-
-  const themeToggle = document.getElementById('themeToggle')
-  function toggleDark() {
-    document.documentElement.classList.toggle('dark')
-    localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-  }
-  themeToggle.addEventListener('click', toggleDark)
-  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    document.documentElement.classList.add('dark')
-  }
-
-  function updateTime() {
-    const now = new Date()
-    const y = now.getFullYear(), m = now.getMonth()+1, d = now.getDate()
-    const hh = String(now.getHours()).padStart(2,'0'), mm = String(now.getMinutes()).padStart(2,'0'), ss = String(now.getSeconds()).padStart(2,'0')
-    const w = '日一二三四五六'[now.getDay()]
-    document.getElementById('realTime').innerText = `${y}年${m}月${d}日 ${hh}:${mm}:${ss} 星期${w}`
-  }
-  updateTime()
-  setInterval(updateTime, 1000)
-
-  const searchInput = document.getElementById('search-input')
-  const searchBtn = document.getElementById('search-btn')
-  const searchIcon = document.getElementById('searchIcon')
-  const searchHistory = document.getElementById('searchHistory')
-  let currentEngine = 'baidu'
-
-  window.onload = () => searchInput.focus()
-
-  let history = JSON.parse(localStorage.getItem('searchHistory') || '[]')
-  function renderHistory() {
-    searchHistory.innerHTML = ''
-    history.slice(-6).forEach(item => {
-      const div = document.createElement('div')
-      div.className = 'history-item'
-      div.innerText = item
-      div.onclick = () => {
-        searchInput.value = item
-        doSearch()
+// 全局网站翻译（整站切换语言）
+function changeLang(lang) {
+  document.documentElement.lang = lang;
+  const translateScript = document.createElement('script');
+  translateScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+  document.body.appendChild(translateScript);
+  window.googleTranslateElementInit = () => {
+    new google.translate.TranslateElement({pageLanguage: 'zh', layout: 1}, '');
+    setTimeout(() => {
+      const combo = document.querySelector('.goog-te-combo');
+      if (combo) {
+        combo.value = lang;
+        combo.dispatchEvent(new Event('change'));
       }
-      searchHistory.appendChild(div)
-    })
+    }, 300);
+  };
+}
+
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loading').classList.add('hidden'), 500);
+});
+
+const themeToggle = document.getElementById('themeToggle');
+function toggleDark() {
+  document.documentElement.classList.toggle('dark');
+  localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+}
+themeToggle.addEventListener('click', toggleDark);
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  document.documentElement.classList.add('dark');
+}
+
+function updateTime() {
+  const now = new Date();
+  const y = now.getFullYear(), m = now.getMonth()+1, d = now.getDate();
+  const hh = String(now.getHours()).padStart(2,0), mm = String(now.getMinutes()).padStart(2,0), ss = String(now.getSeconds()).padStart(2,0);
+  const w = '日一二三四五六'[now.getDay()];
+  document.getElementById('realTime').innerText = `${y}年${m}月${d}日 ${hh}:${mm}:${ss} 星期${w}`;
+}
+updateTime();
+setInterval(updateTime, 1000);
+
+const searchInput = document.getElementById('search-input');
+const searchBtn = document.getElementById('search-btn');
+const searchIcon = document.getElementById('searchIcon');
+const searchHistory = document.getElementById('searchHistory');
+let currentEngine = 'baidu';
+
+window.onload = () => searchInput.focus();
+
+let history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
+function renderHistory() {
+  searchHistory.innerHTML = '';
+  history.slice(-6).forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'history-item';
+    div.innerText = item;
+    div.onclick = () => {
+      searchInput.value = item;
+      doSearch();
+    };
+    searchHistory.appendChild(div);
+  });
+}
+renderHistory();
+
+document.querySelectorAll('.search-engine').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.search-engine').forEach(b => b.classList.remove('bg-primary','text-white'), b => b.classList.add('bg-gray-200','dark:bg-gray-700'));
+    btn.classList.remove('bg-gray-200','dark:bg-gray-700');
+    btn.classList.add('bg-primary','text-white');
+    currentEngine = btn.dataset.engine;
+  };
+});
+
+function doSearch() {
+  let q = searchInput.value.trim();
+  if (!q) return;
+  if (!history.includes(q)) {
+    history.push(q);
+    localStorage.setItem('searchHistory', JSON.stringify(history));
+    renderHistory();
   }
-  renderHistory()
+  const url = {
+    baidu: 'https://www.baidu.com/s?wd=',
+    google: 'https://www.google.com/search?q=',
+    bing: 'https://www.bing.com/search?q='
+  }[currentEngine];
+  window.open(url + encodeURIComponent(q), '_blank');
+}
 
-  document.querySelectorAll('.search-engine').forEach(btn => {
-    btn.onclick = () => {
-      document.querySelectorAll('.search-engine').forEach(b => b.classList.remove('bg-primary','text-white'), b.classList.add('bg-gray-200','dark:bg-gray-700'))
-      btn.classList.remove('bg-gray-200','dark:bg-gray-700')
-      btn.classList.add('bg-primary','text-white')
-      currentEngine = btn.dataset.engine
-    }
-  })
+searchBtn.onclick = doSearch;
+searchIcon.onclick = doSearch;
+searchInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
 
-  function doSearch() {
-    let q = searchInput.value.trim()
-    if (!q) return
-    if (!history.includes(q)) {
-      history.push(q)
-      localStorage.setItem('searchHistory', JSON.stringify(history))
-      renderHistory()
-    }
-    const url = {
-      baidu: 'https://www.baidu.com/s?wd=',
-      google: 'https://www.google.com/search?q=',
-      bing: 'https://www.bing.com/search?q='
-    }[currentEngine]
-    window.open(url + encodeURIComponent(q), '_blank')
-  }
+let lastClick = 0;
+document.querySelectorAll('[data-url]').forEach(el => {
+  el.onclick = () => {
+    const now = Date.now();
+    if (now - lastClick < 700) return;
+    lastClick = now;
+    el.style.transform = 'scale(0.96)';
+    setTimeout(() => el.style.transform = '', 80);
+    window.open(el.dataset.url, '_blank');
+  };
+});
 
-  searchBtn.onclick = doSearch
-  searchIcon.onclick = doSearch
-  searchInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') doSearch()
-  })
+const sidebar = document.getElementById('rightSidebar');
+const toggle = document.getElementById('sidebarToggle');
+let isOpen = false;
 
-  let lastClick = 0
-  document.querySelectorAll('[data-url]').forEach(el => {
-    el.onclick = () => {
-      const now = Date.now()
-      if (now - lastClick < 700) return
-      lastClick = now
-      el.style.transform = 'scale(0.96)'
-      setTimeout(() => el.style.transform = '', 80)
-      window.open(el.dataset.url, '_blank')
-    }
-  })
+if (window.innerWidth < 640) {
+  sidebar.style.display = 'none';
+}
 
-  const sidebar = document.getElementById('rightSidebar')
-  const toggle = document.getElementById('sidebarToggle')
-  let isOpen = false
+toggle.onclick = () => {
+  isOpen = !isOpen;
+  sidebar.style.display = isOpen ? 'flex' : 'none';
+  toggle.innerHTML = isOpen ? '<i class="fa fa-times"></i>' : '<i class="fa fa-bars"></i>';
+};
 
-  if (window.innerWidth < 640) {
-    sidebar.style.display = 'none'
-  }
-
-  toggle.onclick = () => {
-    isOpen = !isOpen
-    sidebar.style.display = isOpen ? 'flex' : 'none'
-    toggle.innerHTML = isOpen ? '<i class="fa fa-times"></i>' : '<i class="fa fa-bars"></i>'
-  }
+function showAddToHomeTip() {
+  let tip = document.createElement('div');
+  tip.style.cssText = `
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    background:#fff; color:#222; padding:22px; border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.3); z-index:99999;
+    max-width:300px; text-align:center; line-height:1.6;
+  `;
+  tip.innerHTML = `
+    <h4 style="margin:0 0 10px; font-size:16px;">📱 添加到桌面</h4>
+    <p style="font-size:14px; margin:0;">
+      手机浏览器右上角 → 添加到主屏幕<br>
+      电脑浏览器 → 创建快捷方式
+    </p>
+    <button onclick="this.parentElement.remove()"
+      style="margin-top:15px; padding:8px 16px; border:none;
+      background:#4f67e5; color:#fff; border-radius:6px; cursor:pointer;">
+      知道了
+    </button>
+  `;
+  document.body.appendChild(tip);
+}
 </script>
 </body>
 </html>
