@@ -571,5 +571,29 @@ langBtn.onclick = () => {
   });
 };
 </script>
+
+// 自动隐藏 Monetag 顶部横幅广告（30秒后）
+window.addEventListener('load', function() {
+  // 延迟 1.5 秒，确保广告完全渲染
+  setTimeout(() => {
+    // 定位顶部广告容器（适配你截图里的样式）
+    const topAdBanners = document.querySelectorAll(
+      'div[style*="position: fixed; top: 0px; left: 0px; width: 100%; z-index: 2147483647;"]'
+    );
+
+    if (topAdBanners.length > 0) {
+      console.log('检测到 Monetag 顶部横幅广告，将在 30 秒后自动隐藏');
+
+      // 30 秒后自动隐藏
+      setTimeout(() => {
+        topAdBanners.forEach(ad => {
+          ad.style.display = 'none';
+          // 可选：如果想彻底移除，用 ad.remove();
+        });
+        console.log('Monetag 顶部横幅广告已自动隐藏');
+      }, 30000); // 30000 毫秒 = 30 秒
+    }
+  }, 1500);
+});
 </body>
 </html>
