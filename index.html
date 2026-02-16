@@ -23,8 +23,8 @@
   </script>
   <style type="text/tailwindcss">
     @layer utilities {
-      .glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); }
-      .glass-dark { background: rgba(15,23,42,0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.05); }
+      .glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); }
+      .glass-dark { background: rgba(15,23,42,0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.12); }
       .gradient-bg { background: linear-gradient(135deg, #4f67e5 0%, #7c3aed 50%, #db2777 100%); }
       .text-gradient { background: linear-gradient(90deg, #4f67e5, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
       .hover-scale { transition: .2s; }
@@ -82,7 +82,7 @@
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="google">谷歌</button>
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="bing">必应</button>
     </div>
-    <div class="flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-3">
+    <div class="flex items-center bg-white dark:bg-slate-80 rounded-xl px-4 py-3">
       <i id="searchIcon" class="fa fa-search text-gray-400 mr-3 cursor-pointer"></i>
       <input id="search-input" placeholder="搜索、打开网站、输入网址……" class="w-full bg-transparent outline-none">
       <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg">搜索</button>
@@ -111,9 +111,9 @@
       <i class="fa fa-shopping-bag text-xl text-indigo-400"></i>
       <p class="text-sm mt-1">信符铺</p>
     </div>
-    <div class="nav-card" data-url="https://www.aliyundrive.com">
-      <i class="fa fa-cloud text-xl text-blue-400"></i>
-      <p class="text-sm mt-1">网盘</p>
+    <div class="nav-card" data-url="https://fanqienovel.com">
+      <i class="fa fa-book text-xl text-red-600"></i>
+      <p class="text-sm mt-1">番茄小说</p>
     </div>
   </div>
 
@@ -331,7 +331,7 @@
     <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
       <h3 class="font-medium mb-3 text-base">实用工具</h3>
       <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://www.baidu.com/s?wd=小说','_blank')" class="cursor-pointer hover:text-primary">小说</span>
+        <span onclick="window.open('https://fanqienovel.com','_blank')" class="cursor-pointer hover:text-primary">番茄小说</span>
         <span onclick="window.open('https://www.baidu.com/s?wd=听书','_blank')" class="cursor-pointer hover:text-primary">听书</span>
         <span onclick="window.open('https://www.baidu.com/s?wd=表情包','_blank')" class="cursor-pointer hover:text-primary">表情包</span>
         <span onclick="window.open('https://www.baidu.com/s?wd=头像','_blank')" class="cursor-pointer hover:text-primary">头像</span>
@@ -354,7 +354,7 @@
       <a class="hover:text-primary">用户协议</a>
       <a class="hover:text-primary">免责声明</a>
     </div>
-    <p class="mb-1">AI通鉴 © 2026 · 智能导航</p>
+    <p class="mb-1">AI通鉴 © 2026 智能导航</p>
   </footer>
 </div>
 
@@ -460,9 +460,7 @@ function showAddToHomeTip() {
   document.body.appendChild(tip)
 }
 
-// ======================
-// 全量中英文翻译
-// ======================
+// 中英文翻译
 const langBtn = document.getElementById('langBtn')
 let isEnglish = false
 
@@ -494,12 +492,10 @@ const translations = {
   "📱 添加到桌面": "Add to Home",
   "手机浏览器右上角 → 添加到主屏幕": "Browser → Add to Home",
   "电脑浏览器 → 创建快捷方式": "PC → Create Shortcut",
-  "微信号已复制！": "WeChat ID copied!",
-  "搜索历史已清空": "History cleared",
   "隐私政策": "Privacy",
   "用户协议": "Terms",
   "免责声明": "Disclaimer",
-  "AI通鉴 © 2026 · 智能导航": "AI Navigator © 2026 Personal Use",
+  "AI通鉴 © 2026 智能导航": "AI Navigator © 2026 Smart Navigation",
   "二维码": "QR Code",
   "图压缩": "Compress",
   "翻译": "Translate",
@@ -509,14 +505,6 @@ const translations = {
   "豆包AI": "Doubao AI",
   "通义千问": "Tongyi Qianwen",
   "文心一言": "ERNIE",
-  "Midjourney": "Midjourney",
-  "AI音视频": "AI Audio & Video",
-  "百度AI": "Baidu AI",
-  "AI去水印": "AI Watermark",
-  "图片压缩": "Image Compress",
-  "AI设计": "AI Design",
-  "AI抠图": "AI Cutout",
-  "更多AI": "More AI",
   "抖音": "Douyin",
   "快手": "Kuaishou",
   "小红书": "Xiaohongshu",
@@ -526,111 +514,27 @@ const translations = {
   "优酷": "Youku",
   "网易云音乐": "NetEase Cloud Music",
   "QQ音乐": "QQ Music",
-  "虎牙": "Huya",
-  "斗鱼": "Douyu",
-  "动漫": "Anime",
   "微博": "Weibo",
-  "QQ网页版": "QQ Web",
-  "微信网页版": "WeChat Web",
   "知乎": "Zhihu",
   "豆瓣": "Douban",
-  "今日头条": "Toutiao",
-  "网易新闻": "NetEase News",
-  "同城交友": "Local Friends",
-  "兴趣圈子": "Interest Groups",
-  "论坛": "Forums",
-  "社区": "Communities",
-  "聊天": "Chat",
   "信符铺": "XinFu Store",
   "网盘": "Cloud Drive",
+  "番茄小说": "Fanqienovel",
   "12306": "12306",
-  "公积金": "Housing Fund",
-  "社保": "Social Security",
-  "违章": "Violations",
-  "话费": "Phone Bill",
-  "水电费": "Utilities",
-  "租房": "Rent",
-  "买房": "Buy House",
-  "招聘": "Recruitment",
-  "家政": "Housekeeping",
-  "医疗": "Medical",
-  "体检": "Checkup",
-  "号卡宽带": "SIM & Broadband",
-  "抖音引流": "Douyin Traffic",
-  "小红书运营": "Xiaohongshu Ops",
-  "私域运营": "Private Ops",
-  "剪辑教程": "Editing Tutorials",
-  "电商运营": "E-commerce Ops",
-  "兼职": "Part-time",
-  "副业": "Side Hustle",
-  "电商": "E-commerce",
-  "直播": "Live",
-  "短视频带货": "Short Video Sales",
-  "推广": "Promotion",
-  "正版素材": "Royalty-free",
-  "设计素材": "Design Assets",
-  "高清壁纸": "HD Wallpapers",
-  "办公模板": "Office Templates",
-  "插件": "Plugins",
-  "学习资料": "Study Materials",
-  "字体": "Fonts",
-  "图标": "Icons",
-  "背景图": "Backgrounds",
-  "简历模板": "Resume Templates",
-  "小说": "Novels",
-  "听书": "Audiobooks",
-  "表情包": "Stickers",
-  "头像": "Avatars",
-  "起名": "Naming",
-  "测网速": "Speed Test",
-  "证件照": "ID Photos",
-  "图片编辑": "Photo Edit",
-  "音频处理": "Audio Edit",
-  "格式转换": "Convert",
-  "百度地图": "Baidu Maps",
-  "高德地图": "Amap",
-  "百度学术": "Baidu Scholar",
-  "知网": "CNKI",
-  "快递查询": "Parcel Track",
-  "身份证": "ID Card",
-  "手机号": "Phone Number",
-  "天气": "Weather",
-  "万年历": "Calendar",
   "淘宝": "Taobao",
   "京东": "JD",
   "拼多多": "Pinduoduo",
-  "1688批发": "1688 Wholesale",
   "美团": "Meituan",
   "饿了么": "Ele.me",
   "携程": "Ctrip",
-  "飞猪": "Fliggy",
-  "优惠券": "Coupons",
-  "返利": "Cashback",
-  "秒杀": "Flash Sales",
   "WPS": "WPS",
   "腾讯文档": "Tencent Docs",
   "Notion": "Notion",
-  "QQ邮箱": "QQ Mail",
-  "163邮箱": "163 Mail",
-  "PDF转换": "PDF Convert",
-  "截图": "Screenshot",
-  "录屏": "Screen Rec",
-  "表格": "Sheets",
-  "文档编辑": "Doc Edit",
-  "倒计时": "Countdown",
-  "Figma": "Figma",
-  "Canva": "Canva",
   "阿里云盘": "Aliyun Drive",
   "百度网盘": "Baidu Netdisk",
-  "网易云课堂": "NetEase Open Course",
-  "大学MOOC": "China MOOC",
-  "PPT模板": "PPT Templates",
-  "插画": "Illustrations",
-  "考研": "Postgraduate Exam",
-  "考证": "Certification"
+  "号卡宽带": "SIM & Broadband"
 };
 
-// 给所有文字打上翻译标记
 document.querySelectorAll('h2, h3, button, a, p, span, [placeholder]').forEach(el => {
   const t = (el.innerText || '').trim();
   if (t && translations[t]) el.setAttribute('data-lang', t);
@@ -638,7 +542,6 @@ document.querySelectorAll('h2, h3, button, a, p, span, [placeholder]').forEach(e
   if (ph && translations[ph]) el.setAttribute('data-lang-ph', ph);
 });
 
-// 切换语言
 langBtn.onclick = () => {
   isEnglish = !isEnglish;
   langBtn.innerText = isEnglish ? '🌍 CN' : '🌍 EN';
