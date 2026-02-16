@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI通鉴 - 新一代AI智能导航</title>
-  <link rel="icon" href="https://p3-flow-image-sign.byteoss.com/tos-cn-i-9hnh1cl1ds/8f9a9a9d9a9d9a9d9a9d9a9d9a9d9a9d~tplv-9hnh1cl1ds-image.png" type="image/x-icon">
+  <link rel="icon" href="https://p3-flow-image-sign.byteoss.com/8f9a9a9d9a9d9a9d9a9d9a9d9a9d9a9d" type="image/x-icon">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -24,7 +24,7 @@
   <style type="text/tailwindcss">
     @layer utilities {
       .glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); }
-      .glass-dark { background: rgba(15,23,42,0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.12); }
+      .glass-dark { background: rgba(15,23,42,0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.12); }
       .gradient-bg { background: linear-gradient(135deg, #4f67e5 0%, #7c3aed 50%, #db2777 100%); }
       .text-gradient { background: linear-gradient(90deg, #4f67e5, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
       .hover-scale { transition: .2s; }
@@ -35,34 +35,33 @@
       .dot { width: 10px; height: 10px; margin: 0 5px; border-radius: 50%; background: #4f67e5; animation: bounce .6s infinite alternate; }
       .dot:nth-child(2) { animation-delay: .2s; }
       .dot:nth-child(3) { animation-delay: .4s; }
-      @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-15px); } }
-      .theme-toggle { @apply fixed top-3 right-3 w-9 h-9 rounded-full glass dark:glass-dark items-center justify-center text-primary shadow-lg hover-scale z-50 flex; }
-      .lang-toggle { @apply fixed top-14 right-3 w-9 h-9 rounded-full glass dark:glass-dark items-center justify-center text-primary shadow-lg hover-scale z-50 flex text-xs; }
-      .time-box { @apply text-center text-sm text-gray-600 dark:text-gray-300 mb-3; }
+      @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(15px); } }
+      .time-box { @apply text-center text-sm text-gray-600 dark:text-white mb-3; }
     }
   </style>
 
   <!-- 51LA 网站统计 -->
   <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
   <script>LA.init({id:"3P1xuCYvCR9rfBGe",ck:"3P1xuCYvCR9rfBGe"})</script>
-  
 
-  <!-- Monetag Multitag 脚本 -->
+  <!-- Monetag 脚本 -->
   <script src="/tag.min.js" data-zone="211603" async data-cfasync="false"></script>
 </head>
-<script src="https://quge5.com/88/tag.min.js" data-zone="211603" async data-cfasync="false"></script>
-<body class="bg-slate-100 dark:bg-dark min-h-screen transition-colors">
+<body class="bg-slate-100 dark:bg-slate-900 min-h-screen transition-colors dark:text-white">
 <div class="loading" id="loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
 <div class="fixed top-0 left-0 w-full h-full opacity-10 gradient-bg -z-10"></div>
-
-<button id="themeToggle" class="theme-toggle"><i class="fa fa-moon-o dark:hidden"></i><i class="fa fa-sun-o hidden dark:block"></i></button>
-<button id="langBtn" class="lang-toggle">🌍 EN</button>
 
 <div class="sidebar-toggle fixed right-2 bottom-20 w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary z-40" id="sidebarToggle">
   <i class="fa fa-bars"></i>
 </div>
 
 <div class="right-sidebar fixed right-2 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3" id="rightSidebar">
+  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" id="themeToggle">
+    <i class="fa fa-moon-o dark:hidden"></i><i class="fa fa-sun-o hidden dark:block"></i>
+  </div>
+  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer text-xs" id="langBtn">
+    🌍 EN
+  </div>
   <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')"><i class="fa fa-shopping-bag"></i></div>
   <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="navigator.clipboard.writeText('chien5156').then(()=>alert('WeChat ID copied!'))"><i class="fa fa-weixin"></i></div>
   <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="showAddToHomeTip()"><i class="fa fa-desktop"></i></div>
@@ -90,7 +89,7 @@
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="google">谷歌</button>
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="bing">必应</button>
     </div>
-    <div class="flex items-center bg-white dark:bg-slate-80 rounded-xl px-4 py-3">
+    <div class="flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-3">
       <i id="searchIcon" class="fa fa-search text-gray-400 mr-3 cursor-pointer"></i>
       <input id="search-input" placeholder="搜索、打开网站、输入网址……" class="w-full bg-transparent outline-none">
       <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg">搜索</button>
@@ -112,7 +111,7 @@
       <p class="text-sm mt-1">谷歌</p>
     </div>
     <div class="nav-card" data-url="https://github.com">
-      <i class="fa fa-github text-xl text-gray-700 dark:text-gray-300"></i>
+      <i class="fa fa-github text-xl"></i>
       <p class="text-sm mt-1">GitHub</p>
     </div>
     <div class="nav-card" data-url="https://bsx.pianwen.com.cn/s/iojX6HV3">
@@ -144,7 +143,7 @@
       <p class="text-xs mt-1">计算器</p>
     </div>
     <div class="nav-card" onclick="window.open('https://notion.so/','_blank')">
-      <i class="fa fa-sticky-note-o text-xl text-gray-500"></i>
+      <i class="fa fa-sticky-note-o text-xl"></i>
       <p class="text-xs mt-1">便签</p>
     </div>
     <div class="nav-card" onclick="window.open('https://www.123apps.com/remove-watermark/','_blank')">
@@ -356,7 +355,7 @@
 
   </div>
 
-  <footer class="text-center text-sm text-gray-500 pt-6 border-t border-gray-200 dark:border-gray-800">
+  <footer class="text-center text-sm text-gray-500 dark:text-gray-300 pt-6 border-t border-gray-200 dark:border-gray-800">
     <div class="flex justify-center gap-3 mb-2">
       <a class="hover:text-primary">隐私政策</a>
       <a class="hover:text-primary">用户协议</a>
@@ -387,7 +386,7 @@ if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.match
   document.documentElement.classList.add('dark')
 }
 
-// 实时时间
+// 时间
 function updateTime() {
   const now = new Date();
   const y = now.getFullYear();
@@ -435,7 +434,7 @@ searchInput.addEventListener('keydown', e => {
   if (e.key === 'Enter') doSearch()
 })
 
-// 点击动画
+// 点击卡片动画
 let lastClick = 0
 document.querySelectorAll('[data-url]').forEach(el => {
   el.onclick = () => {
@@ -448,7 +447,7 @@ document.querySelectorAll('[data-url]').forEach(el => {
   }
 })
 
-// 侧边栏
+// 侧边栏开关
 const sidebar = document.getElementById('rightSidebar')
 const toggle = document.getElementById('sidebarToggle')
 let isOpen = false
@@ -473,7 +472,7 @@ function showAddToHomeTip() {
   document.body.appendChild(tip)
 }
 
-// 中英文翻译
+// 中英文
 const langBtn = document.getElementById('langBtn')
 let isEnglish = false
 
@@ -515,9 +514,6 @@ const translations = {
   "计算器": "Calc",
   "便签": "Notes",
   "去水印": "Watermark",
-  "豆包AI": "Doubao AI",
-  "通义千问": "Tongyi Qianwen",
-  "文心一言": "ERNIE",
   "抖音": "Douyin",
   "快手": "Kuaishou",
   "小红书": "Xiaohongshu",
@@ -531,9 +527,7 @@ const translations = {
   "知乎": "Zhihu",
   "豆瓣": "Douban",
   "信符铺": "XinFu Store",
-  "网盘": "Cloud Drive",
   "番茄小说": "Fanqienovel",
-  "12306": "12306",
   "淘宝": "Taobao",
   "京东": "JD",
   "拼多多": "Pinduoduo",
