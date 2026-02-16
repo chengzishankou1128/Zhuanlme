@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="application-name" content="AI通鉴">
-  <meta name="description" content="AI通鉴 · 高效上网 · 一站直达">
   <title>AI通鉴 - 新一代AI智能导航</title>
-  <link rel="icon" href="https://p3-flow-imagex-sign.bytejump.com/obj/seed-creative-public/assets/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="https://p3-flow-image-sign.byteoss.com/tos-cn-i-9hnh1cl1ds/8f9a9a9d9a9d9a9d9a9d9a9d9a9d9a9d~tplv-9hnh1cl1ds-image.png" type="image/x-icon">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
@@ -17,192 +15,81 @@
         extend: {
           colors: {
             primary: '#4f67e5',
-            secondary: '#7c3aed',
-            dark: '#0f2342',
-          },
-          fontFamily: {
-            sans: ['Inter','system-ui'],
-          },
-        },
+            dark: '#0f1219'
+          }
+        }
       }
     }
   </script>
   <style type="text/tailwindcss">
     @layer utilities {
-      .glass {
-        background: rgba(255,255,255,0.08);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255,255,255,0.1);
-      }
-      .glass-dark {
-        background: rgba(15,35,66,0.6);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255,255,255,0.05);
-      }
-      .gradient-bg {
-        background: linear-gradient(135deg, #4f67e5 0%, #7c3aed 50%, #db2777 100%);
-      }
-      .text-gradient {
-        background: linear-gradient(90deg, #4f67e5, #db2777);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .hover-scale {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-      .hover-scale:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      }
-      .nav-card {
-        @apply glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer;
-      }
-      .loading {
-        position: fixed;
-        inset: 0;
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #f8fafc;
-        transition: opacity 0.5s ease;
-      }
-      .dark {
-        background: #0f2342;
-      }
-      .loading.hidden {
-        opacity: 0;
-        pointer-events: none;
-      }
-      .dot {
-        width: 10px;
-        height: 10px;
-        margin: 0 5px;
-        border-radius: 50%;
-        background: #4f67e5;
-        animation: bounce 0.6s infinite alternate;
-      }
-      .dot:nth-child(2) {
-        animation-delay: 0.2s;
-      }
-      .dot:nth-child(3) {
-        animation-delay: 0.4s;
-      }
-      @keyframes bounce {
-        from { transform: translateY(0); }
-        to { transform: translateY(-15px); }
-      }
-      .theme-toggle {
-        @apply fixed top-3 right-3 w-9 h-9 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale z-50;
-      }
-      .time-box {
-        @apply text-center text-sm text-gray-600 dark:text-gray-300 mb-3;
-      }
-      .history-item {
-        @apply px-2 py-1.5 text-sm bg-gray-100 dark:bg-gray-800 rounded cursor-pointer hover:bg-gray-200 dark:bg-gray-700;
-      }
-
-      .right-sidebar {
-        @apply fixed right-2 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3;
-      }
-      .sidebar-btn {
-        @apply w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer relative;
-      }
-      .sidebar-btn:hover::after {
-        content: attr(data-text);
-        position: absolute;
-        right: 44px;
-        white-space: nowrap;
-        background: #222;
-        color: #fff;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-size: 12px;
-      }
-      .sidebar-toggle {
-        @apply fixed right-2 bottom-20 w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary shadow-lg hover-scale cursor-pointer z-40;
-      }
+      .glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); }
+      .glass-dark { background: rgba(15,23,42,0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.05); }
+      .gradient-bg { background: linear-gradient(135deg, #4f67e5 0%, #7c3aed 50%, #db2777 100%); }
+      .text-gradient { background: linear-gradient(90deg, #4f67e5, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+      .hover-scale { transition: .2s; }
+      .hover-scale:hover { transform: translateY(-2px); }
+      .nav-card { @apply glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer; }
+      .loading { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: #f8fafc; transition: opacity .5s; }
+      .loading.hidden { opacity: 0; pointer-events: none; }
+      .dot { width: 10px; height: 10px; margin: 0 5px; border-radius: 50%; background: #4f67e5; animation: bounce .6s infinite alternate; }
+      .dot:nth-child(2) { animation-delay: .2s; }
+      .dot:nth-child(3) { animation-delay: .4s; }
+      @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-15px); } }
+      .theme-toggle { @apply fixed top-3 right-3 w-9 h-9 rounded-full glass dark:glass-dark items-center justify-center text-primary shadow-lg hover-scale z-50 flex; }
+      .lang-toggle { @apply fixed top-14 right-3 w-9 h-9 rounded-full glass dark:glass-dark items-center justify-center text-primary shadow-lg hover-scale z-50 flex text-xs; }
+      .time-box { @apply text-center text-sm text-gray-600 dark:text-gray-300 mb-3; }
     }
   </style>
 </head>
 
-<body class="bg-slate-100 dark:bg-dark min-h-screen transition-colors duration-300">
-<div class="loading" id="loading">
-  <div class="dot"></div>
-  <div class="dot"></div>
-  <div class="dot"></div>
-</div>
+<body class="bg-slate-100 dark:bg-dark min-h-screen transition-colors">
+<div class="loading" id="loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+<div class="fixed top-0 left-0 w-full h-full opacity-10 gradient-bg -z-10"></div>
 
-<div class="fixed top-0 left-0 w-full h-full opacity-20 pointer-events-none gradient-bg -z-10"></div>
+<button id="themeToggle" class="theme-toggle"><i class="fa fa-moon-o dark:hidden"></i><i class="fa fa-sun-o hidden dark:block"></i></button>
+<button id="langBtn" class="lang-toggle">🌍 EN</button>
 
-<button id="themeToggle" class="theme-toggle">
-  <i class="fa fa-moon-o dark:hidden"></i>
-  <i class="fa fa-sun-o hidden dark:block"></i>
-</button>
-
-<div class="sidebar-toggle" id="sidebarToggle">
+<div class="sidebar-toggle fixed right-2 bottom-20 w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary z-40" id="sidebarToggle">
   <i class="fa fa-bars"></i>
 </div>
 
-<div class="right-sidebar" id="rightSidebar">
-  <div class="sidebar-btn" data-text="信符铺" onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')">
-    <i class="fa fa-shopping-bag"></i>
-  </div>
-  <div class="sidebar-btn" data-text="客服微信" onclick="navigator.clipboard.writeText('chien5156').then(()=>alert('微信号已复制！'))">
-    <i class="fa fa-weixin"></i>
-  </div>
-  <div class="sidebar-btn" data-text="添加到桌面" onclick="showAddToHomeTip()">
-    <i class="fa fa-desktop"></i>
-  </div>
-  <div class="sidebar-btn" data-text="刷新" onclick="location.reload()">
-    <i class="fa fa-refresh"></i>
-  </div>
-  <div class="sidebar-btn" data-text="清空历史" onclick="localStorage.removeItem('searchHistory');history=[];renderHistory();alert('搜索历史已清空')">
-    <i class="fa fa-trash-o"></i>
-  </div>
-  <div class="sidebar-btn" data-text="顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-    <i class="fa fa-arrow-up"></i>
-  </div>
+<div class="right-sidebar fixed right-2 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3" id="rightSidebar">
+  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')"><i class="fa fa-shopping-bag"></i></div>
+  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="navigator.clipboard.writeText('chien5156').then(()=>alert('WeChat ID copied!'))"><i class="fa fa-weixin"></i></div>
+  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="showAddToHomeTip()"><i class="fa fa-desktop"></i></div>
+  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="location.reload()"><i class="fa fa-refresh"></i></div>
+  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="localStorage.removeItem('searchHistory');alert('History cleared')"><i class="fa fa-trash-o"></i></div>
+  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fa fa-arrow-up"></i></div>
 </div>
 
 <nav class="glass dark:glass-dark sticky top-2 z-50 max-w-5xl mx-auto rounded-full px-5 py-3 mb-5 flex items-center justify-between">
   <h1 class="text-lg font-bold text-gradient">AI通鉴</h1>
-  <div class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300">
+  <div class="flex gap-4 text-sm">
     <a href="#" class="hover:text-primary">首页</a>
     <a href="#tools" class="hover:text-primary">工具</a>
     <a href="#categories" class="hover:text-primary">分类</a>
-    <span class="text-xs font-bold gap-1 flex">
-      <a onclick="changeLang('zh')" class="cursor-pointer hover:text-primary">中</a>
-      <a onclick="changeLang('en')" class="cursor-pointer hover:text-primary">EN</a>
-      <a onclick="changeLang('ja')" class="cursor-pointer hover:text-primary">日</a>
-      <a onclick="changeLang('ko')" class="cursor-pointer hover:text-primary">韩</a>
-    </span>
   </div>
 </nav>
 
 <div class="max-w-5xl mx-auto px-4 pb-20">
   <div id="realTime" class="time-box"></div>
-
-  <div class="glass dark:glass-dark rounded-xl px-4 py-3 mb-5 text-sm text-center text-gray-700 dark:text-gray-300">
-    AI通鉴 · 高效上网 · 一站直达
-  </div>
+  <div class="glass dark:glass-dark rounded-xl px-4 py-3 mb-5 text-sm text-center">AI通鉴 · 高效上网 · 一站直达</div>
 
   <div class="glass dark:glass-dark rounded-2xl p-5 mb-8 shadow-xl">
-    <div class="flex-wrap gap-2 mb-3 flex">
+    <div class="flex gap-2 mb-3">
       <button class="search-engine px-2 py-1 text-xs rounded bg-primary text-white" data-engine="baidu">百度</button>
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="google">谷歌</button>
       <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="bing">必应</button>
     </div>
-    <div class="flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-3 shadow">
+    <div class="flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-3">
       <i id="searchIcon" class="fa fa-search text-gray-400 mr-3 cursor-pointer"></i>
-      <input id="search-input" type="text" placeholder="搜索、输入网址……" 
-             class="w-full bg-transparent outline-none text-gray-800 dark:text-gray-200">
-      <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90">搜索</button>
+      <input id="search-input" placeholder="搜索、打开网站、输入网址……" class="w-full bg-transparent outline-none">
+      <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg">搜索</button>
     </div>
-    <div id="searchHistory" class="mt-3 flex-wrap gap-2"></div>
   </div>
 
-  <h2 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">常用直达</h2>
+  <h2 class="text-lg font-semibold mb-4">常用直达</h2>
   <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-8">
     <div class="nav-card" data-url="https://www.douyin.com">
       <i class="fa fa-video-camera text-xl text-red-500"></i>
@@ -230,7 +117,7 @@
     </div>
   </div>
 
-  <h2 id="tools" class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">快捷工具</h2>
+  <h2 id="tools" class="text-lg font-semibold mb-4">快捷工具</h2>
   <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 mb-8">
     <div class="nav-card" onclick="window.open('https://cli.im/','_blank')">
       <i class="fa fa-qrcode text-xl text-green-500"></i>
@@ -252,13 +139,13 @@
       <i class="fa fa-sticky-note-o text-xl text-gray-500"></i>
       <p class="text-xs mt-1">便签</p>
     </div>
-    <div class="nav-card">
-      <i class="fa fa-clock-o text-xl text-teal-500"></i>
-      <p class="text-xs mt-1">时间</p>
+    <div class="nav-card" onclick="window.open('https://www.123apps.com/remove-watermark/','_blank')">
+      <i class="fa fa-eraser text-xl text-pink-500"></i>
+      <p class="text-xs mt-1">去水印</p>
     </div>
   </div>
 
-  <h2 id="categories" class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">网址分类</h2>
+  <h2 id="categories" class="text-lg font-semibold mb-4">网址分类</h2>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
 
     <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
@@ -462,161 +349,314 @@
   </div>
 
   <footer class="text-center text-sm text-gray-500 pt-6 border-t border-gray-200 dark:border-gray-800">
-    <div class="flex justify-center gap-4 mb-1">
-      <a class="hover:text-primary cursor-pointer">隐私政策</a>
-      <a class="hover:text-primary cursor-pointer">用户协议</a>
-      <a class="hover:text-primary cursor-pointer">联系我们</a>
+    <div class="flex justify-center gap-3 mb-2">
+      <a class="hover:text-primary">隐私政策</a>
+      <a class="hover:text-primary">用户协议</a>
+      <a class="hover:text-primary">免责声明</a>
     </div>
-    <p>© 2026 AI通鉴 All Rights Reserved</p>
+    <p class="mb-1">AI通鉴 © 2026 · 个人导航 · 非经营性</p>
   </footer>
 </div>
 
 <script>
-// 全局网站翻译（整站切换语言）
-function changeLang(lang) {
-  document.documentElement.lang = lang;
-  const translateScript = document.createElement('script');
-  translateScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-  document.body.appendChild(translateScript);
-  window.googleTranslateElementInit = () => {
-    new google.translate.TranslateElement({pageLanguage: 'zh', layout: 1}, '');
-    setTimeout(() => {
-      const combo = document.querySelector('.goog-te-combo');
-      if (combo) {
-        combo.value = lang;
-        combo.dispatchEvent(new Event('change'));
-      }
-    }, 300);
-  };
-}
-
 window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('loading').classList.add('hidden'), 500);
-});
+  setTimeout(() => document.getElementById('loading').classList.add('hidden'), 500)
+})
 
-const themeToggle = document.getElementById('themeToggle');
+// 深色模式
+const themeToggle = document.getElementById('themeToggle')
 function toggleDark() {
-  document.documentElement.classList.toggle('dark');
-  localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+  document.documentElement.classList.toggle('dark')
+  localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
 }
-themeToggle.addEventListener('click', toggleDark);
+themeToggle.addEventListener('click', toggleDark)
 if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-  document.documentElement.classList.add('dark');
+  document.documentElement.classList.add('dark')
 }
 
+// 实时时间
 function updateTime() {
   const now = new Date();
-  const y = now.getFullYear(), m = now.getMonth()+1, d = now.getDate();
-  const hh = String(now.getHours()).padStart(2,0), mm = String(now.getMinutes()).padStart(2,0), ss = String(now.getSeconds()).padStart(2,0);
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  const hh = String(now.getHours()).padStart(2, '0');
+  const mm = String(now.getMinutes()).padStart(2, '0');
+  const ss = String(now.getSeconds()).padStart(2, '0');
   const w = '日一二三四五六'[now.getDay()];
   document.getElementById('realTime').innerText = `${y}年${m}月${d}日 ${hh}:${mm}:${ss} 星期${w}`;
 }
 updateTime();
 setInterval(updateTime, 1000);
 
-const searchInput = document.getElementById('search-input');
-const searchBtn = document.getElementById('search-btn');
-const searchIcon = document.getElementById('searchIcon');
-const searchHistory = document.getElementById('searchHistory');
-let currentEngine = 'baidu';
+// 搜索
+const searchInput = document.getElementById('search-input')
+const searchBtn = document.getElementById('search-btn')
+const searchIcon = document.getElementById('searchIcon')
+let currentEngine = 'baidu'
 
-window.onload = () => searchInput.focus();
-
-let history = JSON.parse(localStorage.getItem('searchHistory') || '[]');
-function renderHistory() {
-  searchHistory.innerHTML = '';
-  history.slice(-6).forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'history-item';
-    div.innerText = item;
-    div.onclick = () => {
-      searchInput.value = item;
-      doSearch();
-    };
-    searchHistory.appendChild(div);
-  });
-}
-renderHistory();
+window.onload = () => searchInput.focus()
 
 document.querySelectorAll('.search-engine').forEach(btn => {
   btn.onclick = () => {
-    document.querySelectorAll('.search-engine').forEach(b => b.classList.remove('bg-primary','text-white'), b => b.classList.add('bg-gray-200','dark:bg-gray-700'));
-    btn.classList.remove('bg-gray-200','dark:bg-gray-700');
-    btn.classList.add('bg-primary','text-white');
-    currentEngine = btn.dataset.engine;
-  };
-});
+    document.querySelectorAll('.search-engine').forEach(b => b.classList.remove('bg-primary','text-white'), b => b.classList.add('bg-gray-200','dark:bg-gray-700'))
+    btn.classList.remove('bg-gray-200','dark:bg-gray-700')
+    btn.classList.add('bg-primary','text-white')
+    currentEngine = btn.dataset.engine
+  }
+})
 
 function doSearch() {
-  let q = searchInput.value.trim();
-  if (!q) return;
-  if (!history.includes(q)) {
-    history.push(q);
-    localStorage.setItem('searchHistory', JSON.stringify(history));
-    renderHistory();
-  }
+  let q = searchInput.value.trim()
+  if (!q) return
   const url = {
     baidu: 'https://www.baidu.com/s?wd=',
     google: 'https://www.google.com/search?q=',
     bing: 'https://www.bing.com/search?q='
-  }[currentEngine];
-  window.open(url + encodeURIComponent(q), '_blank');
+  }[currentEngine]
+  window.open(url + encodeURIComponent(q), '_blank')
 }
-
-searchBtn.onclick = doSearch;
-searchIcon.onclick = doSearch;
+searchBtn.onclick = doSearch
+searchIcon.onclick = doSearch
 searchInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter') doSearch();
-});
+  if (e.key === 'Enter') doSearch()
+})
 
-let lastClick = 0;
+// 点击动画
+let lastClick = 0
 document.querySelectorAll('[data-url]').forEach(el => {
   el.onclick = () => {
-    const now = Date.now();
-    if (now - lastClick < 700) return;
-    lastClick = now;
-    el.style.transform = 'scale(0.96)';
-    setTimeout(() => el.style.transform = '', 80);
-    window.open(el.dataset.url, '_blank');
-  };
-});
+    const now = Date.now()
+    if (now - lastClick < 700) return
+    lastClick = now
+    el.style.transform = 'scale(0.96)'
+    setTimeout(() => el.style.transform = '', 80)
+    window.open(el.dataset.url, '_blank')
+  }
+})
 
-const sidebar = document.getElementById('rightSidebar');
-const toggle = document.getElementById('sidebarToggle');
-let isOpen = false;
-
+// 侧边栏
+const sidebar = document.getElementById('rightSidebar')
+const toggle = document.getElementById('sidebarToggle')
+let isOpen = false
 if (window.innerWidth < 640) {
-  sidebar.style.display = 'none';
+  sidebar.style.display = 'none'
+}
+toggle.onclick = () => {
+  isOpen = !isOpen
+  sidebar.style.display = isOpen ? 'flex' : 'none'
+  toggle.innerHTML = isOpen ? '<i class="fa fa-times"></i>' : '<i class="fa fa-bars"></i>'
 }
 
-toggle.onclick = () => {
-  isOpen = !isOpen;
-  sidebar.style.display = isOpen ? 'flex' : 'none';
-  toggle.innerHTML = isOpen ? '<i class="fa fa-times"></i>' : '<i class="fa fa-bars"></i>';
+// 添加到桌面
+function showAddToHomeTip() {
+  let tip = document.createElement('div')
+  tip.style.cssText = `position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:22px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.3);z-index:99999;max-width:300px;text-align:center;line-height:1.6;`
+  tip.innerHTML = `
+    <h4 style="margin:0 0 10px;font-size:16px;">📱 添加到桌面</h4>
+    <p style="font-size:14px;margin:0;">手机浏览器右上角 → 添加到主屏幕<br>电脑浏览器 → 创建快捷方式</p>
+    <button onclick="this.parentElement.remove()" style="margin-top:15px;padding:8px 16px;border:none;background:#4f67e5;color:#fff;border-radius:6px;cursor:pointer;">知道了</button>
+  `
+  document.body.appendChild(tip)
+}
+
+// ======================
+// 全量中英文翻译
+// ======================
+const langBtn = document.getElementById('langBtn')
+let isEnglish = false
+
+const translations = {
+  "首页": "Home",
+  "工具": "Tools",
+  "分类": "Categories",
+  "常用直达": "Quick Access",
+  "快捷工具": "Tools",
+  "网址分类": "Categories",
+  "AI工具": "AI Tools",
+  "短视频娱乐": "Video & Entertainment",
+  "社交聊天": "Social",
+  "搜索查询": "Search",
+  "购物薅羊毛": "Shopping",
+  "办公效率": "Office",
+  "设计学习": "Design & Study",
+  "生活服务": "Life Service",
+  "营销副业": "Business",
+  "素材资源": "Resources",
+  "实用工具": "Utilities",
+  "搜索、打开网站、输入网址……": "Search or URL",
+  "搜索": "Search",
+  "百度": "Baidu",
+  "谷歌": "Google",
+  "必应": "Bing",
+  "AI通鉴 · 高效上网 · 一站直达": "AI Navigator",
+  "知道了": "OK",
+  "📱 添加到桌面": "Add to Home",
+  "手机浏览器右上角 → 添加到主屏幕": "Browser → Add to Home",
+  "电脑浏览器 → 创建快捷方式": "PC → Create Shortcut",
+  "微信号已复制！": "WeChat ID copied!",
+  "搜索历史已清空": "History cleared",
+  "隐私政策": "Privacy",
+  "用户协议": "Terms",
+  "免责声明": "Disclaimer",
+  "AI通鉴 © 2026 · 个人导航 · 非经营性": "AI Navigator © 2026 Personal Use",
+  "二维码": "QR Code",
+  "图压缩": "Compress",
+  "翻译": "Translate",
+  "计算器": "Calc",
+  "便签": "Notes",
+  "去水印": "Watermark",
+  "豆包AI": "Doubao AI",
+  "通义千问": "Tongyi Qianwen",
+  "文心一言": "ERNIE",
+  "Midjourney": "Midjourney",
+  "AI音视频": "AI Audio & Video",
+  "百度AI": "Baidu AI",
+  "AI去水印": "AI Watermark",
+  "图片压缩": "Image Compress",
+  "AI设计": "AI Design",
+  "AI抠图": "AI Cutout",
+  "更多AI": "More AI",
+  "抖音": "Douyin",
+  "快手": "Kuaishou",
+  "小红书": "Xiaohongshu",
+  "B站": "Bilibili",
+  "腾讯视频": "Tencent Video",
+  "爱奇艺": "iQiyi",
+  "优酷": "Youku",
+  "网易云音乐": "NetEase Cloud Music",
+  "QQ音乐": "QQ Music",
+  "虎牙": "Huya",
+  "斗鱼": "Douyu",
+  "动漫": "Anime",
+  "微博": "Weibo",
+  "QQ网页版": "QQ Web",
+  "微信网页版": "WeChat Web",
+  "知乎": "Zhihu",
+  "豆瓣": "Douban",
+  "今日头条": "Toutiao",
+  "网易新闻": "NetEase News",
+  "同城交友": "Local Friends",
+  "兴趣圈子": "Interest Groups",
+  "论坛": "Forums",
+  "社区": "Communities",
+  "聊天": "Chat",
+  "信符铺": "XinFu Store",
+  "网盘": "Cloud Drive",
+  "12306": "12306",
+  "公积金": "Housing Fund",
+  "社保": "Social Security",
+  "违章": "Violations",
+  "话费": "Phone Bill",
+  "水电费": "Utilities",
+  "租房": "Rent",
+  "买房": "Buy House",
+  "招聘": "Recruitment",
+  "家政": "Housekeeping",
+  "医疗": "Medical",
+  "体检": "Checkup",
+  "号卡宽带": "SIM & Broadband",
+  "抖音引流": "Douyin Traffic",
+  "小红书运营": "Xiaohongshu Ops",
+  "私域运营": "Private Ops",
+  "剪辑教程": "Editing Tutorials",
+  "电商运营": "E-commerce Ops",
+  "兼职": "Part-time",
+  "副业": "Side Hustle",
+  "电商": "E-commerce",
+  "直播": "Live",
+  "短视频带货": "Short Video Sales",
+  "推广": "Promotion",
+  "正版素材": "Royalty-free",
+  "设计素材": "Design Assets",
+  "高清壁纸": "HD Wallpapers",
+  "办公模板": "Office Templates",
+  "插件": "Plugins",
+  "学习资料": "Study Materials",
+  "字体": "Fonts",
+  "图标": "Icons",
+  "背景图": "Backgrounds",
+  "简历模板": "Resume Templates",
+  "小说": "Novels",
+  "听书": "Audiobooks",
+  "表情包": "Stickers",
+  "头像": "Avatars",
+  "起名": "Naming",
+  "测网速": "Speed Test",
+  "证件照": "ID Photos",
+  "图片编辑": "Photo Edit",
+  "音频处理": "Audio Edit",
+  "格式转换": "Convert",
+  "百度地图": "Baidu Maps",
+  "高德地图": "Amap",
+  "百度学术": "Baidu Scholar",
+  "知网": "CNKI",
+  "快递查询": "Parcel Track",
+  "身份证": "ID Card",
+  "手机号": "Phone Number",
+  "天气": "Weather",
+  "万年历": "Calendar",
+  "淘宝": "Taobao",
+  "京东": "JD",
+  "拼多多": "Pinduoduo",
+  "1688批发": "1688 Wholesale",
+  "美团": "Meituan",
+  "饿了么": "Ele.me",
+  "携程": "Ctrip",
+  "飞猪": "Fliggy",
+  "优惠券": "Coupons",
+  "返利": "Cashback",
+  "秒杀": "Flash Sales",
+  "WPS": "WPS",
+  "腾讯文档": "Tencent Docs",
+  "Notion": "Notion",
+  "QQ邮箱": "QQ Mail",
+  "163邮箱": "163 Mail",
+  "PDF转换": "PDF Convert",
+  "截图": "Screenshot",
+  "录屏": "Screen Rec",
+  "表格": "Sheets",
+  "文档编辑": "Doc Edit",
+  "倒计时": "Countdown",
+  "Figma": "Figma",
+  "Canva": "Canva",
+  "阿里云盘": "Aliyun Drive",
+  "百度网盘": "Baidu Netdisk",
+  "网易云课堂": "NetEase Open Course",
+  "大学MOOC": "China MOOC",
+  "PPT模板": "PPT Templates",
+  "插画": "Illustrations",
+  "考研": "Postgraduate Exam",
+  "考证": "Certification"
 };
 
-function showAddToHomeTip() {
-  let tip = document.createElement('div');
-  tip.style.cssText = `
-    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-    background:#fff; color:#222; padding:22px; border-radius:12px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.3); z-index:99999;
-    max-width:300px; text-align:center; line-height:1.6;
-  `;
-  tip.innerHTML = `
-    <h4 style="margin:0 0 10px; font-size:16px;">📱 添加到桌面</h4>
-    <p style="font-size:14px; margin:0;">
-      手机浏览器右上角 → 添加到主屏幕<br>
-      电脑浏览器 → 创建快捷方式
-    </p>
-    <button onclick="this.parentElement.remove()"
-      style="margin-top:15px; padding:8px 16px; border:none;
-      background:#4f67e5; color:#fff; border-radius:6px; cursor:pointer;">
-      知道了
-    </button>
-  `;
-  document.body.appendChild(tip);
-}
+// 给所有文字打上翻译标记
+document.querySelectorAll('h2, h3, button, a, p, span, [placeholder]').forEach(el => {
+  const t = (el.innerText || '').trim();
+  if (t && translations[t]) el.setAttribute('data-lang', t);
+  const ph = el.getAttribute('placeholder');
+  if (ph && translations[ph]) el.setAttribute('data-lang-ph', ph);
+});
+
+// 切换语言
+langBtn.onclick = () => {
+  isEnglish = !isEnglish;
+  langBtn.innerText = isEnglish ? '🌍 CN' : '🌍 EN';
+
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    const key = el.getAttribute('data-lang');
+    if (key && translations[key]) {
+      el.innerText = isEnglish ? translations[key] : key;
+    }
+  });
+
+  document.querySelectorAll('[data-lang-ph]').forEach(el => {
+    const key = el.getAttribute('data-lang-ph');
+    if (key && translations[key]) {
+      el.setAttribute('placeholder', isEnglish ? translations[key] : key);
+    }
+  });
+};
 </script>
 </body>
 </html>
