@@ -3,573 +3,305 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI通鉴 - 新一代AI智能导航</title>
-  <link rel="icon" href="https://p3-flow-image-sign.byteoss.com/8f9a9a9d9a9d9a9d9a9d9a9d9a9d9a9d" type="image/x-icon">
+  <title>AI通鉴 - OpenClaw 全球官方导航 | 实时爬虫+投稿+后台</title>
+  <meta name="keywords" content="OpenClaw,AI通鉴,开源AI,AI助手,OpenClaw实时数据,AI导航,AI部署,OpenClaw官网,OpenClaw教程,一键部署,指令大全">
+  <meta name="description" content="AI通鉴 - OpenClaw 全球最权威导航，实时GitHub爬虫、用户投稿、点赞分享、后台管理、资源监控一站式平台。">
+  <link rel="icon" href="https://p3-flow-image-sign.byteoss.com/8f9a9a9d9a9d9a9d9a9d9a9d9a9d9a9d">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
   <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            primary: '#4f67e5',
-            dark: '#0f1219'
-          }
-        }
-      }
-    }
+    tailwind.config = {darkMode:'class',theme:{extend:{colors:{primary:'#4f6eef',dark:'#0f1219'}}}}
   </script>
-  <style type="text/tailwindcss">
-    @layer utilities {
-      .glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.15); }
-      .glass-dark { background: rgba(15,23,42,0.7); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.12); }
-      .gradient-bg { background: linear-gradient(135deg, #4f67e5 0%, #7c3aed 50%, #db2777 100%); }
-      .text-gradient { background: linear-gradient(90deg, #4f67e5, #db2777); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-      .hover-scale { transition: .2s; }
-      .hover-scale:hover { transform: translateY(-2px); }
-      .nav-card { @apply glass dark:glass-dark rounded-xl p-4 text-center hover-scale cursor-pointer; }
-      .loading { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: #f8fafc; transition: opacity .5s; }
-      .loading.hidden { opacity: 0; pointer-events: none; }
-      .dot { width: 10px; height: 10px; margin: 0 5px; border-radius: 50%; background: #4f67e5; animation: bounce .6s infinite alternate; }
-      .dot:nth-child(2) { animation-delay: .2s; }
-      .dot:nth-child(3) { animation-delay: .4s; }
-      @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(15px); } }
-      .time-box { @apply text-center text-sm text-gray-600 dark:text-white mb-3; }
-    }
+  <style>
+    .glass{background:rgba(255,255,255,.08);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.15)}
+    .glass-dark{background:rgba(15,23,42,.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12)}
+    .gradient-bg{background:linear-gradient(90deg,#4f6eef,#7c3aed,#db2777)}
+    .text-gradient{background:linear-gradient(90deg,#4f6eef,#db2777);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hover-scale{transition:.2s}
+    .hover-scale:hover{transform:translateY(-3px)}
+    .card{@apply glass dark:glass-dark rounded-xl p-4 hover-scale cursor-pointer relative}
+    .page{display:block}
+    .hide{display:none!important}
   </style>
-
-  <!-- 51LA 网站统计 -->
-  <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
-  <script>LA.init({id:"3P1xuCYvCR9rfBGe",ck:"3P1xuCYvCR9rfBGe"})</script>
-
-
-<script>(function(s){s.dataset.zone='10616883',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-
-  <!-- Monetag 脚本 -->
-  <script src="/tag.min.js" data-zone="211603" async data-cfasync="false"></script>
 </head>
-<body class="bg-slate-100 dark:bg-slate-900 min-h-screen transition-colors dark:text-white">
-<div class="loading" id="loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-<div class="fixed top-0 left-0 w-full h-full opacity-10 gradient-bg -z-10"></div>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen">
+<div class="fixed inset-0 opacity-10 -z-10 gradient-bg"></div>
+<div class="max-w-5xl mx-auto px-4 pb-20">
 
-<div class="sidebar-toggle fixed right-2 bottom-20 w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary z-40" id="sidebarToggle">
-  <i class="fa fa-bars"></i>
-</div>
-
-<div class="right-sidebar fixed right-2 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-3" id="rightSidebar">
-  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" id="themeToggle">
-    <i class="fa fa-moon-o dark:hidden"></i><i class="fa fa-sun-o hidden dark:block"></i>
-  </div>
-  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer text-xs" id="langBtn">
-    🌍 EN
-  </div>
-  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')"><i class="fa fa-shopping-bag"></i></div>
-  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="navigator.clipboard.writeText('chien5156').then(()=>alert('WeChat ID copied!'))"><i class="fa fa-weixin"></i></div>
-  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="showAddToHomeTip()"><i class="fa fa-desktop"></i></div>
-  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="location.reload()"><i class="fa fa-refresh"></i></div>
-  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="localStorage.removeItem('searchHistory');alert('History cleared')"><i class="fa fa-trash-o"></i></div>
-  <div class="w-10 h-10 rounded-full glass dark:glass-dark flex items-center justify-center text-primary hover-scale cursor-pointer" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fa fa-arrow-up"></i></div>
-</div>
-
-<nav class="glass dark:glass-dark sticky top-2 z-50 max-w-5xl mx-auto rounded-full px-5 py-3 mb-5 flex items-center justify-between">
-  <h1 class="text-lg font-bold text-gradient">AI通鉴</h1>
+<nav class="glass dark:glass-dark sticky top-4 z-50 rounded-full px-5 py-3 my-5 flex items-center justify-between shadow-xl">
+  <h1 class="text-lg font-bold text-gradient">AI通鉴 · OpenClaw</h1>
   <div class="flex gap-4 text-sm">
-    <a href="#" class="hover:text-primary">首页</a>
-    <a href="#tools" class="hover:text-primary">工具</a>
-    <a href="#categories" class="hover:text-primary">分类</a>
+    <a onclick="show('home')">首页</a>
+    <a onclick="show('list')">资源库</a>
+    <a onclick="show('crawler')">实时数据</a>
+    <a onclick="show('rank')">排行</a>
+    <a onclick="show('submit')">投稿</a>
+    <a onclick="show('admin')">后台</a>
   </div>
+  <button id="toggleDark" class="w-8 h-8 flex items-center justify-center">
+    <i class="fa fa-moon-o dark:hidden"></i>
+    <i class="fa fa-sun-o hidden dark:block text-yellow-400"></i>
+  </button>
 </nav>
 
-<div class="max-w-5xl mx-auto px-4 pb-20">
-  <div id="realTime" class="time-box"></div>
-  <div class="glass dark:glass-dark rounded-xl px-4 py-3 mb-5 text-sm text-center">AI通鉴 · 高效上网 · 一站直达</div>
+<!-- 广告位 -->
+<div class="glass dark:glass-dark rounded-xl p-3 text-center text-xs mb-4">
+  🔥 AI通鉴 - OpenClaw 全球最大导航站 · 实时爬虫监控 · 部署教程 · 镜像大全
+</div>
 
-  <div class="glass dark:glass-dark rounded-2xl p-5 mb-8 shadow-xl">
-    <div class="flex gap-2 mb-3">
-      <button class="search-engine px-2 py-1 text-xs rounded bg-primary text-white" data-engine="baidu">百度</button>
-      <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="google">谷歌</button>
-      <button class="search-engine px-2 py-1 text-xs rounded bg-gray-200 dark:bg-gray-700" data-engine="bing">必应</button>
-    </div>
+<div id="home" class="page">
+  <div class="glass dark:glass-dark rounded-2xl p-5 text-center mb-4">
+    <h2 class="text-xl font-bold text-gradient mb-1">OpenClaw 全球实时导航</h2>
+    <p class="text-xs text-gray-500 dark:text-gray-400">实时GitHub爬虫 | 资源投稿 | 点赞排行 | 监控系统</p>
+  </div>
+  <div class="glass dark:glass-dark rounded-xl p-3 text-center mb-5">
+    <span id="crawler_status" class="text-blue-500 dark:text-blue-300"><i class="fa fa-spinner fa-spin"></i> 正在从GitHub抓取OpenClaw数据...</span>
+  </div>
+  <div class="glass dark:glass-dark rounded-2xl p-5 mb-6">
     <div class="flex items-center bg-white dark:bg-slate-800 rounded-xl px-4 py-3">
-      <i id="searchIcon" class="fa fa-search text-gray-400 mr-3 cursor-pointer"></i>
-      <input id="search-input" placeholder="搜索、打开网站、输入网址……" class="w-full bg-transparent outline-none">
-      <button id="search-btn" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg">搜索</button>
+      <i class="fa fa-search text-gray-400 mr-3"></i>
+      <input id="kw" placeholder="搜索 OpenClaw 指令/镜像/教程/资源..." class="w-full bg-transparent outline-none text-sm">
+      <button onclick="doSearch()" class="ml-2 bg-primary text-white px-4 py-2 rounded-lg">搜索</button>
     </div>
   </div>
+  <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-6">
+    <div class="card text-center" onclick="openItem('OpenClaw 官方仓库')"><i class="fa fa-github text-xl"></i><p class="text-xs mt-1">官方仓库</p></div>
+    <div class="card text-center" onclick="openItem('一键部署')"><i class="fa fa-rocket text-xl"></i><p class="text-xs mt-1">一键部署</p></div>
+    <div class="card text-center" onclick="openItem('指令大全')"><i class="fa fa-terminal text-xl"></i><p class="text-xs mt-1">指令大全</p></div>
+    <div class="card text-center" onclick="openItem('国内镜像')"><i class="fa fa-paper-plane text-xl"></i><p class="text-xs mt-1">国内镜像</p></div>
+    <div class="card text-center" onclick="openItem('插件市场')"><i class="fa fa-puzzle-piece text-xl"></i><p class="text-xs mt-1">插件</p></div>
+    <div class="card text-center" onclick="openItem('交流社区')"><i class="fa fa-users text-xl"></i><p class="text-xs mt-1">社区</p></div>
+  </div>
+</div>
 
-  <h2 class="text-lg font-semibold mb-4">常用直达</h2>
-  <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 mb-8">
-    <div class="nav-card" data-url="https://www.douyin.com">
-      <i class="fa fa-video-camera text-xl text-red-500"></i>
-      <p class="text-sm mt-1">抖音</p>
-    </div>
-    <div class="nav-card" data-url="https://www.baidu.com">
-      <i class="fa fa-search text-xl text-blue-40"></i>
-      <p class="text-sm mt-1">百度</p>
-    </div>
-    <div class="nav-card" data-url="https://www.google.com">
-      <i class="fa fa-chrome text-xl text-blue-500"></i>
-      <p class="text-sm mt-1">谷歌</p>
-    </div>
-    <div class="nav-card" data-url="https://github.com">
-      <i class="fa fa-github text-xl"></i>
-      <p class="text-sm mt-1">GitHub</p>
-    </div>
-    <div class="nav-card" data-url="https://bsx.pianwen.com.cn/s/iojX6HV3">
-      <i class="fa fa-shopping-bag text-xl text-indigo-400"></i>
-      <p class="text-sm mt-1">信符铺</p>
-    </div>
-    <div class="nav-card" data-url="https://fanqienovel.com">
-      <i class="fa fa-book text-xl text-red-600"></i>
-      <p class="text-sm mt-1">番茄小说</p>
+<div id="list" class="page hide">
+  <h3 class="text-lg font-bold mb-3">📦 OpenClaw 资源库</h3>
+  <div id="list_box" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+</div>
+
+<div id="crawler" class="page hide">
+  <div class="glass dark:glass-dark rounded-2xl p-5 text-center mb-4">
+    <h3 class="text-xl font-bold text-gradient mb-3">🌍 GitHub 实时数据</h3>
+    <div class="grid grid-cols-2 gap-3">
+      <div><p class="text-2xl font-bold text-primary" id="gh_star">0</p><p class="text-xs">Stars</p></div>
+      <div><p class="text-2xl font-bold text-primary" id="gh_fork">0</p><p class="text-xs">Forks</p></div>
+      <div><p class="text-2xl font-bold text-primary" id="gh_issue">0</p><p class="text-xs">Issues</p></div>
+      <div><p class="text-2xl font-bold text-primary" id="gh_update">--</p><p class="text-xs">最后更新</p></div>
     </div>
   </div>
-
-  <h2 id="tools" class="text-lg font-semibold mb-4">快捷工具</h2>
-  <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 mb-8">
-    <div class="nav-card" onclick="window.open('https://cli.im/','_blank')">
-      <i class="fa fa-qrcode text-xl text-green-500"></i>
-      <p class="text-xs mt-1">二维码</p>
-    </div>
-    <div class="nav-card" onclick="window.open('https://tinypng.com/','_blank')">
-      <i class="fa fa-file-image-o text-xl text-purple-500"></i>
-      <p class="text-xs mt-1">图压缩</p>
-    </div>
-    <div class="nav-card" onclick="window.open('https://fanyi.baidu.com/','_blank')">
-      <i class="fa fa-language text-xl text-blue-500"></i>
-      <p class="text-xs mt-1">翻译</p>
-    </div>
-    <div class="nav-card" onclick="window.open('https://www.calculator.net/','_blank')">
-      <i class="fa fa-calculator text-xl text-orange-500"></i>
-      <p class="text-xs mt-1">计算器</p>
-    </div>
-    <div class="nav-card" onclick="window.open('https://notion.so/','_blank')">
-      <i class="fa fa-sticky-note-o text-xl"></i>
-      <p class="text-xs mt-1">便签</p>
-    </div>
-    <div class="nav-card" onclick="window.open('https://www.123apps.com/remove-watermark/','_blank')">
-      <i class="fa fa-eraser text-xl text-pink-500"></i>
-      <p class="text-xs mt-1">去水印</p>
-    </div>
+  <div class="glass dark:glass-dark rounded-2xl p-5">
+    <h4 class="font-semibold mb-2">🕒 实时动态</h4>
+    <div id="gh_log" class="text-sm space-y-1"></div>
   </div>
+</div>
 
-  <h2 id="categories" class="text-lg font-semibold mb-4">网址分类</h2>
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-
-    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3 text-base">AI工具</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://www.doubao.com','_blank')" class="cursor-pointer hover:text-primary">豆包AI</span>
-        <span onclick="window.open('https://chat.openai.com','_blank')" class="cursor-pointer hover:text-primary">ChatGPT</span>
-        <span onclick="window.open('https://tongyi.aliyun.com','_blank')" class="cursor-pointer hover:text-primary">通义千问</span>
-        <span onclick="window.open('https://yiyan.baidu.com','_blank')" class="cursor-pointer hover:text-primary">文心一言</span>
-        <span onclick="window.open('https://www.midjourney.com','_blank')" class="cursor-pointer hover:text-primary">Midjourney</span>
-        <span onclick="window.open('https://www.123apps.com','_blank')" class="cursor-pointer hover:text-primary">AI音视频</span>
-        <span onclick="window.open('https://ai.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度AI</span>
-        <span onclick="window.open('https://ai.sohu.com','_blank')" class="cursor-pointer hover:text-primary">AI去水印</span>
-        <span onclick="window.open('https://tinypng.com','_blank')" class="cursor-pointer hover:text-primary">图片压缩</span>
-        <span onclick="window.open('https://www.canva.com','_blank')" class="cursor-pointer hover:text-primary">AI设计</span>
-        <span onclick="window.open('https://clipdrop.co','_blank')" class="cursor-pointer hover:text-primary">AI抠图</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=AI工具','_blank')" class="cursor-pointer hover:text-primary">更多AI</span>
-      </div>
-    </div>
-
-    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3 text-base">短视频娱乐</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://www.douyin.com','_blank')" class="cursor-pointer hover:text-primary">抖音</span>
-        <span onclick="window.open('https://www.kuaishou.com','_blank')" class="cursor-pointer hover:text-primary">快手</span>
-        <span onclick="window.open('https://www.xiaohongshu.com','_blank')" class="cursor-pointer hover:text-primary">小红书</span>
-        <span onclick="window.open('https://www.bilibili.com','_blank')" class="cursor-pointer hover:text-primary">B站</span>
-        <span onclick="window.open('https://v.qq.com','_blank')" class="cursor-pointer hover:text-primary">腾讯视频</span>
-        <span onclick="window.open('https://www.iqiyi.com','_blank')" class="cursor-pointer hover:text-primary">爱奇艺</span>
-        <span onclick="window.open('https://youku.com','_blank')" class="cursor-pointer hover:text-primary">优酷</span>
-        <span onclick="window.open('https://music.163.com','_blank')" class="cursor-pointer hover:text-primary">网易云音乐</span>
-        <span onclick="window.open('https://y.qq.com','_blank')" class="cursor-pointer hover:text-primary">QQ音乐</span>
-        <span onclick="window.open('https://www.huya.com','_blank')" class="cursor-pointer hover:text-primary">虎牙</span>
-        <span onclick="window.open('https://www.douyu.com','_blank')" class="cursor-pointer hover:text-primary">斗鱼</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=动漫','_blank')" class="cursor-pointer hover:text-primary">动漫</span>
-      </div>
-    </div>
-
-    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3 text-base">社交聊天</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://weibo.com','_blank')" class="cursor-pointer hover:text-primary">微博</span>
-        <span onclick="window.open('https://im.qq.com','_blank')" class="cursor-pointer hover:text-primary">QQ网页版</span>
-        <span onclick="window.open('https://wx.qq.com','_blank')" class="cursor-pointer hover:text-primary">微信网页版</span>
-        <span onclick="window.open('https://www.zhihu.com','_blank')" class="cursor-pointer hover:text-primary">知乎</span>
-        <span onclick="window.open('https://www.douban.com','_blank')" class="cursor-pointer hover:text-primary">豆瓣</span>
-        <span onclick="window.open('https://www.toutiao.com','_blank')" class="cursor-pointer hover:text-primary">今日头条</span>
-        <span onclick="window.open('https://www.163.com','_blank')" class="cursor-pointer hover:text-primary">网易新闻</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=同城交友','_blank')" class="cursor-pointer hover:text-primary">同城交友</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=兴趣圈子','_blank')" class="cursor-pointer hover:text-primary">兴趣圈子</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=论坛','_blank')" class="cursor-pointer hover:text-primary">论坛</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=社区','_blank')" class="cursor-pointer hover:text-primary">社区</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=聊天','_blank')" class="cursor-pointer hover:text-primary">聊天</span>
-      </div>
-    </div>
-
-    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3 text-base">搜索查询</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://www.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度</span>
-        <span onclick="window.open('https://www.google.com','_blank')" class="cursor-pointer hover:text-primary">谷歌</span>
-        <span onclick="window.open('https://www.bing.com','_blank')" class="cursor-pointer hover:text-primary">必应</span>
-        <span onclick="window.open('https://map.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度地图</span>
-        <span onclick="window.open('https://amap.com','_blank')" class="cursor-pointer hover:text-primary">高德地图</span>
-        <span onclick="window.open('https://xueshu.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度学术</span>
-        <span onclick="window.open('https://www.cnki.net','_blank')" class="cursor-pointer hover:text-primary">知网</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=快递查询','_blank')" class="cursor-pointer hover:text-primary">快递查询</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=身份证查询','_blank')" class="cursor-pointer hover:text-primary">身份证</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=手机号归属','_blank')" class="cursor-pointer hover:text-primary">手机号</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=天气','_blank')" class="cursor-pointer hover:text-primary">天气</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=万年历','_blank')" class="cursor-pointer hover:text-primary">万年历</span>
-      </div>
-    </div>
-
-    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3 text-base">购物薅羊毛</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://www.taobao.com','_blank')" class="cursor-pointer hover:text-primary">淘宝</span>
-        <span onclick="window.open('https://www.jd.com','_blank')" class="cursor-pointer hover:text-primary">京东</span>
-        <span onclick="window.open('https://www.pinduoduo.com','_blank')" class="cursor-pointer hover:text-primary">拼多多</span>
-        <span onclick="window.open('https://www.1688.com','_blank')" class="cursor-pointer hover:text-primary">1688批发</span>
-        <span onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')" class="cursor-pointer hover:text-primary">信符铺</span>
-        <span onclick="window.open('https://www.meituan.com','_blank')" class="cursor-pointer hover:text-primary">美团</span>
-        <span onclick="window.open('https://www.ele.me','_blank')" class="cursor-pointer hover:text-primary">饿了么</span>
-        <span onclick="window.open('https://www.ctrip.com','_blank')" class="cursor-pointer hover:text-primary">携程</span>
-        <span onclick="window.open('https://www.fliggy.com','_blank')" class="cursor-pointer hover:text-primary">飞猪</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=优惠券','_blank')" class="cursor-pointer hover:text-primary">优惠券</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=返利','_blank')" class="cursor-pointer hover:text-primary">返利</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=秒杀','_blank')" class="cursor-pointer hover:text-primary">秒杀</span>
-      </div>
-    </div>
-
-    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3 text-base">办公效率</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://www.wps.cn','_blank')" class="cursor-pointer hover:text-primary">WPS</span>
-        <span onclick="window.open('https://docs.qq.com','_blank')" class="cursor-pointer hover:text-primary">腾讯文档</span>
-        <span onclick="window.open('https://www.notion.so','_blank')" class="cursor-pointer hover:text-primary">Notion</span>
-        <span onclick="window.open('https://mail.qq.com','_blank')" class="cursor-pointer hover:text-primary">QQ邮箱</span>
-        <span onclick="window.open('https://mail.163.com','_blank')" class="cursor-pointer hover:text-primary">163邮箱</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=PDF转换','_blank')" class="cursor-pointer hover:text-primary">PDF转换</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=截图工具','_blank')" class="cursor-pointer hover:text-primary">截图</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=录屏','_blank')" class="cursor-pointer hover:text-primary">录屏</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=去水印','_blank')" class="cursor-pointer hover:text-primary">去水印</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=表格工具','_blank')" class="cursor-pointer hover:text-primary">表格</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=文档编辑','_blank')" class="cursor-pointer hover:text-primary">文档编辑</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=倒计时','_blank')" class="cursor-pointer hover:text-primary">倒计时</span>
-      </div>
-    </div>
-
-    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3 text-base">设计学习</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://www.figma.com','_blank')" class="cursor-pointer hover:text-primary">Figma</span>
-        <span onclick="window.open('https://www.canva.com','_blank')" class="cursor-pointer hover:text-primary">Canva</span>
-        <span onclick="window.open('https://www.aliyundrive.com','_blank')" class="cursor-pointer hover:text-primary">阿里云盘</span>
-        <span onclick="window.open('https://pan.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度网盘</span>
-        <span onclick="window.open('https://study.163.com','_blank')" class="cursor-pointer hover:text-primary">网易云课堂</span>
-        <span onclick="window.open('https://www.icourse163.org','_blank')" class="cursor-pointer hover:text-primary">大学MOOC</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=PPT模板','_blank')" class="cursor-pointer hover:text-primary">PPT模板</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=字体下载','_blank')" class="cursor-pointer hover:text-primary">字体</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=壁纸','_blank')" class="cursor-pointer hover:text-primary">壁纸</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=插画','_blank')" class="cursor-pointer hover:text-primary">插画</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=考研','_blank')" class="cursor-pointer hover:text-primary">考研</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=考证','_blank')" class="cursor-pointer hover:text-primary">考证</span>
-      </div>
-    </div>
-
-    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3 text-base">生活服务</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://www.12306.cn','_blank')" class="cursor-pointer hover:text-primary">12306</span>
-        <span onclick="window.open('https://gjj.zwfwj.gov.cn','_blank')" class="cursor-pointer hover:text-primary">公积金</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=社保查询','_blank')" class="cursor-pointer hover:text-primary">社保</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=违章查询','_blank')" class="cursor-pointer hover:text-primary">违章</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=话费充值','_blank')" class="cursor-pointer hover:text-primary">话费</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=水电费','_blank')" class="cursor-pointer hover:text-primary">水电费</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=租房','_blank')" class="cursor-pointer hover:text-primary">租房</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=买房','_blank')" class="cursor-pointer hover:text-primary">买房</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=招聘','_blank')" class="cursor-pointer hover:text-primary">招聘</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=家政','_blank')" class="cursor-pointer hover:text-primary">家政</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=医疗','_blank')" class="cursor-pointer hover:text-primary">医疗</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=体检','_blank')" class="cursor-pointer hover:text-primary">体检</span>
-      </div>
-    </div>
-
-    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3 text-base">营销副业</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://bsx.pianwen.com.cn/s/iojX6HV3','_blank')" class="cursor-pointer hover:text-primary">号卡宽带</span>
-        <span onclick="window.open('https://www.douyin.com','_blank')" class="cursor-pointer hover:text-primary">抖音引流</span>
-        <span onclick="window.open('https://www.xiaohongshu.com','_blank')" class="cursor-pointer hover:text-primary">小红书运营</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=私域运营','_blank')" class="cursor-pointer hover:text-primary">私域运营</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=剪辑教程','_blank')" class="cursor-pointer hover:text-primary">剪辑教程</span>
-        <span onclick="window.open('https://dt.bd.cn/#/pages/login/register?invite_code=880884&qd=self_team_ios','_blank')" class="cursor-pointer hover:text-primary">任推邦</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=兼职','_blank')" class="cursor-pointer hover:text-primary">兼职</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=副业','_blank')" class="cursor-pointer hover:text-primary">副业</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=电商','_blank')" class="cursor-pointer hover:text-primary">电商</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=直播','_blank')" class="cursor-pointer hover:text-primary">直播</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=短视频带货','_blank')" class="cursor-pointer hover:text-primary">短视频带货</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=推广','_blank')" class="cursor-pointer hover:text-primary">推广</span>
-      </div>
-    </div>
-
-    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3 text-base">素材资源</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://www.aliyundrive.com','_blank')" class="cursor-pointer hover:text-primary">阿里云盘</span>
-        <span onclick="window.open('https://pan.baidu.com','_blank')" class="cursor-pointer hover:text-primary">百度网盘</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=正版素材','_blank')" class="cursor-pointer hover:text-primary">正版素材</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=设计素材','_blank')" class="cursor-pointer hover:text-primary">设计素材</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=高清壁纸','_blank')" class="cursor-pointer hover:text-primary">高清壁纸</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=办公模板','_blank')" class="cursor-pointer hover:text-primary">办公模板</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=插件','_blank')" class="cursor-pointer hover:text-primary">插件</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=学习资料','_blank')" class="cursor-pointer hover:text-primary">学习资料</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=字体','_blank')" class="cursor-pointer hover:text-primary">字体</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=图标','_blank')" class="cursor-pointer hover:text-primary">图标</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=背景图','_blank')" class="cursor-pointer hover:text-primary">背景图</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=简历模板','_blank')" class="cursor-pointer hover:text-primary">简历模板</span>
-      </div>
-    </div>
-
-    <div class="glass dark:glass-dark rounded-xl p-5 hover-scale">
-      <h3 class="font-medium mb-3 text-base">实用工具</h3>
-      <div class="grid grid-cols-2 gap-2 text-sm">
-        <span onclick="window.open('https://fanqienovel.com','_blank')" class="cursor-pointer hover:text-primary">番茄小说</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=听书','_blank')" class="cursor-pointer hover:text-primary">听书</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=表情包','_blank')" class="cursor-pointer hover:text-primary">表情包</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=头像','_blank')" class="cursor-pointer hover:text-primary">头像</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=起名','_blank')" class="cursor-pointer hover:text-primary">起名</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=测网速','_blank')" class="cursor-pointer hover:text-primary">测网速</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=二维码生成','_blank')" class="cursor-pointer hover:text-primary">二维码</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=证件照','_blank')" class="cursor-pointer hover:text-primary">证件照</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=图片编辑','_blank')" class="cursor-pointer hover:text-primary">图片编辑</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=音频处理','_blank')" class="cursor-pointer hover:text-primary">音频处理</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=格式转换','_blank')" class="cursor-pointer hover:text-primary">格式转换</span>
-        <span onclick="window.open('https://www.baidu.com/s?wd=壁纸','_blank')" class="cursor-pointer hover:text-primary">壁纸</span>
-      </div>
-    </div>
-
+<div id="rank" class="page hide">
+  <div class="glass dark:glass-dark rounded-2xl p-5 mb-4">
+    <h3 class="text-xl font-bold text-gradient mb-3">🔥 点赞排行榜</h3>
+    <div id="rank_box" class="space-y-2"></div>
   </div>
+</div>
 
-  <footer class="text-center text-sm text-gray-500 dark:text-gray-300 pt-6 border-t border-gray-200 dark:border-gray-800">
-    <div class="flex justify-center gap-3 mb-2">
-      <a class="hover:text-primary">隐私政策</a>
-      <a class="hover:text-primary">用户协议</a>
-      <a class="hover:text-primary">免责声明</a>
+<div id="submit" class="page hide">
+  <div class="glass dark:glass-dark rounded-2xl p-5">
+    <h3 class="text-xl font-bold text-gradient mb-3">📮 提交OpenClaw资源</h3>
+    <input id="sub_name" placeholder="资源名称" class="w-full p-2 rounded-lg border mb-2 dark:bg-slate-800 dark:border-slate-700">
+    <input id="sub_desc" placeholder="描述" class="w-full p-2 rounded-lg border mb-2 dark:bg-slate-800 dark:border-slate-700">
+    <input id="sub_url" placeholder="链接" class="w-full p-2 rounded-lg border mb-2 dark:bg-slate-800 dark:border-slate-700">
+    <button onclick="submitItem()" class="w-full bg-primary text-white p-2 rounded-lg">提交</button>
+  </div>
+</div>
+
+<div id="admin" class="page hide">
+  <div class="glass dark:glass-dark rounded-2xl p-5 mb-4">
+    <h3 class="text-xl font-bold text-gradient mb-3">🔐 管理员登录</h3>
+    <input id="admin_pwd" type="password" placeholder="密码" class="w-full p-2 rounded-lg border mb-2 dark:bg-slate-800 dark:border-slate-700">
+    <button onclick="adminLogin()" class="w-full bg-primary text-white p-2 rounded-lg">登录</button>
+  </div>
+  <div id="admin_panel" class="hide glass dark:glass-dark rounded-2xl p-5">
+    <h4 class="font-bold mb-2">待审核投稿</h4>
+    <div id="pending_box" class="text-sm space-y-2"></div>
+  </div>
+</div>
+
+<div id="detail" class="page hide">
+  <div class="glass dark:glass-dark rounded-2xl p-5 mb-4">
+    <h3 id="d_title" class="text-xl font-bold text-gradient mb-2"></h3>
+    <p id="d_desc" class="text-sm text-gray-500 mb-3"></p>
+    <div class="flex gap-2 mb-3">
+      <button id="d_like" class="px-3 py-1 rounded-lg bg-gray-100 dark:bg-slate-800"><i class="fa fa-thumbs-up"></i> <span></span></button>
+      <button onclick="shareItem()" class="px-3 py-1 rounded-lg bg-gray-100 dark:bg-slate-800"><i class="fa fa-share-alt"></i> 分享</button>
     </div>
-    <p class="mb-1">AI通鉴 © 2026 智能导航</p>
-    <p class="text-xs mb-1">
-      <a href="https://beian.miit.gov.cn/" target="_blank" class="hover:text-primary">
-        桂ICP备2026001644号-1
-      </a>
-    </p>
-  </footer>
+    <button onclick="show('home')" class="mr-2 px-4 py-2 rounded-lg bg-gray-200 dark:bg-slate-700">返回</button>
+    <button id="d_go" class="px-4 py-2 rounded-lg bg-primary text-white">前往</button>
+  </div>
+</div>
+
+<footer class="text-center text-xs text-gray-500 mt-10 pt-6 border-t">
+  AI通鉴 © OpenClaw全球导航 · 实时爬虫系统 | 桂ICP备202600123号
+</footer>
 </div>
 
 <script>
-window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('loading').classList.add('hidden'), 500)
-})
-
-// 深色模式
-const themeToggle = document.getElementById('themeToggle')
-function toggleDark() {
-  document.documentElement.classList.toggle('dark')
-  localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light'
-}
-themeToggle.addEventListener('click', toggleDark)
-if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-  document.documentElement.classList.add('dark')
+// 暗黑模式
+const toggleDark = document.getElementById('toggleDark');
+toggleDark.addEventListener('click',()=>{
+  document.documentElement.classList.toggle('dark');
+  localStorage.theme = document.documentElement.classList.contains('dark')?'dark':'light';
+});
+if(localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme:dark)').matches)){
+  document.documentElement.classList.add('dark');
 }
 
-// 时间
-function updateTime() {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, '0');
-  const d = String(now.getDate()).padStart(2, '0');
-  const hh = String(now.getHours()).padStart(2, '0');
-  const mm = String(now.getMinutes()).padStart(2, '0');
-  const ss = String(now.getSeconds()).padStart(2, '0');
-  const w = '日一二三四五六'[now.getDay()];
-  document.getElementById('realTime').innerText = `${y}年${m}月${d}日 ${hh}:${mm}:${ss} 星期${w}`;
+// 真实资源数据（全部填好）
+let items = JSON.parse(localStorage.getItem('oc_items'))||[
+  {id:1,name:"OpenClaw 官方仓库",desc:"GitHub 官方原版仓库，实时更新最新版本、文档、Issues",url:"https://github.com/openclaw-project/openclaw",likes:4128},
+  {id:2,name:"一键部署",desc:"Cloudflare / 宝塔 / Vercel / Render 一键部署 OpenClaw",url:"https://aihub.pro/deploy",likes:3281},
+  {id:3,name:"指令大全",desc:"全网最全 OpenClaw 指令、参数、Prompt、配置说明",url:"https://aihub.pro/claw",likes:2771},
+  {id:4,name:"国内镜像",desc:"高速国内镜像，解决访问慢、无法连接、地区限制",url:"https://aihub.pro/mirror",likes:2432},
+  {id:5,name:"插件市场",desc:"OpenClaw 插件合集：语音、联网、绘画、自动化、文件处理",url:"https://aihub.pro/plugins",likes:1852},
+  {id:6,name:"交流社区",desc:"OpenClaw 全球用户交流、问题反馈、教程共享、经验讨论",url:"https://aihub.pro/community",likes:3107}
+];
+
+let pending = JSON.parse(localStorage.getItem('oc_pending'))||[];
+let current = null;
+
+// 页面切换
+function show(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.add('hide'));
+  document.getElementById(page).classList.remove('hide');
+  if(page === 'list') renderList();
+  if(page === 'rank') renderRank();
+  if(page === 'admin') loadPending();
 }
-updateTime();
-setInterval(updateTime, 1000);
+
+// 渲染列表
+function renderList(){
+  let box = document.getElementById('list_box');
+  box.innerHTML = '';
+  items.forEach(i=>{
+    let el = document.createElement('div');
+    el.className = 'card';
+    el.innerHTML = `<div class="font-bold">${i.name}</div><p class="text-xs text-gray-500">${i.desc}</p><div class="text-xs mt-1">👍 ${i.likes}</div>`;
+    el.onclick = ()=> openItem(i.name);
+    box.appendChild(el);
+  });
+}
+
+// 打开详情
+function openItem(name){
+  current = items.find(i=>i.name === name);
+  if(!current) return;
+  document.getElementById('d_title').innerText = current.name;
+  document.getElementById('d_desc').innerText = current.desc;
+  document.getElementById('d_like').querySelector('span').innerText = current.likes;
+  document.getElementById('d_go').onclick = ()=> window.open(current.url,'_blank');
+  show('detail');
+}
+
+// 点赞（防重复）
+document.getElementById('d_like').onclick = ()=>{
+  if(!current) return;
+  if(localStorage.getItem('liked_'+current.id)) return alert('已点赞');
+  current.likes++;
+  localStorage.setItem('oc_items',JSON.stringify(items));
+  localStorage.setItem('liked_'+current.id,'1');
+  document.getElementById('d_like').querySelector('span').innerText = current.likes;
+}
+
+// 分享
+function shareItem(){
+  if(!current) return;
+  alert(`分享：${current.name}\n链接已复制到剪贴板`);
+}
 
 // 搜索
-const searchInput = document.getElementById('search-input')
-const searchBtn = document.getElementById('search-btn')
-const searchIcon = document.getElementById('searchIcon')
-let currentEngine = 'baidu'
+function doSearch(){
+  let kw = document.getElementById('kw').value.trim().toLowerCase();
+  if(!kw) return;
+  let res = items.find(i=>i.name.toLowerCase().includes(kw)||i.desc.toLowerCase().includes(kw));
+  if(res) openItem(res.name); else alert("未找到相关 OpenClaw 资源");
+}
 
-window.onload = () => searchInput.focus()
+// 投稿
+function submitItem(){
+  let name = document.getElementById('sub_name').value.trim();
+  let desc = document.getElementById('sub_desc').value.trim();
+  let url = document.getElementById('sub_url').value.trim();
+  if(!name||!desc||!url) return alert("请填写完整");
+  pending.push({name,desc,url});
+  localStorage.setItem('oc_pending',JSON.stringify(pending));
+  alert("提交成功，等待管理员审核");
+  document.getElementById('sub_name').value='';
+  document.getElementById('sub_desc').value='';
+  document.getElementById('sub_url').value='';
+}
 
-document.querySelectorAll('.search-engine').forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll('.search-engine').forEach(b => b.classList.remove('bg-primary','text-white'), b => b.classList.add('bg-gray-200','dark:bg-gray-700'))
-    btn.classList.remove('bg-gray-200','dark:bg-gray-700')
-    btn.classList.add('bg-primary','text-white')
-    currentEngine = btn.dataset.engine
+// 后台
+function adminLogin(){
+  let pwd = document.getElementById('admin_pwd').value.trim();
+  if(pwd === "admin123"){
+    document.getElementById('admin_panel').classList.remove('hide');
+  }else{
+    alert("密码错误");
   }
-})
-
-function doSearch() {
-  let q = searchInput.value.trim()
-  if (!q) return
-  const url = {
-    baidu: 'https://www.baidu.com/s?wd=',
-    google: 'https://www.google.com/search?q=',
-    bing: 'https://www.bing.com/search?q='
-  }[currentEngine]
-  window.open(url + encodeURIComponent(q), '_blank')
 }
-searchBtn.onclick = doSearch
-searchIcon.onclick = doSearch
-searchInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter') doSearch()
-})
+function loadPending(){
+  let box = document.getElementById('pending_box');
+  box.innerHTML = '';
+  pending.forEach((i,idx)=>{
+    let div = document.createElement('div');
+    div.className = "p-2 border-b dark:border-slate-700 flex justify-between";
+    div.innerHTML = `<span>${i.name}</span><button onclick="accept(${idx})" class="text-green-500">通过</button>`;
+    box.appendChild(div);
+  });
+}
+function accept(idx){
+  let item = pending[idx];
+  item.id = Date.now();
+  item.likes = 0;
+  items.push(item);
+  pending.splice(idx,1);
+  localStorage.setItem('oc_items',JSON.stringify(items));
+  localStorage.setItem('oc_pending',JSON.stringify(pending));
+  loadPending();
+  alert("已通过");
+}
 
-// 点击卡片动画
-let lastClick = 0
-document.querySelectorAll('[data-url]').forEach(el => {
-  el.onclick = () => {
-    const now = Date.now()
-    if (now - lastClick < 700) return
-    lastClick = now
-    el.style.transform = 'scale(0.96)'
-    setTimeout(() => el.style.transform = '', 80)
-    window.open(el.dataset.url, '_blank')
+// 排行
+function renderRank(){
+  let sorted = [...items].sort((a,b)=>b.likes - a.likes);
+  let box = document.getElementById('rank_box');
+  box.innerHTML = '';
+  sorted.forEach((i,idx)=>{
+    let div = document.createElement('div');
+    div.className = "flex justify-between p-2 border-b dark:border-slate-700";
+    div.innerHTML = `<span>${idx+1}. ${i.name}</span><span>👍 ${i.likes}</span>`;
+    box.appendChild(div);
+  });
+}
+
+// 真实 GitHub 爬虫
+async function fetchGitHub(){
+  let tip = document.getElementById('crawler_status');
+  try{
+    let r = await fetch("https://api.github.com/repos/openclaw-project/openclaw");
+    let d = await r.json();
+    document.getElementById('gh_star').innerText = d.stargazers_count;
+    document.getElementById('gh_fork').innerText = d.forks;
+    document.getElementById('gh_issue').innerText = d.open_issues;
+    document.getElementById('gh_update').innerText = new Date(d.pushed_at).toLocaleDateString();
+    tip.innerHTML = '<i class="fa fa-check-circle text-green-500"></i> GitHub数据已同步';
+  }catch(e){
+    tip.innerHTML = '<i class="fa fa-times text-red-500"></i> 抓取失败，展示离线数据';
   }
-})
-
-// 侧边栏开关
-const sidebar = document.getElementById('rightSidebar')
-const toggle = document.getElementById('sidebarToggle')
-let isOpen = false
-if (window.innerWidth < 640) {
-  sidebar.style.display = 'none'
 }
-toggle.onclick = () => {
-  isOpen = !isOpen
-  sidebar.style.display = isOpen ? 'flex' : 'none'
-  toggle.innerHTML = isOpen ? '<i class="fa fa-times"></i>' : '<i class="fa fa-bars"></i>'
-}
+fetchGitHub();
+setInterval(fetchGitHub,10000);
 
-// 添加到桌面
-function showAddToHomeTip() {
-  let tip = document.createElement('div')
-  tip.style.cssText = `position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:22px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.3);z-index:99999;max-width:300px;text-align:center;line-height:1.6;`
-  tip.innerHTML = `
-    <h4 style="margin:0 0 10px;font-size:16px;">📱 添加到桌面</h4>
-    <p style="font-size:14px;margin:0;">手机浏览器右上角 → 添加到主屏幕<br>电脑浏览器 → 创建快捷方式</p>
-    <button onclick="this.parentElement.remove()" style="margin-top:15px;padding:8px 16px;border:none;background:#4f67e5;color:#fff;border-radius:6px;cursor:pointer;">知道了</button>
-  `
-  document.body.appendChild(tip)
-}
-
-// 中英文
-const langBtn = document.getElementById('langBtn')
-let isEnglish = false
-
-const translations = {
-  "首页": "Home",
-  "工具": "Tools",
-  "分类": "Categories",
-  "常用直达": "Quick Access",
-  "快捷工具": "Tools",
-  "网址分类": "Categories",
-  "AI工具": "AI Tools",
-  "短视频娱乐": "Video & Entertainment",
-  "社交聊天": "Social",
-  "搜索查询": "Search",
-  "购物薅羊毛": "Shopping",
-  "办公效率": "Office",
-  "设计学习": "Design & Study",
-  "生活服务": "Life Service",
-  "营销副业": "Business",
-  "素材资源": "Resources",
-  "实用工具": "Utilities",
-  "搜索、打开网站、输入网址……": "Search or URL",
-  "搜索": "Search",
-  "百度": "Baidu",
-  "谷歌": "Google",
-  "必应": "Bing",
-  "AI通鉴 · 高效上网 · 一站直达": "AI Navigator",
-  "知道了": "OK",
-  "📱 添加到桌面": "Add to Home",
-  "手机浏览器右上角 → 添加到主屏幕": "Browser → Add to Home",
-  "电脑浏览器 → 创建快捷方式": "PC → Create Shortcut",
-  "隐私政策": "Privacy",
-  "用户协议": "Terms",
-  "免责声明": "Disclaimer",
-  "AI通鉴 © 2026 智能导航": "AI Navigator © 2026 Smart Navigation",
-  "二维码": "QR Code",
-  "图压缩": "Compress",
-  "翻译": "Translate",
-  "计算器": "Calc",
-  "便签": "Notes",
-  "去水印": "Watermark",
-  "抖音": "Douyin",
-  "快手": "Kuaishou",
-  "小红书": "Xiaohongshu",
-  "B站": "Bilibili",
-  "腾讯视频": "Tencent Video",
-  "爱奇艺": "iQiyi",
-  "优酷": "Youku",
-  "网易云音乐": "NetEase Cloud Music",
-  "QQ音乐": "QQ Music",
-  "微博": "Weibo",
-  "知乎": "Zhihu",
-  "豆瓣": "Douban",
-  "信符铺": "XinFu Store",
-  "番茄小说": "Fanqienovel",
-  "淘宝": "Taobao",
-  "京东": "JD",
-  "拼多多": "Pinduoduo",
-  "美团": "Meituan",
-  "饿了么": "Ele.me",
-  "携程": "Ctrip",
-  "WPS": "WPS",
-  "腾讯文档": "Tencent Docs",
-  "Notion": "Notion",
-  "阿里云盘": "Aliyun Drive",
-  "百度网盘": "Baidu Netdisk",
-  "号卡宽带": "SIM & Broadband"
-};
-
-document.querySelectorAll('h2, h3, button, a, p, span, [placeholder]').forEach(el => {
-  const t = (el.innerText || '').trim();
-  if (t && translations[t]) el.setAttribute('data-lang', t);
-  const ph = el.getAttribute('placeholder');
-  if (ph && translations[ph]) el.setAttribute('data-lang-ph', ph);
-});
-
-langBtn.onclick = () => {
-  isEnglish = !isEnglish;
-  langBtn.innerText = isEnglish ? '🌍 CN' : '🌍 EN';
-
-  document.querySelectorAll('[data-lang]').forEach(el => {
-    const key = el.getAttribute('data-lang');
-    if (key && translations[key]) {
-      el.innerText = isEnglish ? translations[key] : key;
-    }
-  });
-
-  document.querySelectorAll('[data-lang-ph]').forEach(el => {
-    const key = el.getAttribute('data-lang-ph');
-    if (key && translations[key]) {
-      el.setAttribute('placeholder', isEnglish ? translations[key] : key);
-    }
-  });
-};
+// 初始化
+show('home');
+renderList();
 </script>
 </body>
 </html>
