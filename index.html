@@ -6,17 +6,18 @@
 <title>矿点星球</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
-html,body{height:100%;background:#1a1a1a;color:#ffcc00;font-family:system-ui}
-.top{position:fixed;top:0;left:0;width:100%;height:70px;background:#2b2b2b;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:2px solid #ffcc00}
-.top .info{display:flex;gap:16px}
-.btn{background:#ffcc00;color:#000;border-radius:6px;padding:10px 12px;border:0;font-weight:bold}
+html,body{height:100%;background:#1a1000;color:#ffcc00;font-family:"Courier New",monospace}
+.top{position:fixed;top:0;left:0;width:100%;height:70px;background:#2b1808;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:2px solid #ffcc00}
+.top .info{display:flex;gap:16px;font-size:16px;font-weight:bold}
+.btn{background:#ffcc00;color:#000;border:4px solid #ff9900;padding:8px 12px;cursor:pointer;border-radius:2px;font-weight:bold}
+.btn:active{transform:translateY(2px)}
 .container{margin-top:80px;padding:16px;max-width:480px;margin-left:auto;margin-right:auto}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.card{background:#2b2b2b;border-radius:8px;padding:12px;border:1px solid #444;text-align:center}
-.card h3{margin-bottom:8px}
-.nav{position:fixed;bottom:0;left:0;width:100%;height:60px;background:#2b2b2b;display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid #ffcc00}
-.nav button{background:transparent;color:#ffcc00;border:0;font-weight:bold}
-.nav .active{background:#ffcc00;color:#000;border-radius:6px;margin:4px}
+.card{padding:16px;border:4px solid #ffcc00;background:#2b1808;text-align:center;border-radius:4px}
+.card h3{margin-bottom:8px;font-size:16px}
+.nav{position:fixed;bottom:0;left:0;width:100%;height:60px;background:#2b1808;display:grid;grid-template-columns:repeat(2,1fr);border-top:2px solid #ffcc00}
+.nav button{background:transparent;color:#ffcc00;border:0;font-weight:bold;cursor:pointer;font-size:14px}
+.nav .active{background:#ffcc00;color:#000;margin:4px;border-radius:2px}
 .page{display:none}
 .page.active{display:block}
 </style>
@@ -28,12 +29,12 @@ html,body{height:100%;background:#1a1a1a;color:#ffcc00;font-family:system-ui}
     <div>金币:<span id="gold">0</span></div>
     <div>算力:<span id="power">0</span></div>
   </div>
-  <button class="btn" id="sign">签到</button>
+  <button class="btn" id="sign">每日签到</button>
 </div>
 
 <div class="container">
   <div class="page active" id="page1">
-    <h3>矿工</h3>
+    <div class="section-title" style="font-size:20px;margin-bottom:12px;color:#ffcc00;border-left:6px solid #ffcc00;padding-left:10px">雇佣矿工</div>
     <div class="grid">
       <div class="card"><h3>新手矿工</h3><button class="btn" id="h1">免费领取</button></div>
       <div class="card"><h3>熟练矿工</h3><button class="btn" id="h2">500 金币</button></div>
@@ -45,12 +46,12 @@ html,body{height:100%;background:#1a1a1a;color:#ffcc00;font-family:system-ui}
   </div>
 
   <div class="page" id="page2">
-    <h3>道具</h3>
+    <div class="section-title" style="font-size:20px;margin-bottom:12px;color:#ffcc00;border-left:6px solid #ffcc00;padding-left:10px">道具商店</div>
     <div class="grid">
-      <div class="card"><h3>加速</h3><button class="btn" id="b1">500</button></div>
-      <div class="card"><h3>幸运</h3><button class="btn" id="b2">1000</button></div>
-      <div class="card"><h3>超级</h3><button class="btn" id="b3">2000</button></div>
-      <div class="card"><h3>千问Key</h3><button class="btn" id="exchange">10000</button></div>
+      <div class="card"><h3>加速1小时</h3><button class="btn" id="b1">500 金币</button></div>
+      <div class="card"><h3>幸运光环</h3><button class="btn" id="b2">1000 金币</button></div>
+      <div class="card"><h3>超级矿场</h3><button class="btn" id="b3">2000 金币</button></div>
+      <div class="card"><h3>千问模型Key</h3><button class="btn" id="exchange">10000 金币</button></div>
     </div>
   </div>
 </div>
@@ -61,64 +62,99 @@ html,body{height:100%;background:#1a1a1a;color:#ffcc00;font-family:system-ui}
 </div>
 
 <script>
-let uid = localStorage.getItem("uid");
-if(!uid){ uid = "u"+Date.now(); localStorage.setItem("uid",uid); }
-
-async function api(action,data={}){
-  let r = await fetch("/api.php",{method:"POST",body:JSON.stringify({uid,action,...data})});
-  return await r.json();
+// 生成并存储用户唯一标识
+let uid = localStorage.getItem("minestar_uid");
+if(!uid){
+  uid = "user_" + Date.now() + "_" + Math.random().toString(36).substr(2, 8);
+  localStorage.setItem("minestar_uid", uid);
 }
 
-function render(d){
-  document.getElementById("gold").innerText = d.gold||0;
-  document.getElementById("power").innerText = d.power||0;
+// 统一接口请求函数，适配现有api文件夹路径
+async function requestApi(action, data = {}) {
+  try {
+    const res = await fetch("/api/exchange.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ uid, action, ...data })
+    });
+    if (!res.ok) throw new Error("接口请求失败");
+    return await res.json();
+  } catch (err) {
+    console.error("请求异常：", err);
+    return { success: false, msg: "网络异常或接口未部署", gold: 0, power: 0 };
+  }
 }
 
-async function load(){ render(await api("load")); }
-load(); setInterval(load,1000);
+// 渲染页面数据
+function render(data) {
+  document.getElementById("gold").innerText = Math.floor(data.gold || 0);
+  document.getElementById("power").innerText = data.power || 0;
+}
 
-document.getElementById("sign").onclick = async ()=>{
-  let d = await api("sign"); alert(d.msg); render(d);
-};
+// 初始化加载用户数据
+async function init() {
+  const data = await requestApi("load");
+  render(data);
+}
+init();
+// 定时刷新数据（1秒/次）
+setInterval(init, 1000);
 
-document.getElementById("h1").onclick = async ()=>{
-  let d = await api("hire",{id:1}); alert(d.msg); render(d);
-};
-document.getElementById("h2").onclick = async ()=>{
-  let d = await api("hire",{id:2}); alert(d.msg); render(d);
-};
-document.getElementById("h3").onclick = async ()=>{
-  let d = await api("hire",{id:3}); alert(d.msg); render(d);
-};
-document.getElementById("h4").onclick = async ()=>{
-  let d = await api("hire",{id:4}); alert(d.msg); render(d);
-};
-document.getElementById("h5").onclick = async ()=>{
-  let d = await api("hire",{id:5}); alert(d.msg); render(d);
-};
-document.getElementById("h6").onclick = async ()=>{
-  let d = await api("hire",{id:6}); alert(d.msg); render(d);
-};
+// 签到按钮事件
+document.getElementById("sign").addEventListener("click", async () => {
+  const data = await requestApi("sign");
+  alert(data.msg);
+  render(data);
+});
 
-document.getElementById("b1").onclick = async ()=>{
-  let d = await api("buff",{t:1}); alert(d.msg); render(d);
-};
-document.getElementById("b2").onclick = async ()=>{
-  let d = await api("buff",{t:2}); alert(d.msg); render(d);
-};
-document.getElementById("b3").onclick = async ()=>{
-  let d = await api("buff",{t:3}); alert(d.msg); render(d);
+// 矿工雇佣事件绑定
+const hireConfig = {
+  1: { cost: 0, power: 1, flag: "h1", tip: "新手矿工领取成功！" },
+  2: { cost: 500, power: 2, flag: "h2", tip: "熟练矿工雇佣成功！" },
+  3: { cost: 1200, power: 3, flag: "h3", tip: "精英矿工雇佣成功！" },
+  4: { cost: 2500, power: 5, flag: "h4", tip: "专家矿工雇佣成功！" },
+  5: { cost: 5000, power: 8, flag: "h5", tip: "大师矿工雇佣成功！" },
+  6: { cost: 10000, power: 15, flag: "h6", tip: "传说矿工雇佣成功！" }
 };
 
-document.getElementById("exchange").onclick = async ()=>{
-  let d = await api("exchange"); alert(d.msg); render(d);
+Object.keys(hireConfig).forEach(id => {
+  document.getElementById("h" + id).addEventListener("click", async () => {
+    const cfg = hireConfig[id];
+    const data = await requestApi("hire", { id: parseInt(id) });
+    alert(data.msg || cfg.tip);
+    render(data);
+  });
+});
+
+// 道具购买事件绑定
+const buffConfig = {
+  1: { cost: 500, tip: "加速1小时生效！" },
+  2: { cost: 1000, tip: "幸运光环生效！" },
+  3: { cost: 2000, tip: "超级矿场生效！" }
 };
 
-function goto(i){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById("page"+i).classList.add("active");
-  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
-  document.querySelectorAll(".nav button")[i-1].classList.add("active");
+Object.keys(buffConfig).forEach(t => {
+  document.getElementById("b" + t).addEventListener("click", async () => {
+    const cfg = buffConfig[t];
+    const data = await requestApi("buff", { t: parseInt(t) });
+    alert(data.msg || cfg.tip);
+    render(data);
+  });
+});
+
+// 千问Key兑换事件
+document.getElementById("exchange").addEventListener("click", async () => {
+  const data = await requestApi("exchange");
+  alert(data.msg);
+  render(data);
+});
+
+// 页面切换函数
+function goto(pageNum) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.getElementById("page" + pageNum).classList.add("active");
+  document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".nav button")[pageNum - 1].classList.add("active");
 }
 </script>
 </body>
