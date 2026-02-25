@@ -2,299 +2,123 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>矿点星球 - 挂机挖矿</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>矿点星球</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent!important;user-select:none!important;outline:none!important;-webkit-touch-callout:none!important;}
-html,body{overflow:hidden!important;position:fixed!important;width:100%;height:100%;}
-body{background:#1a1000;color:#ffcc00;padding-bottom:60px;overflow:hidden!important;}
-
-.pixel-btn{background:#ffcc00;color:#000;border:4px solid #ff9900;font-weight:bold;padding:10px 14px;cursor:pointer;border-radius:2px;}
-.pixel-btn:active{transform:translateY(2px)}
-.pixel-btn:disabled{background:#880000;border-color:#660000}
-
-#game-bar{position:fixed;top:0;left:0;width:100%;height:80px;background:#2b1808;border-bottom:4px solid #ffcc00;display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:999;}
-#info-area{display:flex;gap:20px;font-size:18px;font-weight:bold}
-
-.container{max-width:920px;margin:100px auto 20px;padding:0 15px;overflow:hidden!important;}
-.section{margin-bottom:24px;display:none}
-.section-title{font-size:24px;margin-bottom:12px;color:#ffcc00;border-left:6px solid #ffcc00;padding-left:10px}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px}
-.card{padding:16px;border:4px solid #ffcc00;background:#2b1808;text-align:center}
-.card h3{margin-bottom:10px}
-.card p{margin-bottom:8px;font-size:14px;color:#ffdd44}
-
-.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:none;align-items:center;justify-content:center;z-index:9999;}
-.modal-box{background:#2b1808;border:3px solid #ffcc00;padding:24px 30px;border-radius:12px;text-align:center;max-width:320px;width:80%}
-.modal-box h2{margin-bottom:14px}
-.modal-box p{margin-bottom:20px;font-size:16px}
-
-#bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:#2b1808;border-top:4px solid #ffcc00;display:flex;height:60px;}
-#bottom-nav button{flex:1;background:transparent;border:none;color:#ffcc00;font-weight:bold;font-size:14px;border-right:1px solid #ff9900;}
-#bottom-nav button:last-child{border-right:none}
-#bottom-nav button.active{background:#ffcc00;color:#000}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+html,body{height:100%;background:#1a1a1a;color:#ffcc00;font-family:system-ui}
+.top{position:fixed;top:0;left:0;width:100%;height:70px;background:#2b2b2b;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:2px solid #ffcc00}
+.top .info{display:flex;gap:16px}
+.btn{background:#ffcc00;color:#000;border-radius:6px;padding:10px 12px;border:0;font-weight:bold}
+.container{margin-top:80px;padding:16px;max-width:480px;margin-left:auto;margin-right:auto}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.card{background:#2b2b2b;border-radius:8px;padding:12px;border:1px solid #444;text-align:center}
+.card h3{margin-bottom:8px}
+.nav{position:fixed;bottom:0;left:0;width:100%;height:60px;background:#2b2b2b;display:grid;grid-template-columns:repeat(4,1fr);border-top:2px solid #ffcc00}
+.nav button{background:transparent;color:#ffcc00;border:0;font-weight:bold}
+.nav .active{background:#ffcc00;color:#000;border-radius:6px;margin:4px}
+.page{display:none}
+.page.active{display:block}
 </style>
 </head>
 <body>
 
-<div id="game-bar">
-    <div id="info-area">
-        <div>金币: <span id="gold">0</span></div>
-        <div>矿工+矿机: <span id="total-count">0</span></div>
-    </div>
-    <button class="pixel-btn" id="sign-btn">每日签到</button>
+<div class="top">
+  <div class="info">
+    <div>金币:<span id="gold">0</span></div>
+    <div>算力:<span id="power">0</span></div>
+  </div>
+  <button class="btn" id="sign">签到</button>
 </div>
 
 <div class="container">
-    <div class="section" id="miner-section">
-        <div class="section-title">我的矿工</div>
-        <div class="grid" id="miner-list"></div>
+  <div class="page active" id="page1">
+    <h3>矿工</h3>
+    <div class="grid">
+      <div class="card"><h3>新手矿工</h3><button class="btn" id="h1">免费领取</button></div>
+      <div class="card"><h3>熟练矿工</h3><button class="btn" id="h2">500 金币</button></div>
+      <div class="card"><h3>精英矿工</h3><button class="btn" id="h3">1200 金币</button></div>
+      <div class="card"><h3>专家矿工</h3><button class="btn" id="h4">2500 金币</button></div>
+      <div class="card"><h3>大师矿工</h3><button class="btn" id="h5">5000 金币</button></div>
+      <div class="card"><h3>传说矿工</h3><button class="btn" id="h6">10000 金币</button></div>
     </div>
+  </div>
 
-    <div class="section" id="machine-section">
-        <div class="section-title">我的矿机</div>
-        <div class="grid" id="machine-list"></div>
+  <div class="page" id="page2">
+    <h3>道具</h3>
+    <div class="grid">
+      <div class="card"><h3>加速</h3><button class="btn" id="b1">500</button></div>
+      <div class="card"><h3>幸运</h3><button class="btn" id="b2">1000</button></div>
+      <div class="card"><h3>超级</h3><button class="btn" id="b3">2000</button></div>
+      <div class="card"><h3>千问Key</h3><button class="btn" id="exchange">10000</button></div>
     </div>
-
-    <div class="section" id="hire-section">
-        <div class="section-title">雇佣矿工</div>
-        <div class="grid">
-            <div class="card"><h3>新手矿工</h3><p>基础产出</p><button class="pixel-btn" id="hire1">免费领取</button></div>
-            <div class="card"><h3>熟练矿工</h3><p>产出 ×1.5</p><button class="pixel-btn" id="hire2">500 金币</button></div>
-            <div class="card"><h3>精英矿工</h3><p>产出 ×2</p><button class="pixel-btn" id="hire3">1200 金币</button></div>
-            <div class="card"><h3>专家矿工</h3><p>产出 ×3</p><button class="pixel-btn" id="hire4">2500 金币</button></div>
-            <div class="card"><h3>大师矿工</h3><p>产出 ×5</p><button class="pixel-btn" id="hire5">5000 金币</button></div>
-            <div class="card"><h3>传说矿工</h3><p>产出 ×10</p><button class="pixel-btn" id="hire6">10000 金币</button></div>
-        </div>
-    </div>
-
-    <div class="section" id="machine-shop-section">
-        <div class="section-title">购买矿机</div>
-        <div class="grid">
-            <div class="card"><h3>初级矿机</h3><p>稳定产出</p><button class="pixel-btn" id="machine1">300 金币</button></div>
-            <div class="card"><h3>中级矿机</h3><p>高效产出 ×2</p><button class="pixel-btn" id="machine2">800 金币</button></div>
-            <div class="card"><h3>高级矿机</h3><p>大功率 ×3</p><button class="pixel-btn" id="machine3">1800 金币</button></div>
-            <div class="card"><h3>超级矿机</h3><p>工业级 ×5</p><button class="pixel-btn" id="machine4">4000 金币</button></div>
-            <div class="card"><h3>星球矿机</h3><p>主宰级 ×8</p><button class="pixel-btn" id="machine5">8000 金币</button></div>
-        </div>
-    </div>
-
-    <div class="section" id="upgrade-section">
-        <div class="section-title">矿场升级</div>
-        <div class="grid">
-            <div class="card"><h3>效率升级</h3><p>全体 +10%</p><button class="pixel-btn" id="upgrade-speed">100 金币</button></div>
-            <div class="card"><h3>产能升级</h3><p>全体 +20%</p><button class="pixel-btn" id="upgrade-output">200 金币</button></div>
-        </div>
-    </div>
-
-    <div class="section" id="item-section">
-        <div class="section-title">道具商店</div>
-        <div class="grid">
-            <div class="card"><h3>加速1小时</h3><p>速度 ×2</p><button class="pixel-btn" id="buy_speed">500 金币</button></div>
-            <div class="card"><h3>幸运光环</h3><p>爆率 +20%</p><button class="pixel-btn" id="buy_lucky">1000 金币</button></div>
-            <div class="card"><h3>超级矿场</h3><p>全体 +30%</p><button class="pixel-btn" id="buy_buff">2000 金币</button></div>
-            <div class="card"><h3>千问模型Key</h3><p>限量兑换</p><button class="pixel-btn" id="buy_qwen">10000 金币</button></div>
-        </div>
-    </div>
-
-    <div class="section" id="team-section">
-        <div class="section-title">我的团队</div>
-        <div class="card" style="max-width:500px;margin:auto;text-align:left;padding:20px;">
-            <h3 style="text-align:center;">邀请奖励</h3>
-            <p>一级好友收益：10%</p><p>二级好友收益：5%</p>
-            <br>
-            <p>一级人数：<span id="t1">0</span> 人</p><p>二级人数：<span id="t2">0</span> 人</p>
-            <br>
-            <p>我的邀请链接：</p>
-            <p id="invite-link" style="color:#fff;word-break:break-all;font-size:12px;"></p>
-            <button class="pixel-btn" id="copy-invite" style="width:100%;margin-top:10px;">复制邀请链接</button>
-        </div>
-    </div>
+  </div>
 </div>
 
-<div id="offlineModal" class="modal">
-    <div class="modal-box">
-        <h2>离线收益</h2>
-        <p>你离线获得了 <span id="offlineGold">0</span> 金币</p>
-        <button class="pixel-btn" onclick="claimOffline()">领取</button>
-    </div>
-</div>
-
-<div id="bottom-nav">
-    <button onclick="showTab('miner')" class="active">矿工</button>
-    <button onclick="showTab('machine')">矿机</button>
-    <button onclick="showTab('hire')">雇佣</button>
-    <button onclick="showTab('machine-shop')">购矿机</button>
-    <button onclick="showTab('upgrade')">升级</button>
-    <button onclick="showTab('item')">道具</button>
-    <button onclick="showTab('team')">团队</button>
+<div class="nav">
+  <button onclick="goto(1)" class="active">矿工</button>
+  <button onclick="goto(2)">道具</button>
 </div>
 
 <script>
-let allUsers = JSON.parse(localStorage.getItem("minestarUsers")) || {};
-let userId = localStorage.getItem("minestarUid") || "user_" + Date.now();
-localStorage.setItem("minestarUid", userId);
+let uid = localStorage.getItem("uid");
+if(!uid){ uid = "u"+Date.now(); localStorage.setItem("uid",uid); }
 
-let user = allUsers[userId] || {
-    gold:0, miners:[], machines:[], hasFreeMiner:false, lastSign:null,
-    lastTime:Date.now(), upgradeCount:0, inviteCode:"MINER"+Math.random().toString(36).substr(2,8).toUpperCase(),
-    parent:null, t1:0,t2:0, speed:0, lucky:0, buff:0, offlineReward:0
-};
-allUsers[userId] = user;
-
-function save(){
-    allUsers[userId] = user;
-    localStorage.setItem("minestarUsers", JSON.stringify(allUsers));
+async function api(action,data={}){
+  let r = await fetch("/api.php",{method:"POST",body:JSON.stringify({uid,action,...data})});
+  return await r.json();
 }
 
-function bindParentFromUrl(){
-    const params = new URLSearchParams(location.search);
-    const code = params.get("code");
-    if(!code || user.parent) return;
-    for(let uid in allUsers){
-        let u = allUsers[uid];
-        if(u.inviteCode === code){
-            user.parent = uid;
-            u.t1 += 1;
-            save();
-        }
-    }
+function render(d){
+  document.getElementById("gold").innerText = d.gold||0;
+  document.getElementById("power").innerText = d.power||0;
 }
 
-const goldEl = document.getElementById("gold");
-const totalEl = document.getElementById("total-count");
+async function load(){ render(await api("load")); }
+load(); setInterval(load,1000);
 
-function render(){
-    goldEl.innerText = Math.floor(user.gold);
-    totalEl.innerText = user.miners.length + user.machines.length;
-    save();
-}
-
-// 签到
-document.getElementById("sign-btn").onclick = ()=>{
-    let d = new Date().toDateString();
-    if(user.lastSign === d) return alert("今日已签到");
-    user.lastSign = d;
-    user.gold += 100;
-    render();
-    alert("签到成功 +100 金币");
+document.getElementById("sign").onclick = async ()=>{
+  let d = await api("sign"); alert(d.msg); render(d);
 };
 
-// 矿工
-document.getElementById("hire1").onclick = ()=>{
-    if(user.hasFreeMiner) return alert("已领取");
-    user.hasFreeMiner = true;
-    user.miners.push({mul:1});
-    render();
-    alert("领取成功");
+document.getElementById("h1").onclick = async ()=>{
+  let d = await api("hire",{id:1}); alert(d.msg); render(d);
 };
-document.getElementById("hire2").onclick = ()=>{
-    if(user.gold>=500){user.gold-=500;user.miners.push({mul:1.5});render();alert("雇佣成功");}else alert("金币不足");
+document.getElementById("h2").onclick = async ()=>{
+  let d = await api("hire",{id:2}); alert(d.msg); render(d);
 };
-document.getElementById("hire3").onclick = ()=>{
-    if(user.gold>=1200){user.gold-=1200;user.miners.push({mul:2});render();alert("雇佣成功");}else alert("金币不足");
+document.getElementById("h3").onclick = async ()=>{
+  let d = await api("hire",{id:3}); alert(d.msg); render(d);
 };
-document.getElementById("hire4").onclick = ()=>{
-    if(user.gold>=2500){user.gold-=2500;user.miners.push({mul:3});render();alert("雇佣成功");}else alert("金币不足");
+document.getElementById("h4").onclick = async ()=>{
+  let d = await api("hire",{id:4}); alert(d.msg); render(d);
 };
-document.getElementById("hire5").onclick = ()=>{
-    if(user.gold>=5000){user.gold-=5000;user.miners.push({mul:5});render();alert("雇佣成功");}else alert("金币不足");
+document.getElementById("h5").onclick = async ()=>{
+  let d = await api("hire",{id:5}); alert(d.msg); render(d);
 };
-document.getElementById("hire6").onclick = ()=>{
-    if(user.gold>=10000){user.gold-=10000;user.miners.push({mul:10});render();alert("雇佣成功");}else alert("金币不足");
+document.getElementById("h6").onclick = async ()=>{
+  let d = await api("hire",{id:6}); alert(d.msg); render(d);
 };
 
-// 矿机
-document.getElementById("machine1").onclick=()=>{if(user.gold>=300){user.gold-=300;user.machines.push({mul:1});render();alert("购买成功");}else alert("金币不足");}
-document.getElementById("machine2").onclick=()=>{if(user.gold>=800){user.gold-=800;user.machines.push({mul:2});render();alert("购买成功");}else alert("金币不足");}
-document.getElementById("machine3").onclick=()=>{if(user.gold>=1800){user.gold-=1800;user.machines.push({mul:3});render();alert("购买成功");}else alert("金币不足");}
-document.getElementById("machine4").onclick=()=>{if(user.gold>=4000){user.gold-=4000;user.machines.push({mul:5});render();alert("购买成功");}else alert("金币不足");}
-document.getElementById("machine5").onclick=()=>{if(user.gold>=8000){user.gold-=8000;user.machines.push({mul:8});render();alert("购买成功");}else alert("金币不足");}
-
-// 升级
-document.getElementById("upgrade-speed").onclick=()=>{if(user.gold>=100){user.gold-=100;user.upgradeCount+=0.1;render();alert("升级成功");}else alert("金币不足");}
-document.getElementById("upgrade-output").onclick=()=>{if(user.gold>=200){user.gold-=200;user.upgradeCount+=0.2;render();alert("升级成功");}else alert("金币不足");}
-
-// 道具
-document.getElementById("buy_speed").onclick=()=>{if(user.gold>=500){user.gold-=500;user.speed=Date.now()+3600000;render();alert("加速生效");}else alert("金币不足");}
-document.getElementById("buy_lucky").onclick=()=>{if(user.gold>=1000){user.gold-=1000;user.lucky=Date.now()+86400000;render();alert("幸运生效");}else alert("金币不足");}
-document.getElementById("buy_buff").onclick=()=>{if(user.gold>=2000){user.gold-=2000;user.buff=Date.now()+86400000;render();alert("超级矿场生效");}else alert("金币不足");}
-
-// 千问兑换（安全后端版）
-document.getElementById("buy_qwen").onclick = async ()=>{
-    if(user.gold < 10000){
-        alert("金币不足 10000");
-        return;
-    }
-    user.gold -= 10000;
-    render();
-
-    try {
-        let res = await fetch("/api/exchange.php");
-        let json = await res.json();
-        alert(json.msg);
-    } catch(e){
-        alert("手慢了，已经被抢光！");
-    }
+document.getElementById("b1").onclick = async ()=>{
+  let d = await api("buff",{t:1}); alert(d.msg); render(d);
+};
+document.getElementById("b2").onclick = async ()=>{
+  let d = await api("buff",{t:2}); alert(d.msg); render(d);
+};
+document.getElementById("b3").onclick = async ()=>{
+  let d = await api("buff",{t:3}); alert(d.msg); render(d);
 };
 
-// 邀请
-document.getElementById("copy-invite").onclick=()=>{
-    let link = location.origin + location.pathname + "?code=" + user.inviteCode;
-    navigator.clipboard.writeText(link).then(()=>alert("链接已复制"));
+document.getElementById("exchange").onclick = async ()=>{
+  let d = await api("exchange"); alert(d.msg); render(d);
 };
 
-// 离线收益
-function calcOffline(){
-    let now = Date.now();
-    let diff = now - user.lastTime;
-    let hours = diff / (3600*1000);
-    if(hours>8) hours=8;
-    let rate = 1 + user.upgradeCount;
-    if(user.speed > now) rate *=2;
-    if(user.lucky > now) rate *=1.2;
-    if(user.buff > now) rate *=1.3;
-
-    let minerPow = user.miners.reduce((s,m)=>s+m.mul,0);
-    let machinePow = user.machines.reduce((s,m)=>s+m.mul,0);
-    let add = (minerPow + machinePow) * rate * 0.04 * hours;
-    user.offlineReward = Math.floor(add);
-    user.lastTime = now;
-    save();
-}
-
-function claimOffline(){
-    user.gold += user.offlineReward;
-    user.offlineReward = 0;
-    render();
-    document.getElementById("offlineModal").style.display = "none";
-}
-
-// 自动产出
-setInterval(()=>{
-    let rate = 1 + user.upgradeCount;
-    if(user.speed > Date.now()) rate *=2;
-    if(user.lucky > Date.now()) rate *=1.2;
-    if(user.buff > Date.now()) rate *=1.3;
-    let p = user.miners.reduce((s,m)=>s+m.mul,0) + user.machines.reduce((s,m)=>s+m.mul,0);
-    user.gold += p * rate * 0.04;
-    render();
-}, 1000);
-
-function showTab(n){
-    document.querySelectorAll(".section").forEach(s=>s.style.display="none");
-    document.getElementById(n+"-section").style.display="block";
-    document.querySelectorAll("#bottom-nav button").forEach(b=>b.classList.remove("active"));
-    event.target.classList.add("active");
-}
-
-bindParentFromUrl();
-calcOffline();
-render();
-if(user.offlineReward>0){
-    document.getElementById("offlineGold").innerText = user.offlineReward;
-    document.getElementById("offlineModal").style.display = "flex";
+function goto(i){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("page"+i).classList.add("active");
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".nav button")[i-1].classList.add("active");
 }
 </script>
 </body>
