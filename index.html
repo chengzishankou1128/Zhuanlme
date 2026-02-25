@@ -2,160 +2,182 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>矿点星球</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>壹加壹铺.cn — 官方流量卡平台</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
-html,body{height:100%;background:#1a1000;color:#ffcc00;font-family:"Courier New",monospace}
-.top{position:fixed;top:0;left:0;width:100%;height:70px;background:#2b1808;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:2px solid #ffcc00}
-.top .info{display:flex;gap:16px;font-size:16px;font-weight:bold}
-.btn{background:#ffcc00;color:#000;border:4px solid #ff9900;padding:8px 12px;cursor:pointer;border-radius:2px;font-weight:bold}
-.btn:active{transform:translateY(2px)}
-.container{margin-top:80px;padding:16px;max-width:480px;margin-left:auto;margin-right:auto}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-.card{padding:16px;border:4px solid #ffcc00;background:#2b1808;text-align:center;border-radius:4px}
-.card h3{margin-bottom:8px;font-size:16px}
-.nav{position:fixed;bottom:0;left:0;width:100%;height:60px;background:#2b1808;display:grid;grid-template-columns:repeat(2,1fr);border-top:2px solid #ffcc00}
-.nav button{background:transparent;color:#ffcc00;border:0;font-weight:bold;cursor:pointer;font-size:14px}
-.nav .active{background:#ffcc00;color:#000;margin:4px;border-radius:2px}
-.page{display:none}
-.page.active{display:block}
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif}
+html,body{width:100%;min-height:100vh;background:#F7F8FA;color:#111111;overflow-x:hidden}
+
+/* 明亮清爽苹果背景 */
+.bg{position:fixed;inset:0;background:linear-gradient(180deg,#E8F0FF 0%,#F7F8FA 100%);z-index:-2}
+.grid{position:fixed;inset:0;background-image:linear-gradient(rgba(0,0,0,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.012) 1px,transparent 1px);background-size:44px 44px;z-index:-1}
+
+/* 品牌标题 */
+.hero{padding:50px 28px 30px;text-align:center}
+.logo{font-size:38px;font-weight:800;letter-spacing:-1.2px;color:#111111}
+.domain{font-size:15px;color:#8E8E93;margin-top:6px}
+.slogan{font-size:16px;color:#8E8E93;margin-top:10px;line-height:1.4}
+
+/* 轮播横幅 */
+.banner{margin:0 24px 36px;height:170px;border-radius:24px;overflow:hidden;position:relative;box-shadow:0 8px 25px rgba(0,60,150,0.12)}
+.slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:#fff;opacity:0;transition:opacity 0.8s}
+.slide.active{opacity:1}
+.slide1{background:linear-gradient(135deg,#007AFF,#5856D6)}
+.slide2{background:linear-gradient(135deg,#34C759,#007AFF)}
+.slide3{background:linear-gradient(135deg,#FF9500,#FF2D55)}
+
+/* 店铺入口 */
+.section{padding:0 24px;margin-bottom:40px}
+.title{font-size:20px;font-weight:700;margin-bottom:16px;color:#111111}
+.store-scroll{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:8px}
+.store-scroll::-webkit-scrollbar{display:none}
+.store{min-width:160px;background:rgba(255,255,255,0.7);border:1px solid rgba(0,0,0,0.06);border-radius:20px;padding:24px 16px;text-align:center;text-decoration:none;color:#111111;backdrop-filter:blur(10px)}
+.store h4{font-size:16px;font-weight:600;margin-bottom:4px}
+.store p{font-size:12px;color:#8E8E93}
+
+/* 套餐卡片 — 明亮 + 渐变流光动画 */
+.card{
+  margin:0 24px 20px;
+  padding:30px 26px;
+  background:rgba(255,255,255,0.85);
+  border:1px solid rgba(0,0,0,0.06);
+  border-radius:24px;
+  position:relative;
+  overflow:hidden;
+  backdrop-filter:blur(10px);
+  box-shadow:0 8px 22px rgba(0,80,200,0.08);
+}
+
+/* 渐变流光动画 */
+.card::before {
+  content:'';
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(90deg,transparent,rgba(0,122,255,0.06),transparent);
+  animation:slideLight 3.5s infinite linear;
+}
+@keyframes slideLight {
+  0%{left:-100%}
+  100%{left:100%}
+}
+
+.tag{position:absolute;top:22px;right:22px;display:flex;align-items:center;gap:6px;background:rgba(255,149,0,0.12);color:#FF9500;padding:6px 10px;border-radius:12px;font-size:12px}
+.fire{width:12px;height:12px;background:linear-gradient(180deg,#FF9500,#FF3B30);clip-path:polygon(50% 0%,100% 40%,80% 100%,50% 80%,20% 100%,0% 40%);animation:f 1.2s infinite alternate}
+@keyframes f{0%{transform:scale(1)}100%{transform:scale(1.14)}}
+.card h3{font-size:24px;font-weight:700;margin-bottom:8px;color:#111111}
+.operator{font-size:14px;color:#8E8E93;margin-bottom:16px}
+.price{font-size:34px;font-weight:700;color:#007AFF;margin:10px 0 22px}
+.feat{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:15px;color:#333333}
+.check{width:20px;height:20px;border:2px solid #007AFF;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.check::after{content:'';width:5px;height:9px;border-right:2px solid #007AFF;border-bottom:2px solid #007AFF;transform:rotate(45deg)}
+.btn{display:block;width:100%;margin-top:24px;padding:18px;text-align:center;background:#007AFF;color:#fff;font-size:16px;font-weight:600;border-radius:18px;text-decoration:none}
+
+/* 底部客服 */
+.fixed-service{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,0.85);border-top:1px solid rgba(0,0,0,0.06);padding:18px 24px;display:flex;gap:14px;backdrop-filter:blur(20px)}
+.service{flex:1;padding:16px;border-radius:18px;border:none;font-size:15px;font-weight:600;color:#fff}
+.wx{background:#34C759}
+.kf{background:#007AFF}
+
+.body-wrap{padding-bottom:120px}
 </style>
 </head>
+
 <body>
 
-<div class="top">
-  <div class="info">
-    <div>金币:<span id="gold">0</span></div>
-    <div>算力:<span id="power">0</span></div>
-  </div>
-  <button class="btn" id="sign">每日签到</button>
+<div class="bg"></div>
+<div class="grid"></div>
+
+<div class="hero">
+  <div class="logo">壹加壹铺</div>
+  <div class="domain">.cn</div>
+  <div class="slogan">全国正规流量卡 · 简单 · 靠谱 · 优惠</div>
 </div>
 
-<div class="container">
-  <div class="page active" id="page1">
-    <div class="section-title" style="font-size:20px;margin-bottom:12px;color:#ffcc00;border-left:6px solid #ffcc00;padding-left:10px">雇佣矿工</div>
-    <div class="grid">
-      <div class="card"><h3>新手矿工</h3><button class="btn" id="h1">免费领取</button></div>
-      <div class="card"><h3>熟练矿工</h3><button class="btn" id="h2">500 金币</button></div>
-      <div class="card"><h3>精英矿工</h3><button class="btn" id="h3">1200 金币</button></div>
-      <div class="card"><h3>专家矿工</h3><button class="btn" id="h4">2500 金币</button></div>
-      <div class="card"><h3>大师矿工</h3><button class="btn" id="h5">5000 金币</button></div>
-      <div class="card"><h3>传说矿工</h3><button class="btn" id="h6">10000 金币</button></div>
-    </div>
-  </div>
+<!-- 轮播 -->
+<div class="banner">
+  <div class="slide slide1 active">🔥 正规流量卡 · 长期套餐</div>
+  <div class="slide slide2">🚀 5G高速 · 全程不限速</div>
+  <div class="slide slide3">💎 官方正规 · 全国可发</div>
+</div>
 
-  <div class="page" id="page2">
-    <div class="section-title" style="font-size:20px;margin-bottom:12px;color:#ffcc00;border-left:6px solid #ffcc00;padding-left:10px">道具商店</div>
-    <div class="grid">
-      <div class="card"><h3>加速1小时</h3><button class="btn" id="b1">500 金币</button></div>
-      <div class="card"><h3>幸运光环</h3><button class="btn" id="b2">1000 金币</button></div>
-      <div class="card"><h3>超级矿场</h3><button class="btn" id="b3">2000 金币</button></div>
-      <div class="card"><h3>千问模型Key</h3><button class="btn" id="exchange">10000 金币</button></div>
-    </div>
+<!-- 店铺 -->
+<div class="section">
+  <div class="title">官方店铺入口</div>
+  <div class="store-scroll">
+    <a href="https://mp.yapingkeji.com/#/pages/sales_index/my_store?mall_id=%2FzRpOsgp3DDit2lhrAT76A%3D%3D" class="store" target="_blank">
+      <h4>一号店铺</h4>
+      <p>官方主店</p>
+    </a>
+    <a href="https://bsx.pianwen.com.cn/s/iojX6HV3" class="store" target="_blank">
+      <h4>二号店铺</h4>
+      <p>流量特惠</p>
+    </a>
+    <a href="https://my.86hk.vip/#/pages/micro_store/index?agent_id=64de22c895fca6bf" class="store" target="_blank">
+      <h4>三号店铺</h4>
+      <p>号卡优选</p>
+    </a>
   </div>
 </div>
 
-<div class="nav">
-  <button onclick="goto(1)" class="active">矿工</button>
-  <button onclick="goto(2)">道具</button>
+<div class="body-wrap">
+  <!-- 移动流量王 -->
+  <div class="card">
+    <div class="tag"><div class="fire"></div>全网爆款</div>
+    <h3>移动流量王</h3>
+    <div class="operator">中国移动 · 5G全国通用 · 本地归属</div>
+    <div class="price">¥29/月</div>
+    <div class="feat"><div class="check"></div>150G全国通用流量</div>
+    <div class="feat"><div class="check"></div>100分钟全国通话</div>
+    <div class="feat"><div class="check"></div>首充200 · 四年长期优惠</div>
+    <div class="feat"><div class="check"></div>无合约 · 官方售后可查</div>
+    <a class="btn">立即办理</a>
+  </div>
+
+  <!-- 电信行者卡 -->
+  <div class="card">
+    <div class="tag"><div class="fire"></div>广东专属</div>
+    <h3>电信行者卡</h3>
+    <div class="operator">中国电信 · 5G高速 · 首月免租</div>
+    <div class="price">¥29/月</div>
+    <div class="feat"><div class="check"></div>205G流量(175G通用+30G定向)</div>
+    <div class="feat"><div class="check"></div>100分钟全国通话</div>
+    <div class="feat"><div class="check"></div>仅发广东 · 粤居码可办</div>
+    <div class="feat"><div class="check"></div>首充100 · 四年优惠续约</div>
+    <a class="btn">立即办理</a>
+  </div>
+
+  <!-- 联通红霞卡 -->
+  <div class="card">
+    <h3>联通红霞卡</h3>
+    <div class="operator">中国联通 · 5G不限速 · 长期套餐</div>
+    <div class="price">¥39/月</div>
+    <div class="feat"><div class="check"></div>150G全国通用流量</div>
+    <div class="feat"><div class="check"></div>100分钟全国通话</div>
+    <div class="feat"><div class="check"></div>全国可发 · 无区域限制</div>
+    <div class="feat"><div class="check"></div>首充100 · 官方正规可查</div>
+    <a class="btn">立即办理</a>
+  </div>
+</div>
+
+<!-- 客服 -->
+<div class="fixed-service">
+  <button class="service wx">微信咨询</button>
+  <button class="service kf">在线客服</button>
 </div>
 
 <script>
-// 生成并存储用户唯一标识
-let uid = localStorage.getItem("minestar_uid");
-if(!uid){
-  uid = "user_" + Date.now() + "_" + Math.random().toString(36).substr(2, 8);
-  localStorage.setItem("minestar_uid", uid);
+const slides = document.querySelectorAll('.slide');
+let i = 0;
+function autoSlide() {
+  slides[i].classList.remove('active');
+  i = (i + 1) % slides.length;
+  slides[i].classList.add('active');
 }
-
-// 统一接口请求函数，适配现有api文件夹路径
-async function requestApi(action, data = {}) {
-  try {
-    const res = await fetch("/api/exchange.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ uid, action, ...data })
-    });
-    if (!res.ok) throw new Error("接口请求失败");
-    return await res.json();
-  } catch (err) {
-    console.error("请求异常：", err);
-    return { success: false, msg: "网络异常或接口未部署", gold: 0, power: 0 };
-  }
-}
-
-// 渲染页面数据
-function render(data) {
-  document.getElementById("gold").innerText = Math.floor(data.gold || 0);
-  document.getElementById("power").innerText = data.power || 0;
-}
-
-// 初始化加载用户数据
-async function init() {
-  const data = await requestApi("load");
-  render(data);
-}
-init();
-// 定时刷新数据（1秒/次）
-setInterval(init, 1000);
-
-// 签到按钮事件
-document.getElementById("sign").addEventListener("click", async () => {
-  const data = await requestApi("sign");
-  alert(data.msg);
-  render(data);
-});
-
-// 矿工雇佣事件绑定
-const hireConfig = {
-  1: { cost: 0, power: 1, flag: "h1", tip: "新手矿工领取成功！" },
-  2: { cost: 500, power: 2, flag: "h2", tip: "熟练矿工雇佣成功！" },
-  3: { cost: 1200, power: 3, flag: "h3", tip: "精英矿工雇佣成功！" },
-  4: { cost: 2500, power: 5, flag: "h4", tip: "专家矿工雇佣成功！" },
-  5: { cost: 5000, power: 8, flag: "h5", tip: "大师矿工雇佣成功！" },
-  6: { cost: 10000, power: 15, flag: "h6", tip: "传说矿工雇佣成功！" }
-};
-
-Object.keys(hireConfig).forEach(id => {
-  document.getElementById("h" + id).addEventListener("click", async () => {
-    const cfg = hireConfig[id];
-    const data = await requestApi("hire", { id: parseInt(id) });
-    alert(data.msg || cfg.tip);
-    render(data);
-  });
-});
-
-// 道具购买事件绑定
-const buffConfig = {
-  1: { cost: 500, tip: "加速1小时生效！" },
-  2: { cost: 1000, tip: "幸运光环生效！" },
-  3: { cost: 2000, tip: "超级矿场生效！" }
-};
-
-Object.keys(buffConfig).forEach(t => {
-  document.getElementById("b" + t).addEventListener("click", async () => {
-    const cfg = buffConfig[t];
-    const data = await requestApi("buff", { t: parseInt(t) });
-    alert(data.msg || cfg.tip);
-    render(data);
-  });
-});
-
-// 千问Key兑换事件
-document.getElementById("exchange").addEventListener("click", async () => {
-  const data = await requestApi("exchange");
-  alert(data.msg);
-  render(data);
-});
-
-// 页面切换函数
-function goto(pageNum) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  document.getElementById("page" + pageNum).classList.add("active");
-  document.querySelectorAll(".nav button").forEach(b => b.classList.remove("active"));
-  document.querySelectorAll(".nav button")[pageNum - 1].classList.add("active");
-}
+setInterval(autoSlide, 3600);
 </script>
+
 </body>
 </html>
