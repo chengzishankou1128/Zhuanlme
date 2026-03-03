@@ -3,98 +3,102 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>超强去水印（手机专用）</title>
+<title>高级去水印</title>
 <style>
   *{box-sizing:border-box}
   body{margin:0;padding:16px;background:#f4f4f4;font-family:system-ui}
-  .card{background:white;padding:20px;border-radius:16px}
+  .box{background:white;padding:20px;border-radius:16px}
   h3{margin-top:0}
-  canvas{max-width:100%;border-radius:10px; border:1px solid #ddd}
+  canvas{max-width:100%;border-radius:10px; border:1px solid #eee}
   button{width:100%;padding:14px;margin:6px 0;border:none;border-radius:12px;background:#007aff;color:white;font-size:16px}
   .btn-red{background:#ff3b30}
 </style>
 </head>
 <body>
-<div class="card">
-  <h3>超强AI去水印 · 纹理修复版</h3>
+<div class="box">
+  <h3>高级去水印（纹理修复）</h3>
   <input type="file" id="file" accept="image/*"><br><br>
-  <canvas id="c"></canvas><br>
-  <button onclick="removeStrong()">一键清除底部水印</button>
+  <canvas id="canvas"></canvas><br>
+  <button onclick="removeWatermark()">一键清除底部水印</button>
   <button onclick="reset()" class="btn-red">恢复原图</button>
-  <button onclick="save()">保存图片</button>
+  <button onclick="download()">保存图片</button>
 </div>
 
 <script>
-const c = document.getElementById('c');
-const ctx = c.getContext('2d');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 let img = null;
-let ori = null;
+let original = null;
 
 document.getElementById('file').addEventListener('change', e => {
   const f = e.target.files[0];
-  if(!f) return;
+  if (!f) return;
   const r = new FileReader();
   r.onload = e => {
     img = new Image();
     img.onload = () => {
-      c.width = img.width;
-      c.height = img.height;
-      ctx.drawImage(img,0,0);
-      ori = ctx.getImageData(0,0,c.width,c.height);
+      canvas.width = img.width;
+      canvas.height = img.height;
+      ctx.drawImage(img, 0, 0);
+      original = ctx.getImageData(0,0,canvas.width,canvas.height);
     }
     img.src = e.target.result;
   }
   r.readAsDataURL(f);
 })
 
-function removeStrong() {
-  if(!img){alert("请先上传图片");return}
-  ctx.putImageData(ori,0,0);
-  const w = c.width, h = c.height;
-  const y0 =Math.floor(h * 0.89);
-  const y1 = Math.floor(h * 0.97);
+function removeWatermark() {
+  if (!img) { alert("请先上传图片"); return; }
+  ctx.putImageData(original,0,0);
 
-  const idata = ctx.getImageData(0,0,w,h);
-  const data = idata.data;
+  const w = canvas.width;
+  const h = canvas.height;
+  const yStart = Math.floor(h * 0.88);
+  const yEnd = Math.floor(h * 0.97);
 
-  const kernel = 3;
+  const data = ctx.getImageData(0,0,w,h).data;
+  const out = ctx.createImageData(w, h);
+  const outData = out.data;
+  outData.set(data);
 
-  for (let y = y0; y < y1; y++) {
+  const radius = 4;
+  for (let y = yStart; y < yEnd; y++) {
     for (let x = 0; x < w; x++) {
-      let sumR = 0, sumG = 0, sumB = 0, cnt = 0;
-      for (let dy = -kernel; dy <= kernel; dy++) {
-        for (let dx = -kernel; dx <= kernel; dx++) {
+      let r = 0, g = 0, b = 0, count = 0;
+      for (let dy = -radius; dy <= radius; dy++) {
+        for (let dx = -radius; dx <= radius; dx++) {
           const nx = x + dx;
           const ny = y + dy;
-          if (nx < 0 || nx >= w || ny < 0 || ny >= y0) continue;
+          if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
+          if (ny >= yStart && ny < yEnd) continue;
           const i = (ny * w + nx) * 4;
-          sumR += data[i];
-          sumG += data[i+1];
-          sumB += data[i+2];
-          cnt++;
+          r += data[i];
+          g += data[i+1];
+          b += data[i+2];
+          count++;
         }
       }
-      if (cnt > 0) {
+      if (count > 0) {
         const i = (y * w + x) * 4;
-        data[i]   = sumR / cnt;
-        data[i+1] = sumG / cnt;
-        data[i+2] = sumB / cnt;
+        outData[i]   = r / count;
+        outData[i+1] = g / count;
+        outData[i+2] = b / count;
+        outData[i+3] = 255;
       }
     }
   }
-  ctx.putImageData(idata,0,0);
-  alert("水印已清除完成！");
+  ctx.putImageData(out, 0, 0);
+  alert("处理完成！");
 }
 
-function reset(){
-  if(ori) ctx.putImageData(ori,0,0);
+function reset() {
+  if (original) ctx.putImageData(original,0,0);
 }
 
-function save(){
-  if(!img){alert("请先上传图片");return}
+function download() {
   const a = document.createElement('a');
-  a.download = '超强去水印_'+Date.now()+'.jpg';
-  a.href = c.toDataURL('image/jpeg', 0.98);
+  a.download = '去水印完成.png';
+  a.href = canvas.toDataURL('image/png');
   a.click();
 }
 </script>
