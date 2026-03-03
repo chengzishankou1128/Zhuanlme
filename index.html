@@ -1,183 +1,233 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>壹加壹铺.cn — 官方流量卡平台</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif}
-html,body{width:100%;min-height:100vh;background:#F7F8FA;color:#111111;overflow-x:hidden}
-
-/* 明亮清爽苹果背景 */
-.bg{position:fixed;inset:0;background:linear-gradient(180deg,#E8F0FF 0%,#F7F8FA 100%);z-index:-2}
-.grid{position:fixed;inset:0;background-image:linear-gradient(rgba(0,0,0,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.012) 1px,transparent 1px);background-size:44px 44px;z-index:-1}
-
-/* 品牌标题 */
-.hero{padding:50px 28px 30px;text-align:center}
-.logo{font-size:38px;font-weight:800;letter-spacing:-1.2px;color:#111111}
-.domain{font-size:15px;color:#8E8E93;margin-top:6px}
-.slogan{font-size:16px;color:#8E8E93;margin-top:10px;line-height:1.4}
-
-/* 轮播横幅 */
-.banner{margin:0 24px 36px;height:170px;border-radius:24px;overflow:hidden;position:relative;box-shadow:0 8px 25px rgba(0,60,150,0.12)}
-.slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:600;color:#fff;opacity:0;transition:opacity 0.8s}
-.slide.active{opacity:1}
-.slide1{background:linear-gradient(135deg,#007AFF,#5856D6)}
-.slide2{background:linear-gradient(135deg,#34C759,#007AFF)}
-.slide3{background:linear-gradient(135deg,#FF9500,#FF2D55)}
-
-/* 店铺入口 */
-.section{padding:0 24px;margin-bottom:40px}
-.title{font-size:20px;font-weight:700;margin-bottom:16px;color:#111111}
-.store-scroll{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:8px}
-.store-scroll::-webkit-scrollbar{display:none}
-.store{min-width:160px;background:rgba(255,255,255,0.7);border:1px solid rgba(0,0,0,0.06);border-radius:20px;padding:24px 16px;text-align:center;text-decoration:none;color:#111111;backdrop-filter:blur(10px)}
-.store h4{font-size:16px;font-weight:600;margin-bottom:4px}
-.store p{font-size:12px;color:#8E8E93}
-
-/* 套餐卡片 — 明亮 + 渐变流光动画 */
-.card{
-  margin:0 24px 20px;
-  padding:30px 26px;
-  background:rgba(255,255,255,0.85);
-  border:1px solid rgba(0,0,0,0.06);
-  border-radius:24px;
-  position:relative;
-  overflow:hidden;
-  backdrop-filter:blur(10px);
-  box-shadow:0 8px 22px rgba(0,80,200,0.08);
-}
-
-/* 渐变流光动画 */
-.card::before {
-  content:'';
-  position:absolute;
-  top:0;
-  left:-100%;
-  width:100%;
-  height:100%;
-  background:linear-gradient(90deg,transparent,rgba(0,122,255,0.06),transparent);
-  animation:slideLight 3.5s infinite linear;
-}
-@keyframes slideLight {
-  0%{left:-100%}
-  100%{left:100%}
-}
-
-.tag{position:absolute;top:22px;right:22px;display:flex;align-items:center;gap:6px;background:rgba(255,149,0,0.12);color:#FF9500;padding:6px 10px;border-radius:12px;font-size:12px}
-.fire{width:12px;height:12px;background:linear-gradient(180deg,#FF9500,#FF3B30);clip-path:polygon(50% 0%,100% 40%,80% 100%,50% 80%,20% 100%,0% 40%);animation:f 1.2s infinite alternate}
-@keyframes f{0%{transform:scale(1)}100%{transform:scale(1.14)}}
-.card h3{font-size:24px;font-weight:700;margin-bottom:8px;color:#111111}
-.operator{font-size:14px;color:#8E8E93;margin-bottom:16px}
-.price{font-size:34px;font-weight:700;color:#007AFF;margin:10px 0 22px}
-.feat{display:flex;align-items:center;gap:10px;margin:12px 0;font-size:15px;color:#333333}
-.check{width:20px;height:20px;border:2px solid #007AFF;border-radius:6px;display:flex;align-items:center;justify-content:center}
-.check::after{content:'';width:5px;height:9px;border-right:2px solid #007AFF;border-bottom:2px solid #007AFF;transform:rotate(45deg)}
-.btn{display:block;width:100%;margin-top:24px;padding:18px;text-align:center;background:#007AFF;color:#fff;font-size:16px;font-weight:600;border-radius:18px;text-decoration:none}
-
-/* 底部客服 */
-.fixed-service{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,0.85);border-top:1px solid rgba(0,0,0,0.06);padding:18px 24px;display:flex;gap:14px;backdrop-filter:blur(20px)}
-.service{flex:1;padding:16px;border-radius:18px;border:none;font-size:15px;font-weight:600;color:#fff}
-.wx{background:#34C759}
-.kf{background:#007AFF}
-
-.body-wrap{padding-bottom:120px}
-</style>
+  <meta charset="UTF-8" />
+  <title>图片去水印 - 稳定版</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, sans-serif;
+    }
+    body {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+      color: #333;
+    }
+    .upload {
+      margin: 20px 0;
+    }
+    input[type="file"] {
+      padding: 8px;
+    }
+    .canvas-wrapper {
+      position: relative;
+      display: inline-block;
+      border: 2px dashed #ccc;
+      margin: 10px 0;
+    }
+    canvas {
+      display: block;
+      max-width: 100%;
+    }
+    .btn {
+      padding: 10px 18px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 8px;
+      margin-top: 10px;
+    }
+    .btn.danger {
+      background: #ef4444;
+    }
+    .tips {
+      color: #666;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="bg"></div>
-<div class="grid"></div>
-
-<div class="hero">
-  <div class="logo">壹加壹铺</div>
-  <div class="domain">.cn</div>
-  <div class="slogan">全国正规流量卡 · 简单 · 靠谱 · 优惠</div>
-</div>
-
-<!-- 轮播 -->
-<div class="banner">
-  <div class="slide slide1 active">🔥 正规流量卡 · 长期套餐</div>
-  <div class="slide slide2">🚀 5G高速 · 全程不限速</div>
-  <div class="slide slide3">💎 官方正规 · 全国可发</div>
-</div>
-
-<!-- 店铺 -->
-<div class="section">
-  <div class="title">官方店铺入口</div>
-  <div class="store-scroll">
-    <a href="https://mp.yapingkeji.com/#/pages/sales_index/my_store?mall_id=%2FzRpOsgp3DDit2lhrAT76A%3D%3D" class="store" target="_blank">
-      <h4>一号店铺</h4>
-      <p>官方主店</p>
-    </a>
-    <a href="https://bsx.pianwen.com.cn/s/iojX6HV3" class="store" target="_blank">
-      <h4>二号店铺</h4>
-      <p>流量特惠</p>
-    </a>
-    <a href="https://my.86hk.vip/#/pages/micro_store/index?agent_id=64de22c895fca6bf" class="store" target="_blank">
-      <h4>三号店铺</h4>
-      <p>号卡优选</p>
-    </a>
-  </div>
-</div>
-
-<div class="body-wrap">
-  <!-- 移动流量王 -->
-  <div class="card">
-    <div class="tag"><div class="fire"></div>全网爆款</div>
-    <h3>移动流量王</h3>
-    <div class="operator">中国移动 · 5G全国通用 · 本地归属</div>
-    <div class="price">¥29/月</div>
-    <div class="feat"><div class="check"></div>150G全国通用流量</div>
-    <div class="feat"><div class="check"></div>100分钟全国通话</div>
-    <div class="feat"><div class="check"></div>首充200 · 四年长期优惠</div>
-    <div class="feat"><div class="check"></div>无合约 · 官方售后可查</div>
-    <a class="btn">立即办理</a>
+<div class="container">
+  <h2>本地图片去水印工具（稳定无Bug）</h2>
+  <div class="upload">
+    <input type="file" id="fileInput" accept="image/*" />
   </div>
 
-  <!-- 电信行者卡 -->
-  <div class="card">
-    <div class="tag"><div class="fire"></div>广东专属</div>
-    <h3>电信行者卡</h3>
-    <div class="operator">中国电信 · 5G高速 · 首月免租</div>
-    <div class="price">¥29/月</div>
-    <div class="feat"><div class="check"></div>205G流量(175G通用+30G定向)</div>
-    <div class="feat"><div class="check"></div>100分钟全国通话</div>
-    <div class="feat"><div class="check"></div>仅发广东 · 粤居码可办</div>
-    <div class="feat"><div class="check"></div>首充100 · 四年优惠续约</div>
-    <a class="btn">立即办理</a>
+  <div class="canvas-wrapper">
+    <canvas id="canvas"></canvas>
   </div>
 
-  <!-- 联通红霞卡 -->
-  <div class="card">
-    <h3>联通红霞卡</h3>
-    <div class="operator">中国联通 · 5G不限速 · 长期套餐</div>
-    <div class="price">¥39/月</div>
-    <div class="feat"><div class="check"></div>150G全国通用流量</div>
-    <div class="feat"><div class="check"></div>100分钟全国通话</div>
-    <div class="feat"><div class="check"></div>全国可发 · 无区域限制</div>
-    <div class="feat"><div class="check"></div>首充100 · 官方正规可查</div>
-    <a class="btn">立即办理</a>
+  <div>
+    <button class="btn" onclick="startRemove()">去水印</button>
+    <button class="btn danger" onclick="clearSelection()">重选区域</button>
+    <button class="btn" onclick="downloadResult()">下载图片</button>
   </div>
-</div>
 
-<!-- 客服 -->
-<div class="fixed-service">
-  <button class="service wx">微信咨询</button>
-  <button class="service kf">在线客服</button>
+  <div class="tips">
+    1. 上传图片 → 2. 鼠标拖动框选水印 → 3. 去水印 → 4. 下载
+  </div>
 </div>
 
 <script>
-const slides = document.querySelectorAll('.slide');
-let i = 0;
-function autoSlide() {
-  slides[i].classList.remove('active');
-  i = (i + 1) % slides.length;
-  slides[i].classList.add('active');
-}
-setInterval(autoSlide, 3600);
-</script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+let img = null;
+let isDragging = false;
+let startX = 0, startY = 0;
+let endX = 0, endY = 0;
+let showRect = false;
+let originalImageData = null;
 
+// 上传图片
+document.getElementById('fileInput').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = ev => {
+    img = new Image();
+    img.onload = () => {
+      const maxW = 800;
+      const ratio = img.width / img.height;
+      const w = Math.min(img.width, maxW);
+      const h = w / ratio;
+
+      canvas.width = w;
+      canvas.height = h;
+      ctx.drawImage(img, 0, 0, w, h);
+      originalImageData = ctx.getImageData(0, 0, w, h);
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+// 鼠标开始框选
+canvas.addEventListener('mousedown', e => {
+  if (!img) return;
+  isDragging = true;
+  const rect = canvas.getBoundingClientRect();
+  startX = e.clientX - rect.left;
+  startY = e.clientY - rect.top;
+});
+
+// 拖拽中
+canvas.addEventListener('mousemove', e => {
+  if (!isDragging || !img) return;
+  const rect = canvas.getBoundingClientRect();
+  endX = e.clientX - rect.left;
+  endY = e.clientY - rect.top;
+  redraw();
+});
+
+// 结束拖拽
+canvas.addEventListener('mouseup', () => {
+  isDragging = false;
+  showRect = true;
+});
+
+// 重绘
+function redraw() {
+  if (!originalImageData) return;
+  ctx.putImageData(originalImageData, 0, 0);
+
+  if (showRect || isDragging) {
+    const x = Math.min(startX, endX);
+    const y = Math.min(startY, endY);
+    const w = Math.abs(endX - startX);
+    const h = Math.abs(endY - startY);
+
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x, y, w, h);
+  }
+}
+
+// 清空选择
+function clearSelection() {
+  showRect = false;
+  redraw();
+}
+
+// 去水印（修复版）
+function startRemove() {
+  if (!img) {
+    alert('请先上传图片！');
+    return;
+  }
+  if (!showRect) {
+    alert('请先拖动鼠标框选水印区域！');
+    return;
+  }
+
+  const x1 = Math.min(startX, endX) | 0;
+  const y1 = Math.min(startY, endY) | 0;
+  const x2 = Math.max(startX, endX) | 0;
+  const y2 = Math.max(startY, endY) | 0;
+  const w = x2 - x1;
+  const h = y2 - y1;
+
+  if (w <= 0 || h <= 0) {
+    alert('选区无效，请重新框选');
+    return;
+  }
+
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const data = imageData.data;
+  const CW = canvas.width;
+
+  // 安全采样，避免越界
+  const sampleX = Math.max(0, x1 - 2);
+  const sampleY = Math.max(0, y1 - 2);
+  const idx = (sampleY * CW + sampleX) * 4;
+  const r = data[idx];
+  const g = data[idx + 1];
+  const b = data[idx + 2];
+
+  // 填充水印区域
+  for (let y = y1; y < y2; y++) {
+    for (let x = x1; x < x2; x++) {
+      const i = (y * CW + x) * 4;
+      data[i] = r;
+      data[i + 1] = g;
+      data[i + 2] = b;
+      data[i + 3] = 255;
+    }
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+  originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  showRect = false;
+  alert('去水印完成！');
+}
+
+// 下载
+function downloadResult() {
+  if (!img) {
+    alert('请先上传并处理图片');
+    return;
+  }
+  const a = document.createElement('a');
+  a.download = '去水印_' + Date.now() + '.jpg';
+  a.href = canvas.toDataURL('image/jpeg', 0.95);
+  a.click();
+}
+</script>
 </body>
 </html>
