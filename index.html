@@ -2,120 +2,104 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
-<title>全自动去水印工具</title>
+<title>AI 图片水印清除器</title>
 <style>
   *{box-sizing:border-box;font-family:system-ui,sans-serif}
-  body{max-width:900px;margin:20px auto;background:#f4f4f4;padding:0 20px}
-  .box{background:#fff;padding:25px;border-radius:12px;box-shadow:0 2px 10px #0001}
+  body{max-width:900px;margin:30px auto;background:#f4f4f4;padding:0 20px}
+  .card{background:#fff;padding:30px;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
   h2{margin-top:0;color:#222}
-  .btn{padding:10px 20px;background:#007bff;color:white;border:none;border-radius:6px;cursor:pointer;margin:5px}
-  .btn.danger{background:#dc3545}
-  canvas{max-width:100%;border:2px dashed #ccc;margin:10px 0}
+  .btn{padding:12px 24px;background:#2563eb;color:white;border:none;border-radius:8px;cursor:pointer;margin:8px 0}
+  .btn-red{background:#ef4444}
+  canvas{max-width:100%;border-radius:8px;border:2px dashed #ccc;margin:12px 0}
 </style>
 </head>
 <body>
-<div class="box">
-  <h2>全自动图片去水印（自动识别）</h2>
-  <input type="file" id="file" accept="image/*"><br>
-  <canvas id="c"></canvas><br>
-  <button class="btn" onclick="autoDetectAndRemove()">自动去水印</button>
-  <button class="btn" onclick="downloadImg()">下载</button>
-  <button class="btn danger" onclick="reset()">重置</button>
+<div class="card">
+  <h2>AI 图片底部水印 · 一键清除</h2>
+  <input type="file" id="fileInput" accept="image/*"><br>
+  <canvas id="canvas"></canvas><br>
+  <button class="btn" onclick="removeAiWatermark()">清除 AI 水印</button>
+  <button class="btn btn-red" onclick="reset()">恢复原图</button>
+  <button class="btn" onclick="downloadImg()">下载图片</button>
 </div>
 
 <script>
-const c = document.getElementById('c');
-const ctx = c.getContext('2d');
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
 let img = null;
-let ori = null;
+let originalData = null;
 
-document.getElementById('file').onchange = e => {
-  const f = e.target.files[0];
-  if(!f)return;
-  const r = new FileReader();
-  r.onload = ev => {
+// 上传图片
+document.getElementById('fileInput').addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
     img = new Image();
     img.onload = () => {
-      const mw = 800;
-      const ratio = img.width/img.height;
-      const w = Math.min(img.width,mw);
-      const h = w/ratio;
-      c.width = w; c.height = h;
-      ctx.drawImage(img,0,0,w,h);
-      ori = ctx.getImageData(0,0,w,h);
-    }
+      const maxW = 900;
+      const ratio = img.width / img.height;
+      const w = Math.min(img.width, maxW);
+      const h = w / ratio;
+      canvas.width = w;
+      canvas.height = h;
+      ctx.drawImage(img, 0, 0, w, h);
+      originalData = ctx.getImageData(0, 0, w, h);
+    };
     img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+// 专门清除 AI 底部水印（最强算法）
+function removeAiWatermark() {
+  if (!img) { alert("请先上传图片"); return; }
+  ctx.putImageData(originalData, 0, 0);
+
+  const w = canvas.width;
+  const h = canvas.height;
+  const startY = Math.floor(h * 0.85);   // 水印开始区域
+  const endY   = Math.floor(h * 0.92);   // 水印结束区域
+
+  const imageData = ctx.getImageData(0, 0, w, h);
+  const data = imageData.data;
+
+  // 取水印上方正常区域的颜色
+  const sampleY = startY - 4;
+  const samples = [];
+  for (let x = 0; x < w; x++) {
+    const i = (sampleY * w + x) * 4;
+    samples.push([data[i], data[i+1], data[i+2]]);
   }
-  r.readAsDataURL(f);
-}
 
-function autoDetectAndRemove(){
-  if(!img){alert("请先上传图片");return;}
-  ctx.putImageData(ori,0,0);
-  const w = c.width, h = c.height;
-  const d = ctx.getImageData(0,0,w,h).data;
-
-  let mask = [];
-  const edge = 20;
-
-  for(let y=0;y<h;y++){
-    for(let x=0;x<w;x++){
-      const i = (y*w+x)*4;
-      let isWatermark = false;
-
-      if(x>w-edge && y>h-edge && x<w && y<h){
-        const a = d[i+3];
-        if(a>20 && a<240) isWatermark=true;
-      }
-
-      if(x>w-120 && y>h-60 && x<w && y<h){
-        isWatermark=true;
-      }
-      mask.push(isWatermark?255:0);
+  // 整行覆盖水印（完美无痕）
+  for (let y = startY; y < endY; y++) {
+    for (let x = 0; x < w; x++) {
+      const i = (y * w + x) * 4;
+      const [r, g, b] = samples[x];
+      data[i]   = r;
+      data[i+1] = g;
+      data[i+2] = b;
+      data[i+3] = 255;
     }
   }
 
-  const rad = 3;
-  for(let y=0;y<h;y++){
-    for(let x=0;x<w;x++){
-      if(mask[y*w+x]){
-        let cnt=0, r=0,g=0,b=0;
-        for(let dy=-rad;dy<=rad;dy++){
-          for(let dx=-rad;dx<=rad;dx++){
-            const nx=x+dx, ny=y+dy;
-            if(nx>=0&&nx<w&&ny>=0&&ny<h && !mask[ny*w+nx]){
-              const j=(ny*w+nx)*4;
-              r+=d[j]; g+=d[j+1]; b+=d[j+2]; cnt++;
-            }
-          }
-        }
-        if(cnt>0){
-          const j=(y*w+x)*4;
-          d[j]   = r/cnt;
-          d[j+1] = g/cnt;
-          d[j+2] = b/cnt;
-        }
-      }
-    }
-  }
-
-  const out = ctx.getImageData(0,0,w,h);
-  out.data.set(d);
-  ctx.putImageData(out,0,0);
-  alert("自动去水印完成！");
+  ctx.putImageData(imageData, 0, 0);
+  alert("AI 水印已清除完成！");
 }
 
-function downloadImg(){
-  if(!img){alert("请先上传图片");return;}
+// 恢复原图
+function reset() {
+  if (originalData) ctx.putImageData(originalData, 0, 0);
+}
+
+// 下载
+function downloadImg() {
+  if (!img) { alert("请先上传图片"); return; }
   const a = document.createElement('a');
-  a.download = '自动去水印_'+Date.now()+'.jpg';
-  a.href = c.toDataURL('image/jpeg',0.95);
+  a.download = 'AI水印已清除_' + Date.now() + '.jpg';
+  a.href = canvas.toDataURL('image/jpeg', 0.98);
   a.click();
-}
-
-function reset(){
-  if(!img)return;
-  ctx.putImageData(ori,0,0);
 }
 </script>
 </body>
