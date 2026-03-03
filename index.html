@@ -2,34 +2,36 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>高级去水印</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>消除笔 - 去水印</title>
 <style>
-  *{box-sizing:border-box}
-  body{margin:0;padding:16px;background:#f4f4f4;font-family:system-ui}
-  .box{background:white;padding:20px;border-radius:16px}
-  h3{margin-top:0}
-  canvas{max-width:100%;border-radius:10px; border:1px solid #eee}
-  button{width:100%;padding:14px;margin:6px 0;border:none;border-radius:12px;background:#007aff;color:white;font-size:16px}
-  .btn-red{background:#ff3b30}
+*{box-sizing:border-box}
+body{margin:0;padding:12px;background:#f4f4f4;font-family:system-ui}
+.box{background:white;padding:16px;border-radius:14px}
+h3{margin-top:0;font-size:18px}
+canvas{max-width:100%;display:block;background:#fff;border:1px solid #eee}
+button{width:100%;padding:14px 0;margin:6px 0;border:none;border-radius:12px;background:#007aff;color:white;font-size:16px}
+.btn-red{background:#ff3b30}
 </style>
 </head>
 <body>
 <div class="box">
-  <h3>高级去水印（纹理修复）</h3>
+  <h3>消除笔（涂抹去水印）</h3>
   <input type="file" id="file" accept="image/*"><br><br>
-  <canvas id="canvas"></canvas><br>
-  <button onclick="removeWatermark()">一键清除底部水印</button>
-  <button onclick="reset()" class="btn-red">恢复原图</button>
-  <button onclick="download()">保存图片</button>
+  <canvas id="c"></canvas><br>
+  <button onclick="reset()">恢复原图</button>
+  <button onclick="save()">保存图片</button>
 </div>
 
 <script>
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
 let img = null;
-let original = null;
+let oriData = null;
+let lastX = null, lastY = null;
+const brushSize = 12;
 
+// 上传图片
 document.getElementById('file').addEventListener('change', e => {
   const f = e.target.files[0];
   if (!f) return;
@@ -37,68 +39,103 @@ document.getElementById('file').addEventListener('change', e => {
   r.onload = e => {
     img = new Image();
     img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
+      c.width = img.width;
+      c.height = img.height;
       ctx.drawImage(img, 0, 0);
-      original = ctx.getImageData(0,0,canvas.width,canvas.height);
+      oriData = ctx.getImageData(0,0,c.width,c.height);
     }
     img.src = e.target.result;
   }
   r.readAsDataURL(f);
 })
 
-function removeWatermark() {
-  if (!img) { alert("请先上传图片"); return; }
-  ctx.putImageData(original,0,0);
+// 触摸涂抹（手机专用）
+c.addEventListener('touchstart', e => {
+  e.preventDefault();
+  const t = e.touches[0];
+  const rect = c.getBoundingClientRect();
+  lastX = (t.clientX - rect.left) * c.width / rect.width;
+  lastY = (t.clientY - rect.top) * c.height / rect.height;
+});
 
-  const w = canvas.width;
-  const h = canvas.height;
-  const yStart = Math.floor(h * 0.88);
-  const yEnd = Math.floor(h * 0.97);
+c.addEventListener('touchmove', e => {
+  e.preventDefault();
+  if (!img) return;
+  const t = e.touches[0];
+  const rect = c.getBoundingClientRect();
+  const x = (t.clientX - rect.left) * c.width / rect.width;
+  const y = (t.clientY - rect.top) * c.height / rect.height;
+  paintLine(lastX, lastY, x, y);
+  lastX = x;
+  lastY = y;
+});
 
+// 画线消除
+function paintLine(x1,y1,x2,y2) {
+  const w = c.width, h = c.height;
   const data = ctx.getImageData(0,0,w,h).data;
-  const out = ctx.createImageData(w, h);
+  const out = ctx.getImageData(0,0,w,h);
   const outData = out.data;
-  outData.set(data);
 
-  const radius = 4;
-  for (let y = yStart; y < yEnd; y++) {
-    for (let x = 0; x < w; x++) {
-      let r = 0, g = 0, b = 0, count = 0;
-      for (let dy = -radius; dy <= radius; dy++) {
-        for (let dx = -radius; dx <= radius; dx++) {
-          const nx = x + dx;
-          const ny = y + dy;
-          if (nx < 0 || nx >= w || ny < 0 || ny >= h) continue;
-          if (ny >= yStart && ny < yEnd) continue;
-          const i = (ny * w + nx) * 4;
-          r += data[i];
-          g += data[i+1];
-          b += data[i+2];
-          count++;
+  const dx = x2-x1, dy = y2-y1;
+  const dist = Math.hypot(dx,dy);
+  for(let i=0;i<=dist;i+=1){
+    const px = x1 + dx*i/dist;
+    const py = y1 + dy*i/dist;
+    erasePixel(px, py, data, outData, w, h);
+  }
+  ctx.putImageData(out,0,0);
+}
+
+// 消除核心（真正的消除笔算法）
+function erasePixel(cx, cy, data, outData, w, h) {
+  const r = brushSize;
+  for(let dy=-r;dy<=r;dy++){
+    for(let dx=-r;dx<=r;dx++){
+      const d = Math.hypot(dx,dy);
+      if(d>r) continue;
+      const x = Math.round(cx + dx);
+      const y = Math.round(cy + dy);
+      if(x<0||x>=w||y<0||y>=h) continue;
+
+      let sumR=0, sumG=0, sumB=0, cnt=0;
+      const sr = 4;
+      for(let sy=-sr;sy<=sr;sy++){
+        for(let sx=-sr;sx<=sr;sx++){
+          const nx = x+sx;
+          const ny = y+sy;
+          if(nx<0||nx>=w||ny<0||ny>=h) continue;
+          const nd = Math.hypot(sx,sy);
+          if(nd>sr) continue;
+          const i = (ny*w + nx)*4;
+          sumR += data[i];
+          sumG += data[i+1];
+          sumB += data[i+2];
+          cnt++;
         }
       }
-      if (count > 0) {
-        const i = (y * w + x) * 4;
-        outData[i]   = r / count;
-        outData[i+1] = g / count;
-        outData[i+2] = b / count;
+      if(cnt>0){
+        const i = (y*w + x)*4;
+        outData[i]   = sumR/cnt;
+        outData[i+1] = sumG/cnt;
+        outData[i+2] = sumB/cnt;
         outData[i+3] = 255;
       }
     }
   }
-  ctx.putImageData(out, 0, 0);
-  alert("处理完成！");
 }
 
-function reset() {
-  if (original) ctx.putImageData(original,0,0);
+// 恢复原图
+function reset(){
+  if(oriData) ctx.putImageData(oriData,0,0);
 }
 
-function download() {
+// 保存
+function save(){
+  if(!img){alert("请先上传图片");return}
   const a = document.createElement('a');
-  a.download = '去水印完成.png';
-  a.href = canvas.toDataURL('image/png');
+  a.download = '消除笔结果.png';
+  a.href = c.toDataURL('image/png');
   a.click();
 }
 </script>
