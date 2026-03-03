@@ -2,30 +2,30 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, user-scalable=no">
-<title>手机AI去水印</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>超强去水印（手机专用）</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;padding:16px;background:#f4f4f4}
-.container{background:white;padding:20px;border-radius:12px}
-h3{margin-top:0}
-canvas{max-width:100%;border-radius:8px;border:1px solid #ddd}
-button{width:100%;padding:14px;margin:6px 0;border:none;border-radius:10px;background:#007aff;color:white;font-size:16px}
-.btn-red{background:#ff3b30}
+  *{box-sizing:border-box}
+  body{margin:0;padding:16px;background:#f4f4f4;font-family:system-ui}
+  .card{background:white;padding:20px;border-radius:16px}
+  h3{margin-top:0}
+  canvas{max-width:100%;border-radius:10px; border:1px solid #ddd}
+  button{width:100%;padding:14px;margin:6px 0;border:none;border-radius:12px;background:#007aff;color:white;font-size:16px}
+  .btn-red{background:#ff3b30}
 </style>
 </head>
 <body>
-<div class="container">
-  <h3>手机一键去AI水印</h3>
+<div class="card">
+  <h3>超强AI去水印 · 纹理修复版</h3>
   <input type="file" id="file" accept="image/*"><br><br>
-  <canvas id="canvas"></canvas><br>
-  <button onclick="go()">一键清除底部水印</button>
+  <canvas id="c"></canvas><br>
+  <button onclick="removeStrong()">一键清除底部水印</button>
   <button onclick="reset()" class="btn-red">恢复原图</button>
-  <button onclick="save()">下载图片</button>
+  <button onclick="save()">保存图片</button>
 </div>
 
 <script>
-const c = document.getElementById('canvas');
+const c = document.getElementById('c');
 const ctx = c.getContext('2d');
 let img = null;
 let ori = null;
@@ -37,44 +37,53 @@ document.getElementById('file').addEventListener('change', e => {
   r.onload = e => {
     img = new Image();
     img.onload = () => {
-      const w = img.width;
-      const h = img.height;
-      c.width = w;
-      c.height = h;
-      ctx.drawImage(img, 0,0);
-      ori = ctx.getImageData(0,0,w,h);
+      c.width = img.width;
+      c.height = img.height;
+      ctx.drawImage(img,0,0);
+      ori = ctx.getImageData(0,0,c.width,c.height);
     }
     img.src = e.target.result;
   }
   r.readAsDataURL(f);
 })
 
-function go() {
+function removeStrong() {
   if(!img){alert("请先上传图片");return}
   ctx.putImageData(ori,0,0);
-  const w = c.width;
-  const h = c.height;
-  const yFrom = Math.floor(h * 0.90);
-  const yTo   = Math.floor(h * 0.96);
+  const w = c.width, h = c.height;
+  const y0 =Math.floor(h * 0.89);
+  const y1 = Math.floor(h * 0.97);
 
   const idata = ctx.getImageData(0,0,w,h);
   const data = idata.data;
 
-  // 取上方颜色填充
-  for(let x=0;x<w;x++){
-    const i = ((yFrom-2) * w + x) *4;
-    const R = data[i];
-    const G = data[i+1];
-    const B = data[i+2];
-    for(let y=yFrom;y<yTo;y++){
-      const p = (y*w+x)*4;
-      data[p] = R;
-      data[p+1] = G;
-      data[p+2] = B;
+  const kernel = 3;
+
+  for (let y = y0; y < y1; y++) {
+    for (let x = 0; x < w; x++) {
+      let sumR = 0, sumG = 0, sumB = 0, cnt = 0;
+      for (let dy = -kernel; dy <= kernel; dy++) {
+        for (let dx = -kernel; dx <= kernel; dx++) {
+          const nx = x + dx;
+          const ny = y + dy;
+          if (nx < 0 || nx >= w || ny < 0 || ny >= y0) continue;
+          const i = (ny * w + nx) * 4;
+          sumR += data[i];
+          sumG += data[i+1];
+          sumB += data[i+2];
+          cnt++;
+        }
+      }
+      if (cnt > 0) {
+        const i = (y * w + x) * 4;
+        data[i]   = sumR / cnt;
+        data[i+1] = sumG / cnt;
+        data[i+2] = sumB / cnt;
+      }
     }
   }
   ctx.putImageData(idata,0,0);
-  alert("清除完成！");
+  alert("水印已清除完成！");
 }
 
 function reset(){
@@ -82,10 +91,10 @@ function reset(){
 }
 
 function save(){
-  if(!img){alert("请先上传");return}
+  if(!img){alert("请先上传图片");return}
   const a = document.createElement('a');
-  a.download = '去水印_'+Date.now()+'.jpg';
-  a.href = c.toDataURL('image/jpeg',0.95);
+  a.download = '超强去水印_'+Date.now()+'.jpg';
+  a.href = c.toDataURL('image/jpeg', 0.98);
   a.click();
 }
 </script>
