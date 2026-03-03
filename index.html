@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>消除笔 - 去水印</title>
+<title>自动强力去水印</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;padding:12px;background:#f4f4f4;font-family:system-ui}
@@ -16,9 +16,10 @@ button{width:100%;padding:14px 0;margin:6px 0;border:none;border-radius:12px;bac
 </head>
 <body>
 <div class="box">
-  <h3>消除笔（涂抹去水印）</h3>
+  <h3>自动强力去水印（深度消除）</h3>
   <input type="file" id="file" accept="image/*"><br><br>
   <canvas id="c"></canvas><br>
+  <button onclick="autoStrongRemove()">🔥 自动深度消除</button>
   <button onclick="reset()">恢复原图</button>
   <button onclick="save()">保存图片</button>
 </div>
@@ -28,10 +29,7 @@ const c = document.getElementById('c');
 const ctx = c.getContext('2d');
 let img = null;
 let oriData = null;
-let lastX = null, lastY = null;
-const brushSize = 12;
 
-// 上传图片
 document.getElementById('file').addEventListener('change', e => {
   const f = e.target.files[0];
   if (!f) return;
@@ -49,92 +47,57 @@ document.getElementById('file').addEventListener('change', e => {
   r.readAsDataURL(f);
 })
 
-// 触摸涂抹（手机专用）
-c.addEventListener('touchstart', e => {
-  e.preventDefault();
-  const t = e.touches[0];
-  const rect = c.getBoundingClientRect();
-  lastX = (t.clientX - rect.left) * c.width / rect.width;
-  lastY = (t.clientY - rect.top) * c.height / rect.height;
-});
+function autoStrongRemove() {
+  if (!img) { alert("请先上传图片"); return; }
+  ctx.putImageData(oriData, 0, 0);
 
-c.addEventListener('touchmove', e => {
-  e.preventDefault();
-  if (!img) return;
-  const t = e.touches[0];
-  const rect = c.getBoundingClientRect();
-  const x = (t.clientX - rect.left) * c.width / rect.width;
-  const y = (t.clientY - rect.top) * c.height / rect.height;
-  paintLine(lastX, lastY, x, y);
-  lastX = x;
-  lastY = y;
-});
+  const w = c.width;
+  const h = c.height;
+  const yStart = Math.floor(h * 0.87);
+  const yEnd = Math.floor(h * 0.98);
 
-// 画线消除
-function paintLine(x1,y1,x2,y2) {
-  const w = c.width, h = c.height;
   const data = ctx.getImageData(0,0,w,h).data;
   const out = ctx.getImageData(0,0,w,h);
   const outData = out.data;
 
-  const dx = x2-x1, dy = y2-y1;
-  const dist = Math.hypot(dx,dy);
-  for(let i=0;i<=dist;i+=1){
-    const px = x1 + dx*i/dist;
-    const py = y1 + dy*i/dist;
-    erasePixel(px, py, data, outData, w, h);
-  }
-  ctx.putImageData(out,0,0);
-}
-
-// 消除核心（真正的消除笔算法）
-function erasePixel(cx, cy, data, outData, w, h) {
-  const r = brushSize;
-  for(let dy=-r;dy<=r;dy++){
-    for(let dx=-r;dx<=r;dx++){
-      const d = Math.hypot(dx,dy);
-      if(d>r) continue;
-      const x = Math.round(cx + dx);
-      const y = Math.round(cy + dy);
-      if(x<0||x>=w||y<0||y>=h) continue;
-
-      let sumR=0, sumG=0, sumB=0, cnt=0;
-      const sr = 4;
-      for(let sy=-sr;sy<=sr;sy++){
-        for(let sx=-sr;sx<=sr;sx++){
-          const nx = x+sx;
-          const ny = y+sy;
-          if(nx<0||nx>=w||ny<0||ny>=h) continue;
-          const nd = Math.hypot(sx,sy);
-          if(nd>sr) continue;
-          const i = (ny*w + nx)*4;
+  // 超强消除算法（深度融合）
+  for (let y = yStart; y < yEnd; y++) {
+    for (let x = 0; x < w; x++) {
+      let sumR = 0, sumG = 0, sumB = 0, cnt = 0;
+      const sampleRange = 10; // 范围更大，融合更自然
+      for (let dy = -sampleRange; dy <= sampleRange; dy++) {
+        for (let dx = -sampleRange; dx <= sampleRange; dx++) {
+          const nx = x + dx;
+          const ny = y + dy - sampleRange;
+          if (nx < 0 || nx >= w || ny < 0 || ny >= yStart) continue;
+          const i = (ny * w + nx) * 4;
           sumR += data[i];
           sumG += data[i+1];
           sumB += data[i+2];
           cnt++;
         }
       }
-      if(cnt>0){
-        const i = (y*w + x)*4;
-        outData[i]   = sumR/cnt;
-        outData[i+1] = sumG/cnt;
-        outData[i+2] = sumB/cnt;
+      if (cnt > 0) {
+        const i = (y * w + x) * 4;
+        outData[i]   = sumR / cnt;
+        outData[i+1] = sumG / cnt;
+        outData[i+2] = sumB / cnt;
         outData[i+3] = 255;
       }
     }
   }
+
+  ctx.putImageData(out, 0, 0);
+  alert("✅ 自动深度消除完成！");
 }
 
-// 恢复原图
-function reset(){
-  if(oriData) ctx.putImageData(oriData,0,0);
+function reset() {
+  if (oriData) ctx.putImageData(oriData,0,0);
 }
 
-// 保存
-function save(){
-  if(!img){alert("请先上传图片");return}
+function save() {
   const a = document.createElement('a');
-  a.download = '消除笔结果.png';
+  a.download = '已深度去水印.png';
   a.href = c.toDataURL('image/png');
   a.click();
 }
