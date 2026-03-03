@@ -1,232 +1,121 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <title>图片去水印 - 稳定版</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, sans-serif;
-    }
-    body {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 20px;
-      background: #f5f5f5;
-    }
-    .container {
-      background: white;
-      padding: 24px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    h2 {
-      margin-top: 0;
-      color: #333;
-    }
-    .upload {
-      margin: 20px 0;
-    }
-    input[type="file"] {
-      padding: 8px;
-    }
-    .canvas-wrapper {
-      position: relative;
-      display: inline-block;
-      border: 2px dashed #ccc;
-      margin: 10px 0;
-    }
-    canvas {
-      display: block;
-      max-width: 100%;
-    }
-    .btn {
-      padding: 10px 18px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      margin-right: 8px;
-      margin-top: 10px;
-    }
-    .btn.danger {
-      background: #ef4444;
-    }
-    .tips {
-      color: #666;
-      font-size: 13px;
-      margin-top: 12px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<title>全自动去水印工具</title>
+<style>
+  *{box-sizing:border-box;font-family:system-ui,sans-serif}
+  body{max-width:900px;margin:20px auto;background:#f4f4f4;padding:0 20px}
+  .box{background:#fff;padding:25px;border-radius:12px;box-shadow:0 2px 10px #0001}
+  h2{margin-top:0;color:#222}
+  .btn{padding:10px 20px;background:#007bff;color:white;border:none;border-radius:6px;cursor:pointer;margin:5px}
+  .btn.danger{background:#dc3545}
+  canvas{max-width:100%;border:2px dashed #ccc;margin:10px 0}
+</style>
 </head>
 <body>
-
-<div class="container">
-  <h2>本地图片去水印工具（稳定无Bug）</h2>
-  <div class="upload">
-    <input type="file" id="fileInput" accept="image/*" />
-  </div>
-
-  <div class="canvas-wrapper">
-    <canvas id="canvas"></canvas>
-  </div>
-
-  <div>
-    <button class="btn" onclick="startRemove()">去水印</button>
-    <button class="btn danger" onclick="clearSelection()">重选区域</button>
-    <button class="btn" onclick="downloadResult()">下载图片</button>
-  </div>
-
-  <div class="tips">
-    1. 上传图片 → 2. 鼠标拖动框选水印 → 3. 去水印 → 4. 下载
-  </div>
+<div class="box">
+  <h2>全自动图片去水印（自动识别）</h2>
+  <input type="file" id="file" accept="image/*"><br>
+  <canvas id="c"></canvas><br>
+  <button class="btn" onclick="autoDetectAndRemove()">自动去水印</button>
+  <button class="btn" onclick="downloadImg()">下载</button>
+  <button class="btn danger" onclick="reset()">重置</button>
 </div>
 
 <script>
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
 let img = null;
-let isDragging = false;
-let startX = 0, startY = 0;
-let endX = 0, endY = 0;
-let showRect = false;
-let originalImageData = null;
+let ori = null;
 
-// 上传图片
-document.getElementById('fileInput').addEventListener('change', e => {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = ev => {
+document.getElementById('file').onchange = e => {
+  const f = e.target.files[0];
+  if(!f)return;
+  const r = new FileReader();
+  r.onload = ev => {
     img = new Image();
     img.onload = () => {
-      const maxW = 800;
-      const ratio = img.width / img.height;
-      const w = Math.min(img.width, maxW);
-      const h = w / ratio;
-
-      canvas.width = w;
-      canvas.height = h;
-      ctx.drawImage(img, 0, 0, w, h);
-      originalImageData = ctx.getImageData(0, 0, w, h);
-    };
+      const mw = 800;
+      const ratio = img.width/img.height;
+      const w = Math.min(img.width,mw);
+      const h = w/ratio;
+      c.width = w; c.height = h;
+      ctx.drawImage(img,0,0,w,h);
+      ori = ctx.getImageData(0,0,w,h);
+    }
     img.src = ev.target.result;
-  };
-  reader.readAsDataURL(file);
-});
-
-// 鼠标开始框选
-canvas.addEventListener('mousedown', e => {
-  if (!img) return;
-  isDragging = true;
-  const rect = canvas.getBoundingClientRect();
-  startX = e.clientX - rect.left;
-  startY = e.clientY - rect.top;
-});
-
-// 拖拽中
-canvas.addEventListener('mousemove', e => {
-  if (!isDragging || !img) return;
-  const rect = canvas.getBoundingClientRect();
-  endX = e.clientX - rect.left;
-  endY = e.clientY - rect.top;
-  redraw();
-});
-
-// 结束拖拽
-canvas.addEventListener('mouseup', () => {
-  isDragging = false;
-  showRect = true;
-});
-
-// 重绘
-function redraw() {
-  if (!originalImageData) return;
-  ctx.putImageData(originalImageData, 0, 0);
-
-  if (showRect || isDragging) {
-    const x = Math.min(startX, endX);
-    const y = Math.min(startY, endY);
-    const w = Math.abs(endX - startX);
-    const h = Math.abs(endY - startY);
-
-    ctx.strokeStyle = 'red';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(x, y, w, h);
   }
+  r.readAsDataURL(f);
 }
 
-// 清空选择
-function clearSelection() {
-  showRect = false;
-  redraw();
-}
+function autoDetectAndRemove(){
+  if(!img){alert("请先上传图片");return;}
+  ctx.putImageData(ori,0,0);
+  const w = c.width, h = c.height;
+  const d = ctx.getImageData(0,0,w,h).data;
 
-// 去水印（修复版）
-function startRemove() {
-  if (!img) {
-    alert('请先上传图片！');
-    return;
-  }
-  if (!showRect) {
-    alert('请先拖动鼠标框选水印区域！');
-    return;
-  }
+  let mask = [];
+  const edge = 20;
 
-  const x1 = Math.min(startX, endX) | 0;
-  const y1 = Math.min(startY, endY) | 0;
-  const x2 = Math.max(startX, endX) | 0;
-  const y2 = Math.max(startY, endY) | 0;
-  const w = x2 - x1;
-  const h = y2 - y1;
+  for(let y=0;y<h;y++){
+    for(let x=0;x<w;x++){
+      const i = (y*w+x)*4;
+      let isWatermark = false;
 
-  if (w <= 0 || h <= 0) {
-    alert('选区无效，请重新框选');
-    return;
-  }
+      if(x>w-edge && y>h-edge && x<w && y<h){
+        const a = d[i+3];
+        if(a>20 && a<240) isWatermark=true;
+      }
 
-  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const data = imageData.data;
-  const CW = canvas.width;
-
-  // 安全采样，避免越界
-  const sampleX = Math.max(0, x1 - 2);
-  const sampleY = Math.max(0, y1 - 2);
-  const idx = (sampleY * CW + sampleX) * 4;
-  const r = data[idx];
-  const g = data[idx + 1];
-  const b = data[idx + 2];
-
-  // 填充水印区域
-  for (let y = y1; y < y2; y++) {
-    for (let x = x1; x < x2; x++) {
-      const i = (y * CW + x) * 4;
-      data[i] = r;
-      data[i + 1] = g;
-      data[i + 2] = b;
-      data[i + 3] = 255;
+      if(x>w-120 && y>h-60 && x<w && y<h){
+        isWatermark=true;
+      }
+      mask.push(isWatermark?255:0);
     }
   }
 
-  ctx.putImageData(imageData, 0, 0);
-  originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  showRect = false;
-  alert('去水印完成！');
+  const rad = 3;
+  for(let y=0;y<h;y++){
+    for(let x=0;x<w;x++){
+      if(mask[y*w+x]){
+        let cnt=0, r=0,g=0,b=0;
+        for(let dy=-rad;dy<=rad;dy++){
+          for(let dx=-rad;dx<=rad;dx++){
+            const nx=x+dx, ny=y+dy;
+            if(nx>=0&&nx<w&&ny>=0&&ny<h && !mask[ny*w+nx]){
+              const j=(ny*w+nx)*4;
+              r+=d[j]; g+=d[j+1]; b+=d[j+2]; cnt++;
+            }
+          }
+        }
+        if(cnt>0){
+          const j=(y*w+x)*4;
+          d[j]   = r/cnt;
+          d[j+1] = g/cnt;
+          d[j+2] = b/cnt;
+        }
+      }
+    }
+  }
+
+  const out = ctx.getImageData(0,0,w,h);
+  out.data.set(d);
+  ctx.putImageData(out,0,0);
+  alert("自动去水印完成！");
 }
 
-// 下载
-function downloadResult() {
-  if (!img) {
-    alert('请先上传并处理图片');
-    return;
-  }
+function downloadImg(){
+  if(!img){alert("请先上传图片");return;}
   const a = document.createElement('a');
-  a.download = '去水印_' + Date.now() + '.jpg';
-  a.href = canvas.toDataURL('image/jpeg', 0.95);
+  a.download = '自动去水印_'+Date.now()+'.jpg';
+  a.href = c.toDataURL('image/jpeg',0.95);
   a.click();
+}
+
+function reset(){
+  if(!img)return;
+  ctx.putImageData(ori,0,0);
 }
 </script>
 </body>
